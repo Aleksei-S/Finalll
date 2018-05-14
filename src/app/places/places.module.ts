@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 
 import { PlacesComponent } from './places.component';
 import { PlacesRoutingModule } from './places-routing.module';
+import { PlacesService } from './places.service';
 
 @NgModule({
   imports: [
@@ -11,6 +12,7 @@ import { PlacesRoutingModule } from './places-routing.module';
     FormsModule,
     PlacesRoutingModule
   ],
-  declarations: [ PlacesComponent ]
+  declarations: [ PlacesComponent ],
+  providers: [ PlacesService ]
 })
 export class PlacesModule { }
