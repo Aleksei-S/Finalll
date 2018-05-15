@@ -1,18 +1,80 @@
 
 <h2>places  works!</h2>
-    <ul class="items">
-      <li *ngFor="let p of places$ | async"
-        [class.selected]="p.id === selectedId">
+<select class="ui dropdown">
+    <option value="1">Male</option>
+    <option value="0">Female</option>
+</select>
+<button class="ui icon button" (click) = "FilterVisible = !FilterVisible">
+    <i class="filter icon"></i>
+</button>
 
 
-        <a [routerLink]="['/hero', p.id]">
-          <span class="badge">{{ p.id }}</span>{{ p.name }}
-        </a>
+<section [hidden]="!FilterVisible">
+    <form class="ui form">
+        <div class="two fields">
+              <div class="field">
+                    <div class="ui checkbox">
+                        <input type="checkbox" name="example">
+                        <label>Магазины</label>
+                    </div>
+              </div>
+              <div class="field">
+                    <div class="ui checkbox">
+                        <input type="checkbox" name="example">
+                        <label>Рестораны</label>
+                    </div>
+              </div>
+        </div>
+        <div class="two fields">
+              <div class="field">
+                    <div class="ui checkbox">
+                        <input type="checkbox" name="example">
+                        <label>Банки</label>
+                    </div>
+              </div>
+              <div class="field">
+                    <div class="ui checkbox">
+                        <input type="checkbox" name="example">
+                        <label>Администрат</label>
+                    </div>
+              </div>
+        </div>
+        <div class="two fields">
+              <div class="field">
+                    <div class="ui checkbox">
+                        <input type="checkbox" name="example">
+                        <label>Школы</label>
+                    </div>
+              </div>
+              <div class="field">
+                    <div class="ui checkbox">
+                        <input type="checkbox" name="example">
+                        <label>Заправки</label>
+                    </div>
+              </div>
+        </div>
+    </form>
+</section>
 
 
 
-      </li>
-    </ul>
+
+
+
+
+<ul class="items">
+    <li *ngFor="let p of places$ | async"
+    [class.selected]="p.id === selectedId">
+
+
+    <a [routerLink]="['/hero', p.id]">
+        <span class="badge">{{ p.id }}</span>{{ p.name }}
+    </a>
+
+
+
+</li>
+</ul>
 
 
 <button (click) = "bclick()" >click</button>

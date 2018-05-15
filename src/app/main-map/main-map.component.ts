@@ -14,7 +14,7 @@ public map: any;
 private url="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_314OxmWH6Shuz2aBlL90oP3ObvOapMQ&libraries=places&callback=__onGoogleLoaded";
 private loadAPI: Promise<any>
 
-  constructor() { 
+  constructor() {
   this.loadAPI = new Promise((resolve) => {
 		window['__onGoogleLoaded'] = (ev) => {
 		console.log('gapi loaded')
@@ -66,22 +66,78 @@ public initMap(pos): void{
 	// this.map.addListener('rightclick',(e)=>{
 	// 	this.rightClickOnMap(e);
 	// });
-	// this.map.addListener('click',(e)=>{
-	// 	if (e.placeId) {
- //      console.log("e");
-	// 		console.log(e);
-	// 		e.stop();
-	// 		// e.prevent
-	// 		this.addMarker(e);
-	// 		// this.getDetailsMarker(e);
-	// 	}
-	// 	this.contextMenuOf();
-	// });
+	this.map.addListener('click',(e)=>{
+		if (e.placeId) {
+      console.log("e");
+			console.log(e);
+			e.stop();
+			// e.prevent
+			this.addMarker(e);
+			// this.getDetailsMarker(e);
+		}
+		// this.contextMenuOf();
+	});
 	// this.map.addListener('center_changed', (e)=> {
 	// 	this.contextMenuOf();
 	// });
 
 }
+
+
+
+
+addMarker(e){
+  console.log("addMarker");
+  let coords = this.coords;
+  if (e.placeId) {
+    coords = e.latLng;
+    this.getDetailsMarker(e);
+  }
+  let marker = new google.maps.Marker({
+    position: coords,
+    map: this.map
+  });
+
+  // marker.addListener('rightclick',(e)=>{
+  //   console.log(e);
+  // });
+//   marker.addListener('click',(e)=>{
+//     console.log('marker');
+//     console.log(e);
+//     var geocoder = new google.maps.Geocoder();
+// // https://developers.google.com/maps/documentation/javascript/examples/geocoding-reverse
+// // var latlng = {lat: parseFloat(latlngStr[0]), lng: parseFloat(latlngStr[1])};
+//     geocoder.geocode({'location': e.latLng},(z)=>{
+//       console.log(z);
+//       // this.router.navigate(['/places', { name: '', address: z[0].formatted_address, photo: ''}], { relativeTo: this.activatedRoute });
+//       // this.getDetailsMarker(z[0]);
+//     });
+//   });
+}
+
+
+
+
+
+
+
+// place_id
+getDetailsMarker(e){
+  console.log('getDetailsMarker');
+  console.log(e);
+  var service = new google.maps.places.PlacesService(this.map);
+
+  service.getDetails({placeId: e.placeId}, (place, status) =>{
+    let name = place.name || "";
+    let address = place.formatted_address || "";
+    let photo =  (place.photos) ? place.photos[0].getUrl({'maxWidth': 250, 'maxHeight': 250}) : "";
+    // this.router.navigate(['/places', { name: name, address: address, photo: photo}], { relativeTo: this.activatedRoute });
+    console.log(place);
+  });
+}
+
+
+
 
 contextMenuOn(x, y){
 	let menu = <HTMLElement>document.getElementsByClassName("context-menu")[0];
