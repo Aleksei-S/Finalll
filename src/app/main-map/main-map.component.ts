@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { PlacesService }  from '../places/places.service';
+import { Router }  from '@angular/router';
 declare var google : any;
 
 @Component({
@@ -8,13 +10,21 @@ declare var google : any;
   styleUrls: ['./main-map.component.css']
 })
 export class MainMapComponent implements OnInit {
+
+
+clickCnt: number = 0;
+
+
 public map: any;
-// public google : any;
+public coords : any;
 
 private url="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_314OxmWH6Shuz2aBlL90oP3ObvOapMQ&libraries=places&callback=__onGoogleLoaded";
 private loadAPI: Promise<any>
 
-  constructor() {
+  constructor(public router:Router, public placesService:PlacesService) {
+		/////////////
+		this.placesService.onClick.subscribe(cnt => this.clickCnt = cnt);
+
   this.loadAPI = new Promise((resolve) => {
 		window['__onGoogleLoaded'] = (ev) => {
 		console.log('gapi loaded')
@@ -131,6 +141,13 @@ getDetailsMarker(e){
     let name = place.name || "";
     let address = place.formatted_address || "";
     let photo =  (place.photos) ? place.photos[0].getUrl({'maxWidth': 250, 'maxHeight': 250}) : "";
+
+// this.placesService.announceMission(address);
+
+this.placesService.doClick();
+
+this.router.navigate(['/places']);
+// this.placesService.places$ = address;
     // this.router.navigate(['/places', { name: name, address: address, photo: photo}], { relativeTo: this.activatedRoute });
     console.log(place);
   });
