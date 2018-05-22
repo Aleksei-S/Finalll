@@ -23,7 +23,7 @@ private loadAPI: Promise<any>
 
   constructor(public router:Router, public placesService:PlacesService) {
 		/////////////
-		this.placesService.onClick.subscribe(cnt => this.clickCnt = cnt);
+		// this.placesService.onClick.subscribe(cnt => this.clickCnt = cnt);
 
   this.loadAPI = new Promise((resolve) => {
 		window['__onGoogleLoaded'] = (ev) => {
@@ -144,12 +144,14 @@ getDetailsMarker(e){
 
 // this.placesService.announceMission(address);
 
-this.placesService.doClick();
+// this.placesService.sendName(address);
 
-this.router.navigate(['/places']);
+this.router.navigate(['/places', e.placeId]);
+// this.router.navigateByUrl('/places');
+// this.placesService.doClick();
 // this.placesService.places$ = address;
     // this.router.navigate(['/places', { name: name, address: address, photo: photo}], { relativeTo: this.activatedRoute });
-    console.log(place);
+    // console.log(place);
   });
 }
 

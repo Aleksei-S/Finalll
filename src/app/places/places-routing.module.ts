@@ -3,7 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { PlacesComponent } from './places.component';
 
 const placeRoutes: Routes = [
-  { path: 'places', component: PlacesComponent},
+  { path: 'places', component: PlacesComponent, pathMatch: 'full'},
+  { path: 'places/:placeId', component: PlacesComponent},
 ];
 
 @NgModule({
