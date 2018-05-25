@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { PlacesService }  from '../places/places.service';
 import { Router }  from '@angular/router';
@@ -12,7 +12,7 @@ declare var google : any;
 export class MainMapComponent implements OnInit {
 
 
-clickCnt: number = 0;
+// public ok:EventEmitter<number> = new EventEmitter();
 
 
 public map: any;
@@ -21,7 +21,7 @@ public coords : any;
 private url="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_314OxmWH6Shuz2aBlL90oP3ObvOapMQ&libraries=places&callback=__onGoogleLoaded";
 private loadAPI: Promise<any>
 
-  constructor(public router:Router, public placesService:PlacesService) {
+  constructor(public router:Router, public placesService:PlacesService, private zone: NgZone) {
 		/////////////
 		// this.placesService.onClick.subscribe(cnt => this.clickCnt = cnt);
 
@@ -66,6 +66,10 @@ public initMap(pos): void{
 		mapTypeId: google.maps.MapTypeId.ROADMAP
 	};
 	this.map = new google.maps.Map(mapmy, myOptions);
+
+
+  this.placesService.google = google;
+  this.placesService.map = this.map;
 	let marker = new google.maps.Marker({
 		position: {lat:pos.coords.latitude, lng:pos.coords.longitude },
 		map: this.map,
@@ -131,29 +135,57 @@ addMarker(e){
 
 
 
-// place_id
+
 getDetailsMarker(e){
   console.log('getDetailsMarker');
-  console.log(e);
+  // console.log(e);
   var service = new google.maps.places.PlacesService(this.map);
 
   service.getDetails({placeId: e.placeId}, (place, status) =>{
     let name = place.name || "";
     let address = place.formatted_address || "";
     let photo =  (place.photos) ? place.photos[0].getUrl({'maxWidth': 250, 'maxHeight': 250}) : "";
+    this.placesService.addPlaces({id:1, name:address});
+    console.log(place);
+// console.log(this.map.getCenter());
+// this.getNearPlaces();
+    this.zone.run(() => {
+      this.router.navigate(['/places', e.placeId])
+    });
 
-// this.placesService.announceMission(address);
-
-// this.placesService.sendName(address);
-
-this.router.navigate(['/places', e.placeId]);
-// this.router.navigateByUrl('/places');
-// this.placesService.doClick();
-// this.placesService.places$ = address;
-    // this.router.navigate(['/places', { name: name, address: address, photo: photo}], { relativeTo: this.activatedRoute });
-    // console.log(place);
   });
 }
+
+
+
+ getNearPlaces(types='store'){
+  let request = {
+    location: this.map.getCenter(),
+    radius: ' 1000',
+    types: [types]
+  };
+
+   let service = new google.maps.places.PlacesService(this.map);
+   service.nearbySearch(request, (results, status)=>{
+       if (status == google.maps.places.PlacesServiceStatus.OK) {
+      for (var i = 0; i < results.length; i++) {
+        var place = results[i];
+        this.createMarker(place);
+    }
+  }
+   });
+
+}
+
+createMarker(place) {
+   // console.log(place);
+        var placeLoc = place.geometry.location;
+        var marker = new google.maps.Marker({
+          map: this.map,
+          position: place.geometry.location
+        });
+}
+
 
 
 

@@ -1,10 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/map';
-import { Subject }    from 'rxjs';
-import {EventEmitter} from '@angular/core';
-
+import { Subject }    from 'rxjs/Subject';
+import { BehaviorSubject }    from 'rxjs/BehaviorSubject';
 export class Places {
   constructor(public id: number, public name: string) { }
 }
@@ -19,27 +18,61 @@ const PLACES = [
 
 @Injectable()
 export class PlacesService {
+  public map : any;
+  public google : any;
+
+  public GooglePlaceService: Subject<any> = new Subject<any>();
+  public clickCnt: number = 0;
+  public places$: BehaviorSubject<any[]> = new BehaviorSubject<any[]>(PLACES);
+  public onClick:EventEmitter<number> = new EventEmitter();
 
 
-private sourceName = new Subject<string>();
-public name = this.sourceName.asObservable();
-public places$:string;
-private clickCnt:number = 0;
+  getPlaces() {
+      return this.places$;
+  }
 
-getPlaces() {
-    return PLACES;
+  addPlaces(ss){
+    PLACES.push(ss);
+    this.places$.next(PLACES);
+  }
+
+
+
+
+  public doClick(){
+    this.clickCnt++;
+    console.log(this.clickCnt);
+    this.onClick.emit(this.clickCnt);
+  }
+
+
+ getNearPlaces(types='store'){
+  let request = {
+    location: this.map.getCenter(),
+    radius: ' 1000',
+    types: [types]
+  };
+
+   let service = new this.google.maps.places.PlacesService(this.map);
+   service.nearbySearch(request, (results, status)=>{
+       if (status == this.google.maps.places.PlacesServiceStatus.OK) {
+      for (var i = 0; i < results.length; i++) {
+        var place = results[i];
+        this.createMarker(place);
+    }
+  }
+   });
+
 }
-  // sendName(item: string) {
-  //   this.sourceName.next(item);
-  // }
 
-  // onClick:EventEmitter<number> = new EventEmitter();
-
-  // public doClick(){
-  //   this.clickCnt++;
-  //   console.log(this.clickCnt);
-  //   this.onClick.emit(this.clickCnt);
-  // }
+createMarker(place) {
+   // console.log(place);
+        var placeLoc = place.geometry.location;
+        var marker = new this.google.maps.Marker({
+          map: this.map,
+          position: place.geometry.location
+        });
+}
 
 
 

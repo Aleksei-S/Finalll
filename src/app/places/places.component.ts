@@ -12,7 +12,7 @@ import { Router, NavigationStart }  from '@angular/router';
 })
 export class PlacesComponent implements OnInit {
 
-  private places$: Places[];
+  private places$: any;
   private selectedId: number;
   private subscription: Subscription;
   private clickCount:number=0;
@@ -21,17 +21,7 @@ export class PlacesComponent implements OnInit {
   constructor(private placesService:PlacesService, private zone: NgZone, private router: Router) {
     console.log('constructor  component');
 
-    router.events.subscribe((e)=>{
-      if (e instanceof NavigationStart) {
-        console.log("NavigationStart");
-        this.ngOnInit();
-        this.zone.run(() => {});
-      }
-    });
 
-//https://www.google.com/search?q=angular+router+navigate+not+ngoninit&spell=1&sa=X&ved=0ahUKEwjxj723zJjbAhWBbFAKHW2UCV4QBQgkKAA&biw=1191&bih=932
-//https://angular.io/api/router/RouteReuseStrategy
-//https://stackoverflow.com/questions/39533291/angular2-router-2-0-0-not-reloading-components-when-same-url-loaded-with-differe/39533351#39533351
     // this.placesService.onClick.subscribe(cnt=>{
     //   console.log('constructor   .placesService.onClick.subscribe');
     //   this.clickCount = cnt;
@@ -58,7 +48,15 @@ export class PlacesComponent implements OnInit {
 
 console.log('OnInit  component');
 
- this.places$ = this.placesService.getPlaces();
+ // this.places$ = this.placesService.getPlaces();
+
+
+
+this.subscription = this.placesService.places$.subscribe(
+      (mission) => {
+        console.log(mission);
+        this.places$ = mission;
+    });
 
 
     // this.places$ = this.service.getPlaces();
@@ -70,9 +68,11 @@ console.log('OnInit  component');
   }
 
   bclick(){
-    console.log(this.places$);
-    console.log(this.clickCount);
-    console.log(this);
+    // console.log(this.places$);
+    // console.log(this.clickCount);
+    // console.log(this);
+    console.log(this.placesService.map);
+    this.placesService.doClick();
   }
 
 }
