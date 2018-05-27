@@ -70,6 +70,7 @@ public initMap(pos): void{
 
   this.placesService.google = google;
   this.placesService.map = this.map;
+  this.placesService.mapReadyUpload.next(true);
 	let marker = new google.maps.Marker({
 		position: {lat:pos.coords.latitude, lng:pos.coords.longitude },
 		map: this.map,

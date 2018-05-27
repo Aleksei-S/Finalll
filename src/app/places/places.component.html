@@ -2,77 +2,88 @@
 <h2>places  works!</h2>
 
 
-<ul class="items">
-    <li *ngFor="let p of places$"
-    [class.selected]="p.id === selectedId">
-    <a [routerLink]="['/places', p.placeId]">
-        <span class="badge">{{ p.name }}</span>
-    </a>
-
-
-
-  </li>
-</ul>
-
-
-
-
-
+<!-- <ul class="items">
+		<li *ngFor="let p of places$"
+		[class.selected]="p.id === selectedId">
+ -->
+<!--     <a [routerLink]="['/places', p.placeId]">
+				<span class="badge">{{ p.name }}</span>
+		</a>
+ -->
+<div class="ui" *ngFor="let p of placesService.places$ | async">
+	<div class="ui divider"></div>
+	<form class="ui form">
+			<div class="fields">
+				<div class="ten wide field">
+					<label>Name</label>
+					TYPES
+				</div>
+				<div class="six wide field">
+								<div class="ui bordered image">
+								  <svg width="150" height="200">
+								    <image xlink:href="https://www.capitalfm.co.ke/news/files/2018/05/RUTO-SRC-SEREM.jpg" x="0" y="0" width="100%" height="100%"></image>
+								  </svg>
+								</div>
+				</div>
+			</div>
+	</form>
+</div>
+<div class="ui divider"></div>
 
 <!-- <select class="ui dropdown">
-    <option value="1">Male</option>
-    <option value="0">Female</option>
+		<option value="1">Male</option>
+		<option value="0">Female</option>
 </select>
 <button class="ui icon button" (click) = "FilterVisible = !FilterVisible">
-    <i class="filter icon"></i>
+		<i class="filter icon"></i>
 </button>
  -->
 
 <!-- <section [hidden]="!FilterVisible">
-    <form class="ui form">
-        <div class="two fields">
-              <div class="field">
-                    <div class="ui checkbox">
-                        <input type="checkbox" name="example">
-                        <label>Магазины</label>
-                    </div>
-              </div>
-              <div class="field">
-                    <div class="ui checkbox">
-                        <input type="checkbox" name="example">
-                        <label>Рестораны</label>
-                    </div>
-              </div>
-        </div>
-        <div class="two fields">
-              <div class="field">
-                    <div class="ui checkbox">
-                        <input type="checkbox" name="example">
-                        <label>Банки</label>
-                    </div>
-              </div>
-              <div class="field">
-                    <div class="ui checkbox">
-                        <input type="checkbox" name="example">
-                        <label>Администрат</label>
-                    </div>
-              </div>
-        </div>
-        <div class="two fields">
-              <div class="field">
-                    <div class="ui checkbox">
-                        <input type="checkbox" name="example">
-                        <label>Школы</label>
-                    </div>
-              </div>
-              <div class="field">
-                    <div class="ui checkbox">
-                        <input type="checkbox" name="example">
-                        <label>Заправки</label>
-                    </div>
-              </div>
-        </div>
-    </form>
+		<form class="ui form">
+				<div class="two fields">
+							<div class="field">
+										<div class="ui checkbox">
+												<input type="checkbox" name="example">
+												<label>Магазины</label>
+										</div>
+							</div>
+							<div class="field">
+										<div class="ui checkbox">
+												<input type="checkbox" name="example">
+												<label>Рестораны</label>
+										</div>
+							</div>
+				</div>
+				<div class="two fields">
+							<div class="field">
+										<div class="ui checkbox">
+												<input type="checkbox" name="example">
+												<label>Банки</label>
+										</div>
+							</div>
+							<div class="field">
+										<div class="ui checkbox">
+												<input type="checkbox" name="example">
+												<label>Администрат</label>
+										</div>
+							</div>
+				</div>
+				<div class="two fields">
+							<div class="field">
+										<div class="ui checkbox">
+												<input type="checkbox" name="example">
+												<label>Школы</label>
+										</div>
+							</div>
+							<div class="field">
+										<div class="ui checkbox">
+												<input type="checkbox" name="example">
+												<label>Заправки</label>
+										</div>
+							</div>
+				</div>
+		</form>
 </section>
  -->
 

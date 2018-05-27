@@ -12,4 +12,7 @@
 }
 .menu-segment{
   height: 100%;
+  /*background-color: red;*/
+   overflow-y:auto;
+/*  white-space:nowrap;*/
 }

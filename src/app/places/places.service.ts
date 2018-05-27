@@ -10,20 +10,22 @@ export class Places {
 
 
 const PLACES = [
-  new Places(1, 'Dragon Burning Cities'),
-  new Places(2, 'Sky Rains Great White Sharks'),
-  new Places(3, 'Giant Asteroid Heading For Earth'),
-  new Places(4, 'Procrastinators Meeting Delayed Again'),
+  // new Places(1, 'Dragon Burning Cities'),
+  // new Places(2, 'Sky Rains Great White Sharks'),
+  // new Places(3, 'Giant Asteroid Heading For Earth'),
+  // new Places(4, 'Procrastinators Meeting Delayed Again'),
 ];
 
 @Injectable()
 export class PlacesService {
   public map : any;
   public google : any;
-
+  public mapReadyUpload: Subject<any> = new Subject<any>();
+  
   public GooglePlaceService: Subject<any> = new Subject<any>();
   public clickCnt: number = 0;
-  public places$: BehaviorSubject<any[]> = new BehaviorSubject<any[]>(PLACES);
+  public places$: Subject<any[]> = new Subject<any[]>();
+  // public places$: BehaviorSubject<any[]> = new BehaviorSubject<any[]>(PLACES);
   public onClick:EventEmitter<number> = new EventEmitter();
 
 
@@ -40,30 +42,63 @@ export class PlacesService {
 
 
   public doClick(){
-    this.clickCnt++;
-    console.log(this.clickCnt);
-    this.onClick.emit(this.clickCnt);
+    this.getNearPlaces();
+    // this.clickCnt++;
+    // console.log(this.clickCnt);
+    // this.onClick.emit(this.clickCnt);
   }
 
 
- getNearPlaces(types='store'){
+//  getNearPlaces(types='store'){
+//   let request = {
+//     location: this.map.getCenter(),
+//     radius: '1000',
+//     types: []
+//   };
+
+//   let service = new this.google.maps.places.PlacesService(this.map);
+//   service.nearbySearch(request, (results, status)=>{
+//     if (status == this.google.maps.places.PlacesServiceStatus.OK) {
+//       for (var i = 0; i < results.length; i++) {
+//           var place = results[i];
+//           this.addPlaces(place);
+//           this.createMarker(place);
+//       }
+//     }
+//   });
+
+// }
+
+
+
+ public getNearPlaces(types='store'){
   let request = {
     location: this.map.getCenter(),
-    radius: ' 1000',
-    types: [types]
+    radius: '1000',
+    types: []
   };
 
-   let service = new this.google.maps.places.PlacesService(this.map);
-   service.nearbySearch(request, (results, status)=>{
-       if (status == this.google.maps.places.PlacesServiceStatus.OK) {
+  let service = new this.google.maps.places.PlacesService(this.map);
+  service.nearbySearch(request, (results, status)=>{
+    if (status == this.google.maps.places.PlacesServiceStatus.OK) {
+      let placeArr = [];
       for (var i = 0; i < results.length; i++) {
-        var place = results[i];
-        this.createMarker(place);
+          var place = results[i];
+          placeArr.push(place);
+          this.createMarker(place);
+      }
+      console.log(placeArr);
+      return placeArr;
     }
-  }
-   });
-
+  });
 }
+
+
+
+
+
+
+
 
 createMarker(place) {
    // console.log(place);
