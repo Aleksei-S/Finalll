@@ -16,7 +16,7 @@ export class PlacesComponent implements OnInit {
   private places$: any[];
   private selectedId: number;
   private subscription: Subscription;
-  private Obs: Observable<any>;
+  private Obs: Observable<any>; 
   private subscription1: Subscription;
   private clickCount:number=0;
 
@@ -24,11 +24,6 @@ export class PlacesComponent implements OnInit {
   constructor(private placesService:PlacesService, private zone: NgZone, private router: Router) {
     console.log('constructor  component');
   }
-
-
-
-
-
 
   ngOnInit() {
 
@@ -43,20 +38,20 @@ export class PlacesComponent implements OnInit {
 //        })
 // this.placesService.doClick();
 
-this.subscription = this.placesService.places$
-.subscribe(
-  (mission) => {
-    this.zone.run(()=>{
-      this.places$ = mission;
-    });
-  });
+// this.subscription = this.placesService.places$
+// .subscribe(
+//   (mission) => {
+//     this.zone.run(()=>{
+//       this.places$ = mission;
+//     });
+//   });
 
 
 }
 
 bclick(){
-  console.log(this.places$);
-  console.log(this.placesService.places$);
+  // console.log(this.places$);
+ console.log(this.placesService.currentPlace$);
 }
 
 }

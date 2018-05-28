@@ -1,6 +1,6 @@
 import { Component, OnInit, NgZone, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { PlacesService }  from '../places/places.service';
+import { PlacesService, Places }  from '../places/places.service';
 import { Router }  from '@angular/router';
 declare var google : any;
 
@@ -143,9 +143,18 @@ getDetailsMarker(e){
   var service = new google.maps.places.PlacesService(this.map);
 
   service.getDetails({placeId: e.placeId}, (place, status) =>{
+  	let placeId = e.placeId;
     let name = place.name || "";
     let address = place.formatted_address || "";
-    let photo =  (place.photos) ? place.photos[0].getUrl({'maxWidth': 250, 'maxHeight': 250}) : "";
+	let photoUrl =  (place.photos) ? place.photos[0].getUrl({'maxWidth': 250, 'maxHeight': 250}) : "";
+	let rate =  place.rating || "";
+	let phone_number =  place.formatted_phone_number|| "";
+	let location =  place.geometry.location;
+
+
+
+this.placesService.currentPlace$ = new Places(placeId, name, address, photoUrl, rate, phone_number, location);
+
     // this.placesService.addPlaces({id:1, name:address});
     console.log(place);
 // console.log(this.map.getCenter());
@@ -157,8 +166,7 @@ getDetailsMarker(e){
   });
 }
 
-
-
+    // location: {}
 
 
 

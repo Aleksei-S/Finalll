@@ -9,7 +9,7 @@ import { Subscription }   from 'rxjs';
 
 export class Places {
   constructor(
-    public PlaceId: string,
+    public placeId: string,
     public name: string,
     public adress: string,
     public photoUrl: string,
@@ -30,14 +30,16 @@ export class PlacesService {
 
 
 
-  public mapReadyUpload: Subject<any> = new Subject<any>();
+  public mapReadyUpload : Subject<any> = new Subject<any>();
 
-  public GooglePlaceService: Subject<any> = new Subject<any>();
-  public clickCnt: number = 0;
+  public GooglePlaceService : Subject<any> = new Subject<any>();
+  public clickCnt : number = 0;
+  public currentPlace$ : Places;
+  // public currentPlace$ : BehaviorSubject<Places> = new BehaviorSubject<Places>(currentPlace);
   // public places$: Subject<any[]> = new Subject<any[]>();
   // public places$: BehaviorSubject<any[]> = new BehaviorSubject<any[]>(PLACES);
-  public onClick:EventEmitter<number> = new EventEmitter();
-  private subscription1: Subscription;
+  public onClick : EventEmitter<number> = new EventEmitter();
+  private subscription1 : Subscription;
 
 
 
