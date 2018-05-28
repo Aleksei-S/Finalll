@@ -146,7 +146,7 @@ getDetailsMarker(e){
     let name = place.name || "";
     let address = place.formatted_address || "";
     let photo =  (place.photos) ? place.photos[0].getUrl({'maxWidth': 250, 'maxHeight': 250}) : "";
-    this.placesService.addPlaces({id:1, name:address});
+    // this.placesService.addPlaces({id:1, name:address});
     console.log(place);
 // console.log(this.map.getCenter());
 // this.getNearPlaces();
@@ -157,35 +157,6 @@ getDetailsMarker(e){
   });
 }
 
-
-
- getNearPlaces(types='store'){
-  let request = {
-    location: this.map.getCenter(),
-    radius: ' 1000',
-    types: [types]
-  };
-
-   let service = new google.maps.places.PlacesService(this.map);
-   service.nearbySearch(request, (results, status)=>{
-       if (status == google.maps.places.PlacesServiceStatus.OK) {
-      for (var i = 0; i < results.length; i++) {
-        var place = results[i];
-        this.createMarker(place);
-    }
-  }
-   });
-
-}
-
-createMarker(place) {
-   // console.log(place);
-        var placeLoc = place.geometry.location;
-        var marker = new google.maps.Marker({
-          map: this.map,
-          position: place.geometry.location
-        });
-}
 
 
 

@@ -4,49 +4,67 @@ import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/map';
 import { Subject }    from 'rxjs/Subject';
 import { BehaviorSubject }    from 'rxjs/BehaviorSubject';
+import { Subscription }   from 'rxjs';
+
+
 export class Places {
-  constructor(public id: number, public name: string) { }
+  constructor(
+    public PlaceId: string,
+    public name: string,
+    public adress: string,
+    public photoUrl: string,
+    public rate: string,
+    public phone_number: string,
+    public location: {}
+    ) { }
 }
 
 
-const PLACES = [
-  // new Places(1, 'Dragon Burning Cities'),
-  // new Places(2, 'Sky Rains Great White Sharks'),
-  // new Places(3, 'Giant Asteroid Heading For Earth'),
-  // new Places(4, 'Procrastinators Meeting Delayed Again'),
-];
+const currentPlace = new Places ('', '','' , '', '','', {});
 
 @Injectable()
 export class PlacesService {
   public map : any;
   public google : any;
+
+
+
+
   public mapReadyUpload: Subject<any> = new Subject<any>();
-  
+
   public GooglePlaceService: Subject<any> = new Subject<any>();
   public clickCnt: number = 0;
-  public places$: Subject<any[]> = new Subject<any[]>();
+  // public places$: Subject<any[]> = new Subject<any[]>();
   // public places$: BehaviorSubject<any[]> = new BehaviorSubject<any[]>(PLACES);
   public onClick:EventEmitter<number> = new EventEmitter();
-
-
-  getPlaces() {
-      return this.places$;
-  }
-
-  addPlaces(ss){
-    PLACES.push(ss);
-    this.places$.next(PLACES);
-  }
+  private subscription1: Subscription;
 
 
 
 
-  public doClick(){
-    this.getNearPlaces();
-    // this.clickCnt++;
-    // console.log(this.clickCnt);
-    // this.onClick.emit(this.clickCnt);
-  }
+  // getPlaces() {
+  //     return this.places$;
+  // }
+
+  // addPlaces(ss){
+  //   PLACES.push(ss);
+  //   this.places$.next(PLACES);
+  // }
+
+
+
+
+  // public doClick(){
+  //   if (this.map) {
+  //      this.getNearPlaces();
+  //   } else {
+  //     this.subscription1 = this.mapReadyUpload.subscribe(
+  //       (mission) => {
+  //         console.log('mapReadyUpload');
+  //         this.doClick();
+  //     });
+  //     }
+  // }
 
 
 //  getNearPlaces(types='store'){
@@ -69,45 +87,14 @@ export class PlacesService {
 
 // }
 
-
-
- public getNearPlaces(types='store'){
-  let request = {
-    location: this.map.getCenter(),
-    radius: '1000',
-    types: []
-  };
-
-  let service = new this.google.maps.places.PlacesService(this.map);
-  service.nearbySearch(request, (results, status)=>{
-    if (status == this.google.maps.places.PlacesServiceStatus.OK) {
-      let placeArr = [];
-      for (var i = 0; i < results.length; i++) {
-          var place = results[i];
-          placeArr.push(place);
-          this.createMarker(place);
-      }
-      console.log(placeArr);
-      return placeArr;
-    }
-  });
-}
-
-
-
-
-
-
-
-
-createMarker(place) {
-   // console.log(place);
-        var placeLoc = place.geometry.location;
-        var marker = new this.google.maps.Marker({
-          map: this.map,
-          position: place.geometry.location
-        });
-}
+// createMarker(place) {
+//  console.log(place);
+//         var placeLoc = place.geometry.location;
+//         var marker = new this.google.maps.Marker({
+//           map: this.map,
+//           position: place.geometry.location
+//         });
+// }
 
 
 

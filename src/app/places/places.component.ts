@@ -13,7 +13,7 @@ import {zip} from "rxjs/observable/zip";
 })
 export class PlacesComponent implements OnInit {
 
-  private places$: any;
+  private places$: any[];
   private selectedId: number;
   private subscription: Subscription;
   private Obs: Observable<any>;
@@ -23,23 +23,6 @@ export class PlacesComponent implements OnInit {
 
   constructor(private placesService:PlacesService, private zone: NgZone, private router: Router) {
     console.log('constructor  component');
-
-
-    // this.placesService.onClick.subscribe(cnt=>{
-    //   console.log('constructor   .placesService.onClick.subscribe');
-    //   this.clickCount = cnt;
-    //   // this.zone.run(() => {});
-    // });
-
-
-    //  this.placesService.name.subscribe(
-    //   astronaut => {
-    //     console.log('constructor   name.subscribe');
-    //     this.places$ = astronaut;
-    //     this.zone.run(() => {});
-    //   });
-
-
   }
 
 
@@ -49,17 +32,7 @@ export class PlacesComponent implements OnInit {
 
   ngOnInit() {
 
-console.log('OnInit  component');
-
- // this.places$ = this.placesService.getPlaces();
-
-
-// Observable.zip(this.placesService.places$, this.placesService.mapReadyUpload).subscribe(
-//   (mission) => {
-// console.log('zipzipzipzipzipzipzipzip');
-//         // this.placesService.doClick();
-//     });
-
+    console.log('OnInit  component');
 
 // Observable
 //     .zip(name$, document$, (name: string, document: string) => ({name, document}))
@@ -68,56 +41,22 @@ console.log('OnInit  component');
 //            this.document = pair.document;
 //            this.showForm();
 //        })
+// this.placesService.doClick();
 
-
-
-
-
-
-
-this.subscription = this.placesService.places$.subscribe(
-      (mission) => {
-        console.log('mission');
-        this.places$ = mission;
+this.subscription = this.placesService.places$
+.subscribe(
+  (mission) => {
+    this.zone.run(()=>{
+      this.places$ = mission;
     });
-
-// this.Obs = this.placesService.places$;
-
-
-this.subscription1 = this.placesService.mapReadyUpload.subscribe(
-      (mission) => {
-console.log('doClick');
-        this.placesService.doClick();
-    });
+  });
 
 
+}
 
-// etchUser(uid){
-//   this.afDb.object(`users/${uid}`).valueChanges().subscribe((dUser) => {
-//     if (dUser) {
-//       this.currentDBUserBS$ = dUser;
-//     }
-//   });
-// }
-
-
-
-
-    // this.places$ = this.service.getPlaces();
-//         this.subscription = this.placesService.missionAnnounced$.subscribe(
-//       mission => {
-//         console.log(mission);
-// this.ssss= mission;
-//     });
-  }
-
-  bclick(){
-    // console.log(this.places$);
-    // console.log(this.clickCount);
-    // console.log(this);
-    console.log(this.placesService.map);
-    console.log(this.places$);
-    // this.placesService.doClick();
-  }
+bclick(){
+  console.log(this.places$);
+  console.log(this.placesService.places$);
+}
 
 }
