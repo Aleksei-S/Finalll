@@ -101,6 +101,52 @@ export class PlacesService {
 
 
 
+
+getTextSearchPlaces(text, type=''){
+  let request = {
+    query: text,
+    location: this.map.getCenter(),
+    radius: '1000',
+    type: type
+  };
+
+
+        // let input = text;
+        // let searchBox = new google.maps.places.SearchBox(input);
+        // map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+        // // Bias the SearchBox results towards current map's viewport.
+        // map.addListener('bounds_changed', function() {
+        //   searchBox.setBounds(map.getBounds());
+        // });
+
+
+  // https://developers.google.com/maps/documentation/javascript/examples/places-searchbox
+
+  let service = new this.google.maps.places.PlacesService(this.map);
+  service.textSearch(request, (results, status)=>{
+    if (status == google.maps.places.PlacesServiceStatus.OK) {
+    for (var i = 0; i < results.length; i++) {
+      var place = results[i];
+      console.log("place");
+    }
+  }
+  });
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   // Observable string sources
   // private missionAnnouncedSource = new Subject<string>();
   // private missionConfirmedSource = new Subject<string>();

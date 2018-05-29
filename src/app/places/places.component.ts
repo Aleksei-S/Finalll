@@ -16,9 +16,10 @@ export class PlacesComponent implements OnInit {
   private places$: any[];
   private selectedId: number;
   private subscription: Subscription;
-  private Obs: Observable<any>; 
+  private Obs: Observable<any>;
   private subscription1: Subscription;
   private clickCount:number=0;
+  private showAddcomments:false;
 
 
   constructor(private placesService:PlacesService, private zone: NgZone, private router: Router) {
@@ -49,9 +50,25 @@ export class PlacesComponent implements OnInit {
 
 }
 
-bclick(){
-  // console.log(this.places$);
- console.log(this.placesService.currentPlace$);
-}
+    valuechange(e){
+      // console.log(this.places$);
+     console.log(e.target.value);
+     this.placesService.getTextSearchPlaces(e.target.value);
+    }
+
+
+    bclick(){
+      // console.log(this.places$);
+     console.log(this.placesService.currentPlace$);
+    }
 
 }
+ // // Create the search box and link it to the UI element.
+ //        var input = document.getElementById('pac-input');
+ //        var searchBox = new google.maps.places.SearchBox(input);
+ //        map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+ //        // Bias the SearchBox results towards current map's viewport.
+ //        map.addListener('bounds_changed', function() {
+ //          searchBox.setBounds(map.getBounds());
+ //        });
