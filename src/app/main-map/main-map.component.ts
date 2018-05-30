@@ -2,6 +2,8 @@ import { Component, OnInit, NgZone, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { PlacesService, Places }  from '../places/places.service';
 import { Router }  from '@angular/router';
+import { LoadMapService }  from './load-map.service';
+import 'rxjs/add/operator/toPromise';
 declare var google : any;
 
 @Component({
@@ -17,43 +19,36 @@ export class MainMapComponent implements OnInit {
 
 public map: any;
 public coords : any;
-
+public mapReady : any;
 private url="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_314OxmWH6Shuz2aBlL90oP3ObvOapMQ&libraries=places&callback=__onGoogleLoaded";
 private loadAPI: Promise<any>
 
-  constructor(public router:Router, public placesService:PlacesService, private zone: NgZone) {
-		/////////////
-		// this.placesService.onClick.subscribe(cnt => this.clickCnt = cnt);
+  constructor(public router:Router,
+              public placesService:PlacesService,
+              private zone: NgZone,
+              public LoadMapService: LoadMapService) {
 
-  this.loadAPI = new Promise((resolve) => {
-		window['__onGoogleLoaded'] = (ev) => {
-		console.log('gapi loaded')
-		console.log(window);
-		resolve(ev);
-		}
-		this.loadScript();
-	});
-}
-
-  ngOnInit() {
-  	this.loadAPI.then((dd)=>{
-		if (navigator.geolocation) {
-			navigator.geolocation.getCurrentPosition((pos)=>{
-				this.initMap(pos);
-			});
-		} else {
-			console.log('net');
-		}
-	});
   }
 
-	loadScript(){
-	console.log('loading..');
-		let node = document.createElement('script');
-		node.src = this.url;
-		node.type = 'text/javascript';
-		document.getElementsByTagName('head')[0].appendChild(node);
-	}
+  ngOnInit() {
+  	this.LoadMapService.load().then((dd)=>{
+  		if (navigator.geolocation) {
+  			navigator.geolocation.getCurrentPosition((pos)=>{
+  				this.initMap(pos);
+  			});
+  		} else {
+  			console.log('net');
+  		}
+	  });
+  }
+
+// 	loadScript(){
+// 	console.log('loading..');
+// 		let node = document.createElement('script');
+// 		node.src = this.url;
+// 		node.type = 'text/javascript';
+// 		document.getElementsByTagName('head')[0].appendChild(node);
+// 	}
 
 
 public initMap(pos): void{
@@ -70,17 +65,22 @@ public initMap(pos): void{
 
   this.placesService.google = google;
   this.placesService.map = this.map;
-  this.placesService.mapReadyUpload.next(true);
+
+  // this.placesService.mapReadyUpload = 'true'.toPromise();
+
+
+// this.placesService.mapReadyUpload.resolve('value');
+
 	let marker = new google.maps.Marker({
 		position: {lat:pos.coords.latitude, lng:pos.coords.longitude },
 		map: this.map,
 		title: 'Hello World!'
 	});
 
-
 	// this.map.addListener('rightclick',(e)=>{
 	// 	this.rightClickOnMap(e);
 	// });
+
 	this.map.addListener('click',(e)=>{
 		if (e.placeId) {
       console.log("e");
@@ -146,10 +146,10 @@ getDetailsMarker(e){
   	let placeId = e.placeId;
     let name = place.name || "";
     let address = place.formatted_address || "";
-	let photoUrl =  (place.photos) ? place.photos[0].getUrl({'maxWidth': 250, 'maxHeight': 250}) : "";
-	let rate =  place.rating || "";
-	let phone_number =  place.formatted_phone_number|| "";
-	let location =  place.geometry.location;
+  	let photoUrl =  (place.photos) ? place.photos[0].getUrl({'maxWidth': 250, 'maxHeight': 250}) : "";
+  	let rate =  place.rating || "";
+  	let phone_number =  place.formatted_phone_number|| "";
+  	let location =  place.geometry.location;
 
 
 

@@ -5,6 +5,7 @@ import 'rxjs/add/operator/map';
 import { Subject }    from 'rxjs/Subject';
 import { BehaviorSubject }    from 'rxjs/BehaviorSubject';
 import { Subscription }   from 'rxjs';
+import 'rxjs/add/operator/toPromise';
 
 
 export class Places {
@@ -30,7 +31,9 @@ export class PlacesService {
 
 
 
-  public mapReadyUpload : Subject<any> = new Subject<any>();
+  // public mapReadyUpload : Subject<any> = new Subject<any>();
+
+  public mapReadyUpload : any;
 
   public GooglePlaceService : Subject<any> = new Subject<any>();
   public clickCnt : number = 0;
@@ -99,6 +102,15 @@ export class PlacesService {
 // }
 
 
+// async getPrice(currency: string): Promise<number> {
+//     const response = await this.http.get(this.currentPriceUrl).toPromise();
+//     return response.json().bpi[currency].rate;
+//   }
+
+//  async ngOnInit() {
+//     this.price = await this.priceService.getPrice(this.currency);
+//   }
+
 
 
 
@@ -131,10 +143,7 @@ getTextSearchPlaces(text, type=''){
       console.log("place");
     }
   }
-  });
-}
-
-
+ });
 
 
 

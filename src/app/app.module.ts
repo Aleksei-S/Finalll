@@ -10,6 +10,7 @@ import { HomeModule } from './home/home.module';
 import { NewsModule } from './news/news.module';
 import { MainMapComponent } from './main-map/main-map.component';
 import { MainHeaderComponent } from './main-header/main-header.component';
+import { LoadMapService } from './main-map/load-map.service';
 //https://stackblitz.com/angular/omplpnlkrdx?file=src%2Fapp%2Fcrisis-center%2Fcrisis.service.ts
 
 @NgModule({
@@ -27,7 +28,7 @@ import { MainHeaderComponent } from './main-header/main-header.component';
     HomeModule,
     NewsModule
   ],
-  providers: [],
+  providers: [LoadMapService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
