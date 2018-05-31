@@ -14,21 +14,21 @@ import { LoadMapService } from './main-map/load-map.service';
 //https://stackblitz.com/angular/omplpnlkrdx?file=src%2Fapp%2Fcrisis-center%2Fcrisis.service.ts
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    MainMapComponent,
-    MainHeaderComponent
-  ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    AppRoutingModule,
-    PlacesModule,
-    LoginModule,
-    HomeModule,
-    NewsModule
-  ],
-  providers: [LoadMapService],
-  bootstrap: [AppComponent]
+	declarations: [
+		AppComponent,
+		MainMapComponent,
+		MainHeaderComponent
+	],
+	imports: [
+		BrowserModule,
+		FormsModule,
+		AppRoutingModule,
+		PlacesModule,
+		LoginModule,
+		HomeModule,
+		NewsModule
+	],
+	providers: [LoadMapService],
+	bootstrap: [AppComponent]
 })
 export class AppModule { }

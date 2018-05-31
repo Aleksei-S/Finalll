@@ -2,12 +2,12 @@
 <h2>places  works!</h2>
 
 <div class="ui search">
-  <div class="ui icon input">
-    <input class="prompt" id = "searchBox" type="text" placeholder="Поиск мест..." (input)="valuechange($event)" />
-    <i class="search icon"></i>
-  </div>
-   <i class="filter icon"></i>
-  <div class="results" id = "searchBoxOutput"></div>
+	<div class="ui icon input">
+		<input class="prompt" id = "searchBox" type="text" placeholder="Поиск мест..." (input)="valuechange($event)" />
+		<i class="search icon"></i>
+	</div>
+	 <i class="filter icon"></i>
+	<div class="results" id = "searchBoxOutput"></div>
 </div>
 
 
@@ -33,9 +33,9 @@
 				</div>
 				<div class="six wide field">
 								<div class="ui bordered image">
-								  <svg width="150" height="200">
-								    <image xlink:href="https://www.capitalfm.co.ke/news/files/2018/05/RUTO-SRC-SEREM.jpg" x="0" y="0" width="100%" height="100%"></image>
-								  </svg>
+									<svg width="150" height="200">
+										<image xlink:href="https://www.capitalfm.co.ke/news/files/2018/05/RUTO-SRC-SEREM.jpg" x="0" y="0" width="100%" height="100%"></image>
+									</svg>
 								</div>
 				</div>
 			</div>
@@ -70,36 +70,36 @@
 			<!-- КАМЕНТАРИИ -->
 <a class="button-actions" (click) = "showAddcomments = !showAddcomments" >Показать коментарии</a>
 <div class="ui" [hidden]="!showAddcomments" >
-    <form class="ui reply form">
-      <div class="field">
-        <textarea rows="2"></textarea>
-      </div>
-      <div class="ui primary submit labeled icon button">
-        <i class="icon edit"></i> Add Comment
-      </div>
-    </form>
+		<form class="ui reply form">
+			<div class="field">
+				<textarea rows="2"></textarea>
+			</div>
+			<div class="ui primary submit labeled icon button">
+				<i class="icon edit"></i> Add Comment
+			</div>
+		</form>
 
-  <div class="ui comments">
-    <!-- comment -->
-    <div class="comment">
-      <a class="avatar">
-        <img src="">
-      </a>
-      <div class="content">
-        <a class="author">author  author</a>
-        <div class="metadata">
-          <div class="date">1 day ago</div>
-        </div>
-        <div class="text">
-          <p>ТЕКСТ  ТЕКСТ  ТЕКСТ  ТЕКСТ</p>
-        </div>
-        <div class="actions">
-          <a class="reply">Reply</a>
-        </div>
-      </div>
-    </div>
-    <!-- comment -->
-  </div>
+	<div class="ui comments">
+		<!-- comment -->
+		<div class="comment">
+			<a class="avatar">
+				<img src="">
+			</a>
+			<div class="content">
+				<a class="author">author  author</a>
+				<div class="metadata">
+					<div class="date">1 day ago</div>
+				</div>
+				<div class="text">
+					<p>ТЕКСТ  ТЕКСТ  ТЕКСТ  ТЕКСТ</p>
+				</div>
+				<div class="actions">
+					<a class="reply">Reply</a>
+				</div>
+			</div>
+		</div>
+		<!-- comment -->
+	</div>
 </div>
 			<!-- КАМЕНТАРИИ -->
 

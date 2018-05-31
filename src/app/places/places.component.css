@@ -1,6 +1,5 @@
 .button-actions:hover {
-  cursor: pointer;
-  text-decoration-line: underline;
-
+	cursor: pointer;
+	text-decoration-line: underline;
 }
 
