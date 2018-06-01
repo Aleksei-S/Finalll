@@ -30,7 +30,7 @@ export class PlacesService {
     public markers = [];
 
 
-
+public mapReady: BehaviorSubject<any> = new BehaviorSubject<any>(false);
 
 	// public mapReadyUpload : Subject<any> = new Subject<any>();
 

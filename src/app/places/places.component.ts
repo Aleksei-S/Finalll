@@ -36,75 +36,63 @@ export class PlacesComponent implements OnInit {
 
         console.log('OnInit!!!!!  component');
 
+this.subscription = this.placesService.mapReady
+.subscribe(
+  (mission) => {
+      if(mission == true){
 
-        this.LoadMapService.load().then((dd)=>{
-            this.map = this.placesService.map;
-                console.log('LoadMapService LoadMapService LoadMapService');
-                let input = document.getElementById('searchBox');
-                let output = document.getElementById('searchBoxOutput');
-                let map = document.getElementById('map');
-                console.log(this.placesService.map);
-                let searchBox = new google.maps.places.SearchBox(input);
-
-
-                // map.addListener('bounds_changed', function() {
-                //  console.log('window');
-                // //   // searchBox.setBounds(map.getBounds());
-                // });
-
+            console.log('LoadMapService LoadMapService');
+            let input = document.getElementById('searchBox');
+            let output = document.getElementById('searchBoxOutput');
+            let map = document.getElementById('map');
+            let searchBox = new google.maps.places.SearchBox(input);
+            // this.placesService.map.controls[google.maps.ControlPosition.TOP_RIGHT].push(output);
+            this.placesService.map.addListener('bounds_changed', () =>{
+                  searchBox.setBounds(this.placesService.map.getBounds());
+            });
 
 
-                searchBox.addListener('places_changed', function() {
-                    let places = searchBox.getPlaces();
-                    console.log(places);
-                    if (places.length == 0) {
-                      return;
-                    }
 
-
-// var bounds = new google.maps.LatLngBounds();
-                  places.forEach(function(place) {
-                      console.log(place);
-                    if (!place.geometry) {
-                      console.log("Returned place contains no geometry");
-                      return;
-                    }
-
-                    // Create a marker for each place.
-                    // markers.push(new google.maps.Marker({
-                    //   map: map,
-                    //   icon: icon,
-                    //   title: place.name,
-                    //   position: place.geometry.location
-                    // }));
-
-                    // if (place.geometry.viewport) {
-                    //   // Only geocodes have viewport.
-                    //   bounds.union(place.geometry.viewport);
-                    // } else {
-                    //   bounds.extend(place.geometry.location);
-                    // }
-                  });
+      }
+  });
 
 
 
 
 
+//                 searchBox.addListener('places_changed', function() {
+//                     let places = searchBox.getPlaces();
+//                     console.log(places);
+//                     if (places.length == 0) {
+//                       return;
+//                     }
 
 
+// // var bounds = new google.maps.LatLngBounds();
+//                   places.forEach(function(place) {
+//                       console.log(place);
+//                     if (!place.geometry) {
+//                       console.log("Returned place contains no geometry");
+//                       return;
+//                     }
 
+//                     // Create a marker for each place.
+//                     // markers.push(new google.maps.Marker({
+//                     //   map: map,
+//                     //   icon: icon,
+//                     //   title: place.name,
+//                     //   position: place.geometry.location
+//                     // }));
 
+//                     // if (place.geometry.viewport) {
+//                     //   // Only geocodes have viewport.
+//                     //   bounds.union(place.geometry.viewport);
+//                     // } else {
+//                     //   bounds.extend(place.geometry.location);
+//                     // }
+//                   });
 
-
-
-
-
-
-
-
-
-
-                 });
+//                  });
 
 
 
@@ -112,30 +100,6 @@ export class PlacesComponent implements OnInit {
                 // map.addListener('bounds_changed', function() {
                 //   searchBox.setBounds(map.getBounds());
                 // });
-        });
-
-
-
-
-
-
-// this.promise =
-// Observable
-//     .zip(name$, document$, (name: string, document: string) => ({name, document}))
-//     .subscribe(pair => {
-//            this.name = pair.name;
-//            this.document = pair.document;
-//            this.showForm();
-//        })
-// this.placesService.doClick();
-
-// this.subscription = this.placesService.places$
-// .subscribe(
-//   (mission) => {
-//     this.zone.run(()=>{
-//       this.places$ = mission;
-//     });
-//   });
 
 
 }

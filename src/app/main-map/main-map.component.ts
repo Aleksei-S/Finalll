@@ -49,8 +49,13 @@ public initMap(pos): void{
 	};
 	this.placesService.map = new google.maps.Map(mapmy, myOptions);
     this.placesService.google = google;
-	// this.placesService.mapReadyUpload = 'true'.toPromise();
+this.placesService.mapReady.next(true);
 
+
+
+
+	// this.placesService.mapReadyUpload = 'true'.toPromise();
+//https://medium.com/devschacht/ecmascript-observable-1f29d5c5e95c
 
 // this.placesService.mapReadyUpload.resolve('value');
 
@@ -74,13 +79,6 @@ public initMap(pos): void{
 	});
 
 
-
-    this.placesService.map.addListener('bounds_changed', function() {
-      console.log('bounds_changed');
-      console.log(this);
-
-      // searchBox.setBounds(this.placesService.map.getBounds());
-    });
 
 
 
