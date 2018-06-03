@@ -15,19 +15,36 @@ export class Places {
 		public adress: string,
 		public photoUrl: string,
 		public rate: string,
-		public phone_number: string,
 		public location: {}
 		) { }
 }
 
 
-const currentPlace = new Places ('', '','' , '', '','', {});
+
+
+// place_id
+// name
+// formatted_address
+// photos
+// rating
+// phone_number
+// geometry.location
+
+
+
+
+
+
+
+
+
+const currentPlace = new Places ('', '','' , '', '', {});
 
 @Injectable()
 export class PlacesService {
 	public map : any;
 	public google : any;
-    public markers = [];
+  public markers = [];
 
 
 public mapReady: BehaviorSubject<any> = new BehaviorSubject<any>(false);
@@ -159,14 +176,14 @@ deleteMarkers(){
 
 addMarker(e){
     console.log("addMarker Service");
-    console.log(e);
-    this.deleteMarkers();
-    if (e.placeId) {
+    // console.log(e);
+    if (e.placeId || e.place_id) {
         // this.getDetailsMarker(e);
         let marker = new this.google.maps.Marker({
-            position: e.latLng,
+            position: e.latLng || e.geometry.location,
             map: this.map
         });
+        console.log('push');
         this.markers.push(marker);
     }
 
@@ -206,12 +223,11 @@ getDetailsMarker(e){
     var service = new this.google.maps.places.PlacesService(this.map);
 
     service.getDetails({placeId: e.placeId}, (place, status) =>{
-        let placeId = e.placeId;
+        let placeId = e.placeId || e.place_id;
         let name = place.name || "";
         let address = place.formatted_address || "";
         let photoUrl =  (place.photos) ? place.photos[0].getUrl({'maxWidth': 250, 'maxHeight': 250}) : "";
         let rate =  place.rating || "";
-        let phone_number =  place.formatted_phone_number|| "";
         let location =  place.geometry.location;
 
 
@@ -233,7 +249,7 @@ console.log(place);
 // //             this.router.navigate(['/places', e.placeId])
 // //         });
 
-//     });
+    });
 }
 
 

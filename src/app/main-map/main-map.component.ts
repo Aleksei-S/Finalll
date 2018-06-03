@@ -72,6 +72,7 @@ this.placesService.mapReady.next(true);
 	this.placesService.map.addListener('click',(e)=>{
 		if (e.placeId) {
 			e.stop();
+			this.placesService.deleteMarkers();
 			this.placesService.addMarker(e);
 			// this.getDetailsMarker(e);
 		}
