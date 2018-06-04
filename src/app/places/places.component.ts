@@ -44,6 +44,13 @@ ngOnInit() {
 
     this.subscriptionPlaces$.subscribe((e)=>{
         this.places = e;
+        this.places.forEach((pl)=> {
+            if (!pl.geometry) {
+                console.log("Returned place contains no geometry");
+                return;
+            }
+                this.placesService.addMarker(pl);
+            });
         this.cdRef.detectChanges();
     })
 
@@ -77,15 +84,6 @@ ngOnInit() {
                 var bounds = new google.maps.LatLngBounds();
 
                 places.forEach((place)=> {
-                    if (!place.geometry) {
-                        console.log("Returned place contains no geometry");
-                        return;
-                    }
-                     console.log(place);
-                    //добавление маркеров
-                    this.placesService.addMarker(place);
-                    // //пуш place в массив
-                    // this.places$.push(place);
 
                      //смещение карты
                      if (place.geometry.viewport) {
@@ -110,7 +108,7 @@ ngOnInit() {
 
 
 
- 
+
 }
 
 
@@ -119,13 +117,24 @@ ngOnInit() {
 
             }
 
+clickOnPlace(index, pl){
+    console.log(index);
+    this.placesService.getDetails(pl);
+}
+
+
+mouseHover(index, pl){
+    let curentMarker = this.placesService.markers[index];
+    curentMarker.setAnimation(google.maps.Animation.BOUNCE);
+}
+
+mouseLeave(index, pl){
+    this.placesService.markers[index].setAnimation(null);
+}
 
 
 
-
-
-
-            valuechange(e){
+     valuechange(e){
             // console.log(this.places$);
             console.log(e);
          // this.placesService.getTextSearchPlaces(e.target.value);

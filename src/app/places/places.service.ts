@@ -1,4 +1,4 @@
-import { Injectable, EventEmitter } from '@angular/core';
+import { Injectable, EventEmitter, NgZone } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/map';
@@ -6,6 +6,7 @@ import { Subject }    from 'rxjs/Subject';
 import { BehaviorSubject }    from 'rxjs/BehaviorSubject';
 import { Subscription }   from 'rxjs';
 import 'rxjs/add/operator/toPromise';
+import { Router }  from '@angular/router';
 
 
 export class Places {
@@ -19,29 +20,17 @@ export class Places {
 		) { }
 }
 
-
-
-
-// place_id
-// name
-// formatted_address
-// photos
-// rating
-// phone_number
-// geometry.location
-
-
-
-
-
-
-
-
-
 const currentPlace = new Places ('', '','' , '', '', {});
 
 @Injectable()
 export class PlacesService {
+
+constructor(public router:Router,
+              private zone: NgZone,) {}
+
+
+
+
 	public map : any;
 	public google : any;
   public markers = [];
@@ -217,43 +206,35 @@ addMarker(e){
 
 
 
-getDetailsMarker(e){
+getDetails(e){
     console.log('getDetailsMarker SERVICE');
-    // console.log(e);
     var service = new this.google.maps.places.PlacesService(this.map);
-
-    service.getDetails({placeId: e.placeId}, (place, status) =>{
+    let placeId = e.placeId || e.place_id;
+ service.getDetails({placeId: placeId}, (place, status) =>{
+     console.log(place);
         let placeId = e.placeId || e.place_id;
         let name = place.name || "";
         let address = place.formatted_address || "";
         let photoUrl =  (place.photos) ? place.photos[0].getUrl({'maxWidth': 250, 'maxHeight': 250}) : "";
         let rate =  place.rating || "";
         let location =  place.geometry.location;
+        this.currentPlace$ = new Places(placeId, name, address, photoUrl, rate,  location);
+        // this.zone.run(() => {
+            this.router.navigate(['/places', placeId]);
+        // });
 
-
-console.log(place);
-
-
-
-
-
+ });
+}
 
 
 // this.placesService.currentPlace$ = new Places(placeId, name, address, photoUrl, rate, phone_number, location);
 
-// //         // this.placesService.addPlaces({id:1, name:address});
 // //         console.log(place);
 // // // console.log(this.placesService.map.getCenter());
 // // // this.getNearPlaces();
 // //         this.zone.run(() => {
 // //             this.router.navigate(['/places', e.placeId])
 // //         });
-
-    });
-}
-
-
-
 
 
 
