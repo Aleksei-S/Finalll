@@ -117,11 +117,6 @@ ngOnInit() {
 
             }
 
-clickOnPlace(index, pl){
-    console.log(index);
-    this.placesService.getDetails(pl);
-}
-
 
 mouseHover(index, pl){
     let curentMarker = this.placesService.markers[index];

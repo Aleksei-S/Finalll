@@ -1,0 +1,4 @@
+.button-actions:hover {
+	cursor: pointer;
+	text-decoration-line: underline;
+}

@@ -15,9 +15,9 @@
 
 
 <div class="ui" *ngFor="let place of places;let i = index"
- (mouseenter)="mouseHover(i, place)"
- (mouseleave)="mouseLeave(i, place)"
- (click)="clickOnPlace(i, place)">
+				 (mouseenter)="mouseHover(i, place)"
+				 (mouseleave)="mouseLeave(i, place)">
+<a [routerLink]="['/places', place.place_id]">
 	<div class="ui divider"></div>
 	<form class="ui form">
 			<div class="fields">
@@ -31,73 +31,10 @@
 				</div>
 			</div>
 	</form>
+</a>
 </div>
 <div class="ui divider"></div>
 
-
-
-<div *ngIf = "placesService.currentPlace$" >
-	<form class="ui form">
-		<div class="field">
-			<img class="ui image" [src]="placesService.currentPlace$.photoUrl">
-		</div>
-		<div class="field">
-			<h3>{{placesService.currentPlace$.name}}</h3>
-		</div>
-		<div class="field">
-			<LABEL>Адрес</LABEL>
-			<p>{{placesService.currentPlace$.adress}}</p>
-		</div>
-		<div class="field">
-			<LABEL>Телефонный Номер</LABEL>
-			<p>{{placesService.currentPlace$.phone_number}}</p>
-		</div>
-		<div class="field">
-			<LABEL>Рейтинг google</LABEL>
-			<p>{{placesService.currentPlace$.rate}}</p>
-		</div>
-		<div class="field">
-
-			<!-- КАМЕНТАРИИ -->
-<a class="button-actions" (click) = "showAddcomments = !showAddcomments" >Показать коментарии</a>
-<div class="ui" [hidden]="!showAddcomments" >
-		<form class="ui reply form">
-			<div class="field">
-				<textarea rows="2"></textarea>
-			</div>
-			<div class="ui primary submit labeled icon button">
-				<i class="icon edit"></i> Add Comment
-			</div>
-		</form>
-
-	<div class="ui comments">
-		<!-- comment -->
-		<div class="comment">
-			<a class="avatar">
-				<img src="">
-			</a>
-			<div class="content">
-				<a class="author">author  author</a>
-				<div class="metadata">
-					<div class="date">1 day ago</div>
-				</div>
-				<div class="text">
-					<p>ТЕКСТ  ТЕКСТ  ТЕКСТ  ТЕКСТ</p>
-				</div>
-				<div class="actions">
-					<a class="reply">Reply</a>
-				</div>
-			</div>
-		</div>
-		<!-- comment -->
-	</div>
-</div>
-			<!-- КАМЕНТАРИИ -->
-
-		</div>
-	</form>
-
-</div>
 
 
 

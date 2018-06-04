@@ -208,9 +208,9 @@ addMarker(e){
 
 getDetails(e){
     console.log('getDetailsMarker SERVICE');
+    console.log(e);
     var service = new this.google.maps.places.PlacesService(this.map);
-    let placeId = e.placeId || e.place_id;
- service.getDetails({placeId: placeId}, (place, status) =>{
+ service.getDetails({placeId: e}, (place, status) =>{
      console.log(place);
         let placeId = e.placeId || e.place_id;
         let name = place.name || "";
@@ -219,9 +219,9 @@ getDetails(e){
         let rate =  place.rating || "";
         let location =  place.geometry.location;
         this.currentPlace$ = new Places(placeId, name, address, photoUrl, rate,  location);
-        // this.zone.run(() => {
-            this.router.navigate(['/places', placeId]);
-        // });
+        // // this.zone.run(() => {
+        //     this.router.navigate(['/places', placeId]);
+        // // });
 
  });
 }
