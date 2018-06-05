@@ -12,17 +12,12 @@ declare var google : any;
 	styleUrls: ['./main-map.component.css']
 })
 export class MainMapComponent implements OnInit {
-
-
-// public ok:EventEmitter<number> = new EventEmitter();
-
-
-public coords : any;
+	private rightClickOnMarker;
 
 	constructor(public router:Router,
-							public placesService:PlacesService,
-							private zone: NgZone,
-							public LoadMapService: LoadMapService) {
+		public placesService:PlacesService,
+		private zone: NgZone,
+		public LoadMapService: LoadMapService) {
 
 	}
 
@@ -36,75 +31,72 @@ public coords : any;
 				console.log('net');
 			}
 		});
+
+		this.rightClickOnMarker = this.placesService.emitRightClickOnMarker.subscribe({
+            next: (e) => {
+                console.log(e);
+                console.log(e.Ia.view);
+                // e.Ia.view.stop();
+
+                this.contextMenuOn(e.Ia.pageX, e.Ia.pageY);
+            }
+        })
+
 	}
 
-public initMap(pos): void{
-	console.log('initMap');
-	let mapmy = document.getElementById('map');
-	let myCenter = new google.maps.LatLng( pos.coords.latitude, pos.coords.longitude );
-	let myOptions = {
-		center: myCenter,
-		zoom: 15,
-		mapTypeId: google.maps.MapTypeId.ROADMAP
-	};
-	this.placesService.map = new google.maps.Map(mapmy, myOptions);
-    this.placesService.google = google;
-this.placesService.mapReady.next(true);
+	public initMap(pos): void{
+		console.log('initMap');
+		let mapmy = document.getElementById('map');
+		let myCenter = new google.maps.LatLng( pos.coords.latitude, pos.coords.longitude );
+		let myOptions = {
+			center: myCenter,
+			zoom: 15,
+			mapTypeId: google.maps.MapTypeId.ROADMAP
+		};
+		this.placesService.map = new google.maps.Map(mapmy, myOptions);
+		this.placesService.google = google;
+		this.placesService.mapReady.next(true);
+
+		let marker = new google.maps.Marker({
+			position: {lat:pos.coords.latitude, lng:pos.coords.longitude },
+			map: this.placesService.map,
+			title: 'Hello World!'
+		});
+
+		this.placesService.map.addListener('click',(e)=>{
+			if (e.placeId) {
+				e.stop();
+				this.placesService.deleteMarkers();
+				this.placesService.addMarker(e);
+				this.zone.run(() => {
+					this.router.navigate(['/places', e.placeId])
+				});
+			}
+			// this.contextMenuOf();
+		});
 
 
 
 
-	// this.placesService.mapReadyUpload = 'true'.toPromise();
-//https://medium.com/devschacht/ecmascript-observable-1f29d5c5e95c
-
-// this.placesService.mapReadyUpload.resolve('value');
-
-	let marker = new google.maps.Marker({
-		position: {lat:pos.coords.latitude, lng:pos.coords.longitude },
-		map: this.placesService.map,
-		title: 'Hello World!'
-	});
-
-	// this.map.addListener('rightclick',(e)=>{
-	// 	this.rightClickOnMap(e);
-	// });
-
-	this.placesService.map.addListener('click',(e)=>{
-		if (e.placeId) {
-			e.stop();
-			this.placesService.deleteMarkers();
-			this.placesService.addMarker(e);
-			// this.getDetailsMarker(e);
-		}
-		// this.contextMenuOf();
-	});
+		// this.map.addListener('center_changed', (e)=> {
+		// 	this.contextMenuOf();
+		// });
+	}
 
 
 
+	contextMenuOn(x, y){
+		let menu = <HTMLElement>document.getElementsByClassName("context-menu")[0];
+		console.log(menu);
 
-
-
-
-
-	// this.map.addListener('center_changed', (e)=> {
-	// 	this.contextMenuOf();
-	// });
-}
-
-
-
-contextMenuOn(x, y){
-	let menu = <HTMLElement>document.getElementsByClassName("context-menu")[0];
-	console.log(menu);
-
-	menu.style.top = y + "px";
-	menu.style.left = x + "px";
-	menu.style.display = 'block';
+		menu.style.top = y + "px";
+		menu.style.left = x + "px";
+		menu.style.display = 'block';
 	}
 
 	contextMenuOf(){
-	let menu = <HTMLElement>document.getElementsByClassName("context-menu")[0];
-	menu.style.display = 'none';
+		let menu = <HTMLElement>document.getElementsByClassName("context-menu")[0];
+		menu.style.display = 'none';
 	}
 
 }

@@ -1,10 +1,9 @@
-<p>
-	place-details works!
-</p>
-<a class="button-actions" [routerLink]="['/places']"> Назад к результатам</a>
 
 <div *ngIf = "placeDetail" >
 	<form class="ui form">
+		<div class="field">
+			<a class="button-actions" [routerLink]="['/places']"> Назад к результатам</a>
+		</div>
 		<div class="field">
 			<img class="ui image" [src]="placeDetail.photoUrl">
 		</div>
@@ -12,14 +11,14 @@
 			<h3>{{placeDetail.name}}</h3>
 		</div>
 		<div class="field">
-			<LABEL>Адрес</LABEL>
+			<LABEL>Адрес:</LABEL>
 			<p>{{placeDetail.adress}}</p>
 		</div>
-		<div class="field">
+		<div class="field" >
 			<LABEL>Телефонный Номер</LABEL>
 			<p>{{placeDetail.phone_number}}</p>
 		</div>
-		<div class="field">
+		<div class="field" >
 			<LABEL>Рейтинг google</LABEL>
 			<p>{{placeDetail.rate}}</p>
 		</div>

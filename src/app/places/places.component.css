@@ -1,5 +1,6 @@
-.button-actions:hover {
+.list-place:hover {
 	cursor: pointer;
-	text-decoration-line: underline;
+	left: .1em;
+	background-color: ;
 }
 

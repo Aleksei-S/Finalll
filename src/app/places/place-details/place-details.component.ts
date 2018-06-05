@@ -8,41 +8,41 @@ declare var google : any;
 
 
 @Component({
-  selector: 'app-place-details',
-  templateUrl: './place-details.component.html',
-  styleUrls: ['./place-details.component.css']
+	selector: 'app-place-details',
+	templateUrl: './place-details.component.html',
+	styleUrls: ['./place-details.component.css']
 })
 export class PlaceDetailsComponent implements OnInit {
-private subscriptionMap: Subscription;
-private subscriptionPlace: Subscription;
-public placeId:any;
+	private subscriptionMap: Subscription;
+	private subscriptionPlace: Subscription;
+	public placeId:any;
+	public placeDetail:any;
+	
+	constructor(private placesService:PlacesService,
+				private activatedRoute:ActivatedRoute,
+				private cdRef: ChangeDetectorRef) { }
 
-public placeDetail:any;
-  constructor(private placesService:PlacesService,
-   private activatedRoute:ActivatedRoute,
-    private cdRef: ChangeDetectorRef) { }
-
-  ngOnInit() {
- console.log( "PLACE DEATAILSS");
-this.subscriptionPlace = this.placesService.currentPlace$.subscribe((u) => {
-    console.log(u);
-    this.placeDetail = u;
-    this.cdRef.detectChanges();
-});
+	ngOnInit() {
+		console.log( "PLACE DEATAILSS");
+		this.subscriptionPlace = this.placesService.currentPlace$.subscribe((u) => {
+			console.log(u);
+			this.placeDetail = u;
+			this.cdRef.detectChanges();
+		});
 
 
-  this.subscriptionMap = this.placesService.mapReady
-    .subscribe( (mission) => {
-    	if(mission == true){
-    	console.log("mapReadymapReadymapReady");
-          this.activatedRoute.params.subscribe((u) => {
-            console.log(u);
-                console.log(u.placeId);
-                this.placesService.getDetails(u.placeId);
+		this.subscriptionMap = this.placesService.mapReady
+		.subscribe( (mission) => {
+			if(mission == true){
+				console.log("mapReadymapReadymapReady");
+				this.activatedRoute.params.subscribe((u) => {
+					console.log(u);
+					console.log(u.placeId);
+					this.placesService.getDetails(u.placeId);
 
-          });
-}
-   });
+				});
+			}
+		});
 
 
 
@@ -54,8 +54,8 @@ this.subscriptionPlace = this.placesService.currentPlace$.subscribe((u) => {
  //      // this.service.getHero(params.get('id')))
  //  );
 
-  	// this.placesService.getDetails(e)
-  }
+	// this.placesService.getDetails(e)
+}
 
 
 
@@ -63,22 +63,22 @@ this.subscriptionPlace = this.placesService.currentPlace$.subscribe((u) => {
 
 
 ngOnDestroy(){
-    this.subscriptionPlace.unsubscribe();
+	this.subscriptionPlace.unsubscribe();
 }
 
 
 
 
 
-     bclick(){
+bclick(){
 
-         // console.log(this.placesService.currentPlace$);
-         console.log(this.placeDetail);
-     }
-
-
+		 // console.log(this.placesService.currentPlace$);
+		 console.log(this.placeDetail);
+		}
 
 
 
 
-}
+
+
+	}

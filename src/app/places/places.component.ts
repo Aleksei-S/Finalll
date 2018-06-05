@@ -38,20 +38,14 @@ constructor(
 }
 
 ngOnInit() {
-
     console.log('OnInit!!!!!  component');
-    console.log(this.places$.getValue().length != 0);
-if (this.placesService.listPlaces.length != 0) {
-    // this.initComponent();
-    this.places$.next(this.placesService.listPlaces);
-    //this.places = this.placesService.listPlaces;
-}
-// this.initComponent();
 
+if (this.placesService.listPlaces.length != 0) {
+    this.places$.next(this.placesService.listPlaces);
+}
 
     this.subscriptionPlaces$.subscribe((e)=>{
         this.places = e;
-        // this.initComponent();
         this.placesService.deleteMarkers();
         this.places.forEach((pl)=> {
             if (!pl.geometry) {
