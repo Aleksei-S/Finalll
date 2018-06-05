@@ -40,10 +40,19 @@ constructor(
 ngOnInit() {
 
     console.log('OnInit!!!!!  component');
+    console.log(this.places$.getValue().length != 0);
+if (this.placesService.listPlaces.length != 0) {
+    // this.initComponent();
+    this.places$.next(this.placesService.listPlaces);
+    //this.places = this.placesService.listPlaces;
+}
+// this.initComponent();
 
 
     this.subscriptionPlaces$.subscribe((e)=>{
         this.places = e;
+        // this.initComponent();
+        this.placesService.deleteMarkers();
         this.places.forEach((pl)=> {
             if (!pl.geometry) {
                 console.log("Returned place contains no geometry");
@@ -52,7 +61,7 @@ ngOnInit() {
                 this.placesService.addMarker(pl);
             });
         this.cdRef.detectChanges();
-    })
+    });
 
 
     this.subscriptionMap = this.placesService.mapReady
@@ -71,9 +80,8 @@ ngOnInit() {
             });
             searchBox.addListener('places_changed', () =>{
                 let places = searchBox.getPlaces();
-
-
                 this.places$.next(places);
+                this.placesService.listPlaces = places;
 
 
                 console.log(places);
@@ -111,12 +119,24 @@ ngOnInit() {
 
 }
 
+// initComponent(){
+//         this.placesService.deleteMarkers();
+//         this.placesService.listPlaces.forEach((pl)=> {
+//             if (!pl.geometry) {
+//                 console.log("Returned place contains no geometry");
+//                 return;
+//             }
+//                 this.placesService.addMarker(pl);
+//             });
+//         this.cdRef.detectChanges();
+// }
 
-            ngOnDestroy(){
-                google.maps.event.clearListeners(this.placesService.map, 'bounds_changed');
 
-            }
-
+clickOnPlace(index, pl){
+     this.zone.run(() => {
+        this.router.navigate(['/places', pl.place_id]);
+     });
+}
 
 mouseHover(index, pl){
     let curentMarker = this.placesService.markers[index];
@@ -128,18 +148,17 @@ mouseLeave(index, pl){
 }
 
 
+ngOnDestroy(){
+    google.maps.event.clearListeners(this.placesService.map, 'bounds_changed');
+}
 
-     valuechange(e){
-            // console.log(this.places$);
-            console.log(e);
-         // this.placesService.getTextSearchPlaces(e.target.value);
-     }
 
 
      bclick(){
 
          // console.log(this.placesService.currentPlace$);
-         console.log(this.placesService.markers);
+         // console.log(this.placesService.markers);
+         console.log(this.placesService.listPlaces);
      }
 
  }

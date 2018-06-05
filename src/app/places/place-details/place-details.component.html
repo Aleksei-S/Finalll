@@ -1,27 +1,27 @@
 <p>
 	place-details works!
 </p>
-<a class="button-actions"> Назад к результатам</a>
+<a class="button-actions" [routerLink]="['/places']"> Назад к результатам</a>
 
-<div *ngIf = "placesService.currentPlace$" >
+<div *ngIf = "placeDetail" >
 	<form class="ui form">
 		<div class="field">
-			<img class="ui image" [src]="placesService.currentPlace$.photoUrl">
+			<img class="ui image" [src]="placeDetail.photoUrl">
 		</div>
 		<div class="field">
-			<h3>{{placesService.currentPlace$.name}}</h3>
+			<h3>{{placeDetail.name}}</h3>
 		</div>
 		<div class="field">
 			<LABEL>Адрес</LABEL>
-			<p>{{placesService.currentPlace$.adress}}</p>
+			<p>{{placeDetail.adress}}</p>
 		</div>
 		<div class="field">
 			<LABEL>Телефонный Номер</LABEL>
-			<p>{{placesService.currentPlace$.phone_number}}</p>
+			<p>{{placeDetail.phone_number}}</p>
 		</div>
 		<div class="field">
 			<LABEL>Рейтинг google</LABEL>
-			<p>{{placesService.currentPlace$.rate}}</p>
+			<p>{{placeDetail.rate}}</p>
 		</div>
 		<div class="field">
 

@@ -16,8 +16,8 @@
 
 <div class="ui" *ngFor="let place of places;let i = index"
 				 (mouseenter)="mouseHover(i, place)"
-				 (mouseleave)="mouseLeave(i, place)">
-<a [routerLink]="['/places', place.place_id]">
+				 (mouseleave)="mouseLeave(i, place)"
+         (click)="clickOnPlace(i, place)">
 	<div class="ui divider"></div>
 	<form class="ui form">
 			<div class="fields">
@@ -31,7 +31,6 @@
 				</div>
 			</div>
 	</form>
-</a>
 </div>
 <div class="ui divider"></div>
 

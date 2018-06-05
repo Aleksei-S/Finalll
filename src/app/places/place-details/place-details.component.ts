@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef} from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { PlacesService, Places }  from '../places.service';
 import { switchMap } from 'rxjs/operators';
 import { Subscription }   from 'rxjs';
 import { Observable } from 'rxjs/Observable';
+declare var google : any;
+
 
 @Component({
   selector: 'app-place-details',
@@ -12,28 +14,39 @@ import { Observable } from 'rxjs/Observable';
 })
 export class PlaceDetailsComponent implements OnInit {
 private subscriptionMap: Subscription;
-public placeDetails:any;
-  constructor(private placesService:PlacesService, private activatedRoute:ActivatedRoute) { }
+private subscriptionPlace: Subscription;
+public placeId:any;
+
+public placeDetail:any;
+  constructor(private placesService:PlacesService,
+   private activatedRoute:ActivatedRoute,
+    private cdRef: ChangeDetectorRef) { }
 
   ngOnInit() {
  console.log( "PLACE DEATAILSS");
-this.activatedRoute.params.subscribe((u) => {
-      console.log(u);
-this.placeDetails=u;
-    });
+this.subscriptionPlace = this.placesService.currentPlace$.subscribe((u) => {
+    console.log(u);
+    this.placeDetail = u;
+    this.cdRef.detectChanges();
+});
+
 
   this.subscriptionMap = this.placesService.mapReady
     .subscribe( (mission) => {
     	if(mission == true){
     	console.log("mapReadymapReadymapReady");
-    	this.placesService.getDetails(this.placeDetails.placeId);
-            console.log("mapReadymapReadymapReady");
+          this.activatedRoute.params.subscribe((u) => {
+            console.log(u);
+                console.log(u.placeId);
+                this.placesService.getDetails(u.placeId);
+
+          });
 }
    });
 
 
 
-// Observable.forkJoin(this.activatedRoute.params, this.placesService.mapReady).subscribe(res => console.log(res)) 
+// Observable.forkJoin(this.activatedRoute.params, this.placesService.mapReady).subscribe(res => console.log(res))
 
  // this.hero$ = this.activatedRoute.paramMap.pipe(
  //    switchMap((params: ParamMap) =>{})
@@ -45,11 +58,26 @@ this.placeDetails=u;
   }
 
 
+
+
+
+
+ngOnDestroy(){
+    this.subscriptionPlace.unsubscribe();
+}
+
+
+
+
+
      bclick(){
 
          // console.log(this.placesService.currentPlace$);
-         console.log(this.placesService);
+         console.log(this.placeDetail);
      }
+
+
+
 
 
 

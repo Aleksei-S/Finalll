@@ -7,20 +7,20 @@ import { BehaviorSubject }    from 'rxjs/BehaviorSubject';
 import { Subscription }   from 'rxjs';
 import 'rxjs/add/operator/toPromise';
 import { Router }  from '@angular/router';
-
+// declare var google : any;
 
 export class Places {
 	constructor(
-		public placeId: string,
-		public name: string,
-		public adress: string,
-		public photoUrl: string,
-		public rate: string,
-		public location: {}
+		public placeId: any,
+		public name: any,
+		public adress: any,
+		public photoUrl: any,
+		public rate: any,
+		public location: any
 		) { }
 }
 
-const currentPlace = new Places ('', '','' , '', '', {});
+// const currentPlace = new Places ('', '','' , '', '', {});
 
 @Injectable()
 export class PlacesService {
@@ -33,35 +33,14 @@ constructor(public router:Router,
 
 	public map : any;
 	public google : any;
+public listPlaces = [];
   public markers = [];
-
-
-public mapReady: BehaviorSubject<any> = new BehaviorSubject<any>(false);
-
-	// public mapReadyUpload : Subject<any> = new Subject<any>();
-
-	public mapReadyUpload : any;
-
-	public GooglePlaceService : Subject<any> = new Subject<any>();
-	public clickCnt : number = 0;
-	public currentPlace$ : Places;
-	// public currentPlace$ : BehaviorSubject<Places> = new BehaviorSubject<Places>(currentPlace);
-	// public places$: Subject<any[]> = new Subject<any[]>();
-	// public places$: BehaviorSubject<any[]> = new BehaviorSubject<any[]>(PLACES);
-	public onClick : EventEmitter<number> = new EventEmitter();
-	private subscription1 : Subscription;
+  public mapReady: BehaviorSubject<any> = new BehaviorSubject<any>(false);
+	public currentPlace$ : BehaviorSubject<Places> = new BehaviorSubject<Places>(new Places ('', '','' , '', '', {}));
 
 
 
 
-	// getPlaces() {
-	//     return this.places$;
-	// }
-
-	// addPlaces(ss){
-	//   PLACES.push(ss);
-	//   this.places$.next(PLACES);
-	// }
 
 
 
@@ -208,21 +187,16 @@ addMarker(e){
 
 getDetails(e){
     console.log('getDetailsMarker SERVICE');
-    console.log(e);
     var service = new this.google.maps.places.PlacesService(this.map);
  service.getDetails({placeId: e}, (place, status) =>{
      console.log(place);
         let placeId = e.placeId || e.place_id;
         let name = place.name || "";
-        let address = place.formatted_address || "";
+        let adress = place.formatted_address || place.address || "";
         let photoUrl =  (place.photos) ? place.photos[0].getUrl({'maxWidth': 250, 'maxHeight': 250}) : "";
         let rate =  place.rating || "";
         let location =  place.geometry.location;
-        this.currentPlace$ = new Places(placeId, name, address, photoUrl, rate,  location);
-        // // this.zone.run(() => {
-        //     this.router.navigate(['/places', placeId]);
-        // // });
-
+        this.currentPlace$.next({placeId, name, adress, photoUrl, rate,  location});
  });
 }
 
