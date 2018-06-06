@@ -2,96 +2,95 @@
 <h2>places  works!</h2>
 
 <div class="ui search">
-	<div class="ui icon input">
-		<!-- <input class="prompt" id = "searchBox" type="text" placeholder="Поиск мест..." (input)="valuechange($event)" /> -->
-		<input class="prompt" id = "searchBox" type="text" placeholder="Поиск мест..." />
-		<i class="search icon"></i>
-	</div>
-	<i class="filter icon"></i>
-	<div class="results" id = "searchBoxOutput"></div>
+    <div class="ui icon input">
+        <input class="prompt" id = "searchBox" type="text" placeholder="Поиск мест..." />
+        <i class="search icon"></i>
+    </div>
+    <i class="filter icon"></i>
+    <div class="results" id = "searchBoxOutput"></div>
 </div>
-
-
 
 
 <div class="ui list-place" *ngFor="let place of places;let i = index"
-				(mouseenter)="mouseHover(i, place)"
-				(mouseleave)="mouseLeave(i, place)"
-				(click)="clickOnPlace(i, place)">
-<div class="ui divider"></div>
-<form class="ui form list-place">
-	<div class="fields">
-		<div class="nine wide field">
-			<label>{{place.name}}</label>
-			{{place.rating}}
-			<br><p>{{place.formatted_address}}</p>
-		</div>
-		<div class="seven wide field">
-			<img class="ui image " [src]="(place.photos) ? place.photos[0].getUrl({'maxWidth': 250, 'maxHeight': 250}) : ''">
-		</div>
-	</div>
-</form>
+                (mouseenter)="mouseHover(i, place)"
+                (mouseleave)="mouseLeave(i, place)"
+                (click)="clickOnPlace(i, place)">
+                <div class="ui divider"></div>
+    <form class="ui form">
+        <div class="fields">
+            <div class="nine wide field">
+                <label>{{place.name}}</label>
+                {{place.rating}}
+                <br><p>{{place.formatted_address}}</p>
+            </div>
+            <div class="seven wide field">
+                <img class="ui image " [src]="(place.photos) ? place.photos[0].getUrl({'maxWidth': 250, 'maxHeight': 250}) : ''">
+            </div>
+        </div>
+    </form>
+    <div class="ui divider"></div>
 </div>
-<div class="ui divider"></div>
+
+
 
 
 
 
 
 <!-- <select class="ui dropdown">
-		<option value="1">Male</option>
-		<option value="0">Female</option>
+        <option value="1">Male</option>
+        <option value="0">Female</option>
 </select>
 <button class="ui icon button" (click) = "FilterVisible = !FilterVisible">
-		<i class="filter icon"></i>
+        <i class="filter icon"></i>
 </button>
 -->
 
 <!-- <section [hidden]="!FilterVisible">
-		<form class="ui form">
-				<div class="two fields">
-							<div class="field">
-										<div class="ui checkbox">
-												<input type="checkbox" name="example">
-												<label>Магазины</label>
-										</div>
-							</div>
-							<div class="field">
-										<div class="ui checkbox">
-												<input type="checkbox" name="example">
-												<label>Рестораны</label>
-										</div>
-							</div>
-				</div>
-				<div class="two fields">
-							<div class="field">
-										<div class="ui checkbox">
-												<input type="checkbox" name="example">
-												<label>Банки</label>
-										</div>
-							</div>
-							<div class="field">
-										<div class="ui checkbox">
-												<input type="checkbox" name="example">
-												<label>Администрат</label>
-										</div>
-							</div>
-				</div>
-				<div class="two fields">
-							<div class="field">
-										<div class="ui checkbox">
-												<input type="checkbox" name="example">
-												<label>Школы</label>
-										</div>
-							</div>
-							<div class="field">
-										<div class="ui checkbox">
-												<input type="checkbox" name="example">
-												<label>Заправки</label>
-										</div>
-							</div>
-				</div>
-		</form>
+        <form class="ui form">
+                <div class="two fields">
+                            <div class="field">
+                                        <div class="ui checkbox">
+                                                <input type="checkbox" name="example">
+                                                <label>Магазины</label>
+                                        </div>
+                            </div>
+                            <div class="field">
+                                        <div class="ui checkbox">
+                                                <input type="checkbox" name="example">
+                                                <label>Рестораны</label>
+                                        </div>
+                            </div>
+                </div>
+                <div class="two fields">
+                            <div class="field">
+                                        <div class="ui checkbox">
+                                                <input type="checkbox" name="example">
+                                                <label>Банки</label>
+                                        </div>
+                            </div>
+                            <div class="field">
+                                        <div class="ui checkbox">
+                                                <input type="checkbox" name="example">
+                                                <label>Администрат</label>
+                                        </div>
+                            </div>
+                </div>
+                <div class="two fields">
+                            <div class="field">
+                                        <div class="ui checkbox">
+                                                <input type="checkbox" name="example">
+                                                <label>Школы</label>
+                                        </div>
+                            </div>
+                            <div class="field">
+                                        <div class="ui checkbox">
+                                                <input type="checkbox" name="example">
+                                                <label>Заправки</label>
+                                        </div>
+                            </div>
+                </div>
+        </form>
 </section>
 -->
 

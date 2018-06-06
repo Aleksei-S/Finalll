@@ -1,6 +1,17 @@
 .list-place:hover {
-	cursor: pointer;
-	left: .1em;
-	background-color: ;
+  cursor: pointer;
+  -webkit-transform:scale(1.04); /* Safari and Chrome */
+  -moz-transform:scale(1.04); /* Firefox */
+  -ms-transform:scale(1.04); /* IE 9 */
+  -o-transform:scale(1.04); /* Opera */
+  transform:scale(1.04);
+  background-color: #80808058;
 }
 
+.list-place {
+  -webkit-transition: all 0.8s ease; /* Safari and Chrome */
+  -moz-transition: all 0.8s ease; /* Firefox */
+  -ms-transition: all 0.8s ease; /* IE 9 */
+  -o-transition: all 0.8s ease; /* Opera */
+  transition: all 0.8s ease;
+}

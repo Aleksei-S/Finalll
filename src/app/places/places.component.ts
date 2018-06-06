@@ -151,7 +151,7 @@ ngOnDestroy(){
      bclick(){
 
          // console.log(this.placesService.currentPlace$);
-         // console.log(this.placesService.markers);
+         console.log(this.placesService.markers);
          console.log(this.placesService.listPlaces);
      }
 
