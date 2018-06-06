@@ -78,7 +78,6 @@ getTextSearchPlaces(text, type=''){
     });
 
 }
-// [class.selected]="hero.id === selectedId
 
 deleteMarkers(){
     this.markers.forEach(function(marker) {
@@ -89,18 +88,15 @@ deleteMarkers(){
 
 addMarker(e){
     console.log("addMarker");
-console.log(e);
-    if (e.placeId || e.place_id) {
 
+    if (e.placeId || e.place_id) {
         let marker = new this.google.maps.Marker({
             position: e.latLng || e.geometry.location,
             map: this.map
         });
         marker.addListener('rightclick',(e)=>{
-          console.log(e);
-            this.emitRightClickOnMarker.emit(e);
+            this.emitRightClickOnMarker.emit({'marker':marker, 'event':e});
         });
-        console.error(marker);
         this.markers.push(marker);
     }
 

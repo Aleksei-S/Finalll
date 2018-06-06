@@ -14,7 +14,8 @@
 <div class="ui list-place" *ngFor="let place of places;let i = index"
                 (mouseenter)="mouseHover(i, place)"
                 (mouseleave)="mouseLeave(i, place)"
-                (click)="clickOnPlace(i, place)">
+                (click)="clickOnPlace(i, place)"
+                [class.selected] = "place === selectedMarker">
                 <div class="ui divider"></div>
     <form class="ui form">
         <div class="fields">

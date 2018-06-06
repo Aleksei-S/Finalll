@@ -17,6 +17,7 @@ export class MainMapComponent implements OnInit {
 
     private rightClickOnMarker;
     private contextMenu : boolean = false;
+    private placeForContextMenu: any; 
     // private placeForContextMenu = new Subject<any>();
     // private subscription: Subscription;
 
@@ -36,9 +37,9 @@ export class MainMapComponent implements OnInit {
             }
         });
         this.rightClickOnMarker = this.placesService.emitRightClickOnMarker.subscribe({
-            next: (e) => {
-                this.contextMenuOn(e.Ha.pageX, e.Ha.pageY);
-                // this.placeForContextMenu.next()
+            next: (arg) => {
+                this.contextMenuOn(arg.event.Ha.pageX, arg.event.Ha.pageY);
+                this.placeForContextMenu = arg.marker;
             }
         })
     }
@@ -79,12 +80,22 @@ export class MainMapComponent implements OnInit {
     }
 
     CreateNews(e){
-        console.info("CreateNews");
-        console.info(e);
+		let currentPlace;
+		let indexPlace : number;
+        if (this.placesService.listPlaces.length == 0) {
+        	currentPlace = this.placesService.currentPlace$.getValue();
+        } else {
+        	for (var i = this.placesService.markers.length - 1; i >= 0; i--) {
+        		(this.placesService.markers[i] == this.placeForContextMenu) ? indexPlace = i : "";
+        	}
+        	currentPlace = this.placesService.listPlaces[indexPlace];
+        }
+		// currentPlace
+
+        this.contextMenuOf();
     }
 
-
-
+ 
 
 
     contextMenuOn(x, y){

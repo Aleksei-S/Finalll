@@ -26,9 +26,19 @@ export class PlacesComponent implements OnInit {
     private subscriptionMap: Subscription;
     private showAddcomments:false;
     private map:any;
+    //////////////////////////////////////////
+    // public selectedMarker: any;
 
-
-
+    //     marker.addListener('mouseover',(e)=>{
+    //         let currentPlace;
+    //         let indexPlace;
+    //        if (this.listPlaces.length !== 0) {
+    //             for (var i = this.markers.length - 1; i >= 0; i--) {
+    //                 (this.markers[i] == marker) ? indexPlace = i : "";
+    //             }
+    //         currentPlace = this.listPlaces[indexPlace];
+    //         }
+    //     });
 constructor(
     private placesService:PlacesService,
     private zone: NgZone,
@@ -54,6 +64,9 @@ if (this.placesService.listPlaces.length != 0) {
             }
                 this.placesService.addMarker(pl);
             });
+        ////////////////////////////////
+        this.addListenerOnMarker();
+        ////////////////////////////////////
         this.cdRef.detectChanges();
     });
 
@@ -126,6 +139,44 @@ if (this.placesService.listPlaces.length != 0) {
 // }
 
 
+//     marker.addListener('mouseover',(e)=>{
+    //         let currentPlace;
+    //         let indexPlace;
+    //        if (this.listPlaces.length !== 0) {
+    //             for (var i = this.markers.length - 1; i >= 0; i--) {
+    //                 (this.markers[i] == marker) ? indexPlace = i : "";
+    //             }
+    //         currentPlace = this.listPlaces[indexPlace];
+    //         }
+
+
+
+///////////////////////////////////////////////////
+addListenerOnMarker(){
+
+
+    // let currentPlace;
+    // let indexPlace; 
+    // for (var i = this.placesService.markers.length - 1; i >= 0; i--) {
+    //     this.placesService.markers[i].addListener('mouseover',(e)=>{
+
+            console.log('mouseover');
+    //         console.log(e);
+    //         if (this.placesService.listPlaces.length !== 0) {
+    //             for (var i = this.placesService.markers.length - 1; i >= 0; i--) {
+    //                 (this.placesService.markers[i] == e) ? indexPlace = i : "";
+    //             }
+    //         currentPlace = this.placesService.listPlaces[indexPlace];
+    //         }
+    //     });
+    // }
+    // console.log(currentPlace);
+}
+
+
+
+
+//////////////////////////////////////////////
 clickOnPlace(index, pl){
      this.zone.run(() => {
         this.router.navigate(['/places', pl.place_id]);
@@ -153,6 +204,7 @@ ngOnDestroy(){
          // console.log(this.placesService.currentPlace$);
          console.log(this.placesService.markers);
          console.log(this.placesService.listPlaces);
+
      }
 
  }
