@@ -60,7 +60,8 @@ export class MainMapComponent implements OnInit {
         let marker = new google.maps.Marker({
             position: {lat:pos.coords.latitude, lng:pos.coords.longitude },
             map: this.placesService.map,
-            title: 'Hello World!'
+            title: 'Hello World!',
+            icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
         });
 
         this.placesService.map.addListener('click',(e)=>{

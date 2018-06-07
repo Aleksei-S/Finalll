@@ -77,10 +77,12 @@ if (this.placesService.listPlaces.length != 0) {
 
                 console.log('LoadMapService LoadMapService');
                 let input = document.getElementById('searchBox');
-                let searchBox = new google.maps.places.SearchBox(input);
-                console.log(this.placesService);
-            // this.placesService.map.controls[google.maps.ControlPosition.TOP_RIGHT].push(output);
-            searchBox.setBounds(this.placesService.map.getBounds());
+                let output = document.getElementById('searchBoxOutput');
+                var searchBox = new google.maps.places.SearchBox(input);
+ 
+            this.placesService.map.controls[google.maps.ControlPosition.TOP_RIGHT].push(output);
+            // searchBox.setBounds(this.placesService.map.getBounds());
+
             this.placesService.map.addListener('bounds_changed', () =>{
                 searchBox.setBounds(this.placesService.map.getBounds());
             });
@@ -126,6 +128,7 @@ addListenerOnMarker(){
             thisComponent.indexSelectedMarker = indexPlace;
             thisComponent.cdRef.detectChanges();
         }
+
     })( this));
 
     google.maps.event.addListener(marker, "mouseout", () =>{
@@ -162,7 +165,7 @@ ngOnDestroy(){
 
      bclick(){
 
-         console.log(this.selectedMarker);
+       
          // console.log(this.placesService.markers);
          // console.log(this.placesService.listPlaces);
 

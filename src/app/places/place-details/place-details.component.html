@@ -4,8 +4,8 @@
 		<div class="field">
 			<a class="button-actions" [routerLink]="['/places']"> Назад к результатам</a>
 		</div>
-		<div class="field">
-			<img class="ui image" [src]="placeDetail.photoUrl">
+		<div class="field" *ngFor="let photo of placeDetail.photoUrlarr;let i = index">
+			<img class="ui image" [src]="photo">
 		</div>
 		<div class="field">
 			<h3>{{placeDetail.name}}</h3>

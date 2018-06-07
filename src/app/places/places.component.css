@@ -1,10 +1,10 @@
 .list-place:hover {
   cursor: pointer;
-  -webkit-transform:scale(1.04); /* Safari and Chrome */
-  -moz-transform:scale(1.04); /* Firefox */
-  -ms-transform:scale(1.04); /* IE 9 */
-  -o-transform:scale(1.04); /* Opera */
-  transform:scale(1.04);
+  -webkit-transform:scale(1.03); /* Safari and Chrome */
+  -moz-transform:scale(1.03); /* Firefox */
+  -ms-transform:scale(1.03); /* IE 9 */
+  -o-transform:scale(1.03); /* Opera */
+  transform:scale(1.03);
   /*transform: translateY(20px);*/
   background-color: #80808058;
 }
@@ -20,6 +20,5 @@
 }
 
 .selectedMarker {
-  background-color: red;
-
+  background-color: #D6BABA;
 }

@@ -14,7 +14,7 @@ export class Places {
         public placeId: any,
         public name: any,
         public adress: any,
-        public photoUrl: any,
+        public photoUrlarr: any[],
         public rate: any,
         public location: any
         ) { }
@@ -29,7 +29,7 @@ export class PlacesService {
     public listPlaces = [];
     public markers = [];
     public mapReady: BehaviorSubject<any> = new BehaviorSubject<any>(false);
-    public currentPlace$ : BehaviorSubject<Places> = new BehaviorSubject<Places>(new Places ('', '','' , '', '', {}));
+    public currentPlace$ : BehaviorSubject<Places> = new BehaviorSubject<Places>(new Places ('', '','' , [], '', {}));
     public emitRightClickOnMarker = new EventEmitter();
 
     constructor(public router:Router,
@@ -113,10 +113,16 @@ getDetails(e){
         let placeId = e.placeId || e.place_id;
         let name = place.name || "";
         let adress = place.formatted_address || place.address || "";
-        let photoUrl =  (place.photos) ? place.photos[0].getUrl({'maxWidth': 250, 'maxHeight': 250}) : "";
+        let photoUrlarr = []
+        if (place.photos) {
+            for (var i = place.photos.length - 1; i >= 0; i--) {
+                photoUrlarr.push(place.photos[i].getUrl({'maxWidth': 300, 'maxHeight': 300}));
+            }
+        }
+        // let photoUrl =  (place.photos) ? place.photos[0].getUrl({'maxWidth': 300, 'maxHeight': 300}) : "";
         let rate =  place.rating || "";
         let location =  place.geometry.location;
-        this.currentPlace$.next({placeId, name, adress, photoUrl, rate,  location});
+        this.currentPlace$.next({placeId, name, adress, photoUrlarr, rate,  location});
     });
 }
 
