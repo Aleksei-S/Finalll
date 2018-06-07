@@ -27,7 +27,7 @@ export class PlacesComponent implements OnInit {
     private showAddcomments:false;
     private map:any;
     //////////////////////////////////////////
-    // public selectedMarker: any;
+    public indexSelectedMarker: any;
 
     //     marker.addListener('mouseover',(e)=>{
     //         let currentPlace;
@@ -64,9 +64,8 @@ if (this.placesService.listPlaces.length != 0) {
             }
                 this.placesService.addMarker(pl);
             });
-        ////////////////////////////////
+        ////////////////marker event mouseover and mouseout////////////////
         this.addListenerOnMarker();
-        ////////////////////////////////////
         this.cdRef.detectChanges();
     });
 
@@ -90,8 +89,7 @@ if (this.placesService.listPlaces.length != 0) {
                 this.places$.next(places);
                 this.placesService.listPlaces = places;
 
-
-                console.log(places);
+                // console.log(places);
                 if (places.length == 0) {
                     return;
                 }
@@ -99,7 +97,6 @@ if (this.placesService.listPlaces.length != 0) {
                 var bounds = new google.maps.LatLngBounds();
 
                 places.forEach((place)=> {
-
                      //смещение карты
                      if (place.geometry.viewport) {
                          bounds.union(place.geometry.viewport);
@@ -109,74 +106,38 @@ if (this.placesService.listPlaces.length != 0) {
                  });
                 this.placesService.map.fitBounds(bounds);
             });
-
-
         }
+    });
+}
 
 
+addListenerOnMarker(){
+    var marker
+    let indexPlace;
+    for (var i = this.placesService.markers.length - 1; i >= 0; i--) {
 
+        marker = this.placesService.markers[i];
 
+        google.maps.event.addListener(marker, "mouseover", (function(thisComponent) {
+        return function() {
+          for (var i = thisComponent.placesService.markers.length - 1; i >= 0; i--) {
+              (thisComponent.placesService.markers[i] == this) ? indexPlace = i : "";
+          }
+            thisComponent.indexSelectedMarker = indexPlace;
+            thisComponent.cdRef.detectChanges();
+        }
+    })( this));
+
+    google.maps.event.addListener(marker, "mouseout", () =>{
+      this.indexSelectedMarker = undefined;
+      this.cdRef.detectChanges();
     });
 
 
-
-
-
-
+   }
 
 }
 
-// initComponent(){
-//         this.placesService.deleteMarkers();
-//         this.placesService.listPlaces.forEach((pl)=> {
-//             if (!pl.geometry) {
-//                 console.log("Returned place contains no geometry");
-//                 return;
-//             }
-//                 this.placesService.addMarker(pl);
-//             });
-//         this.cdRef.detectChanges();
-// }
-
-
-//     marker.addListener('mouseover',(e)=>{
-    //         let currentPlace;
-    //         let indexPlace;
-    //        if (this.listPlaces.length !== 0) {
-    //             for (var i = this.markers.length - 1; i >= 0; i--) {
-    //                 (this.markers[i] == marker) ? indexPlace = i : "";
-    //             }
-    //         currentPlace = this.listPlaces[indexPlace];
-    //         }
-
-
-
-///////////////////////////////////////////////////
-addListenerOnMarker(){
-
-
-    // let currentPlace;
-    // let indexPlace; 
-    // for (var i = this.placesService.markers.length - 1; i >= 0; i--) {
-    //     this.placesService.markers[i].addListener('mouseover',(e)=>{
-
-            console.log('mouseover');
-    //         console.log(e);
-    //         if (this.placesService.listPlaces.length !== 0) {
-    //             for (var i = this.placesService.markers.length - 1; i >= 0; i--) {
-    //                 (this.placesService.markers[i] == e) ? indexPlace = i : "";
-    //             }
-    //         currentPlace = this.placesService.listPlaces[indexPlace];
-    //         }
-    //     });
-    // }
-    // console.log(currentPlace);
-}
-
-
-
-
-//////////////////////////////////////////////
 clickOnPlace(index, pl){
      this.zone.run(() => {
         this.router.navigate(['/places', pl.place_id]);
@@ -201,9 +162,9 @@ ngOnDestroy(){
 
      bclick(){
 
-         // console.log(this.placesService.currentPlace$);
-         console.log(this.placesService.markers);
-         console.log(this.placesService.listPlaces);
+         console.log(this.selectedMarker);
+         // console.log(this.placesService.markers);
+         // console.log(this.placesService.listPlaces);
 
      }
 

@@ -15,7 +15,7 @@
                 (mouseenter)="mouseHover(i, place)"
                 (mouseleave)="mouseLeave(i, place)"
                 (click)="clickOnPlace(i, place)"
-                [class.selected] = "place === selectedMarker">
+                [class.selectedMarker] = "i === indexSelectedMarker">
                 <div class="ui divider"></div>
     <form class="ui form">
         <div class="fields">

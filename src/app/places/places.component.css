@@ -5,13 +5,21 @@
   -ms-transform:scale(1.04); /* IE 9 */
   -o-transform:scale(1.04); /* Opera */
   transform:scale(1.04);
+  /*transform: translateY(20px);*/
   background-color: #80808058;
 }
 
 .list-place {
+  transform-style: preserve-3d;
   -webkit-transition: all 0.8s ease; /* Safari and Chrome */
   -moz-transition: all 0.8s ease; /* Firefox */
   -ms-transition: all 0.8s ease; /* IE 9 */
   -o-transition: all 0.8s ease; /* Opera */
   transition: all 0.8s ease;
+  /*transform-style: preserve-3d;*/
+}
+
+.selectedMarker {
+  background-color: red;
+
 }
