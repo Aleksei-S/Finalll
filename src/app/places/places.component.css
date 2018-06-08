@@ -5,6 +5,7 @@
   -ms-transform:scale(1.03); /* IE 9 */
   -o-transform:scale(1.03); /* Opera */
   transform:scale(1.03);
+  /*box-shadow: 0 0 10px rgba(0, 0, 0, .5);*/
   /*transform: translateY(20px);*/
   background-color: #80808058;
 }
@@ -20,5 +21,6 @@
 }
 
 .selectedMarker {
-  background-color: #D6BABA;
+  background-color: #80808058;
+   box-shadow: 0 0 10px rgba(0, 0, 0, .5);
 }

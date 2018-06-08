@@ -77,21 +77,22 @@ if (this.placesService.listPlaces.length != 0) {
 
                 console.log('LoadMapService LoadMapService');
                 let input = document.getElementById('searchBox');
-                let output = document.getElementById('searchBoxOutput');
+                // let output = document.getElementById('searchBoxOutput');
                 var searchBox = new google.maps.places.SearchBox(input);
- 
-            this.placesService.map.controls[google.maps.ControlPosition.TOP_RIGHT].push(output);
+
+            // this.placesService.map.controls[google.maps.ControlPosition.TOP_RIGHT].push(output);
             // searchBox.setBounds(this.placesService.map.getBounds());
 
             this.placesService.map.addListener('bounds_changed', () =>{
                 searchBox.setBounds(this.placesService.map.getBounds());
             });
             searchBox.addListener('places_changed', () =>{
+              console.log('places_changed');
                 let places = searchBox.getPlaces();
                 this.places$.next(places);
                 this.placesService.listPlaces = places;
 
-                // console.log(places);
+                console.log(places);
                 if (places.length == 0) {
                     return;
                 }
@@ -129,17 +130,19 @@ addListenerOnMarker(){
             thisComponent.cdRef.detectChanges();
         }
 
-    })( this));
+        })( this));
 
-    google.maps.event.addListener(marker, "mouseout", () =>{
-      this.indexSelectedMarker = undefined;
-      this.cdRef.detectChanges();
-    });
+        google.maps.event.addListener(marker, "mouseout", () =>{
+          this.indexSelectedMarker = undefined;
+          this.cdRef.detectChanges();
+        });
 
 
    }
 
 }
+
+
 
 clickOnPlace(index, pl){
      this.zone.run(() => {
@@ -159,13 +162,16 @@ mouseLeave(index, pl){
 
 ngOnDestroy(){
     google.maps.event.clearListeners(this.placesService.map, 'bounds_changed');
+    for (var i = this.placesService.markers.length - 1; i >= 0; i--) {
+        google.maps.event.clearInstanceListeners(this.placesService.markers[i]);
+   }
 }
 
 
 
      bclick(){
 
-       
+
          // console.log(this.placesService.markers);
          // console.log(this.placesService.listPlaces);
 

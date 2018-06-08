@@ -6,6 +6,7 @@ import { PlacesComponent } from './places.component';
 import { PlacesRoutingModule } from './places-routing.module';
 import { PlacesService } from './places.service';
 import { PlaceDetailsComponent } from './place-details/place-details.component';
+import { SliderComponent } from './place-details/slider/slider.component';
 
 @NgModule({
   imports: [
@@ -13,7 +14,7 @@ import { PlaceDetailsComponent } from './place-details/place-details.component';
     FormsModule,
     PlacesRoutingModule
   ],
-  declarations: [ PlacesComponent, PlaceDetailsComponent ],
+  declarations: [ PlacesComponent, PlaceDetailsComponent, SliderComponent ],
   providers: [ PlacesService ]
 })
 export class PlacesModule { }
