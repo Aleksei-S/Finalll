@@ -18,8 +18,8 @@ export class MainMapComponent implements OnInit {
     private rightClickOnMarker;
     private contextMenu : boolean = false;
     private placeForContextMenu: any; 
+    private curentPlaceId: string; 
     // private placeForContextMenu = new Subject<any>();
-    // private subscription: Subscription;
 
     constructor(public router:Router,
         public placesService:PlacesService,
@@ -39,6 +39,8 @@ export class MainMapComponent implements OnInit {
         this.rightClickOnMarker = this.placesService.emitRightClickOnMarker.subscribe({
             next: (arg) => {
                 this.contextMenuOn(arg.event.Ha.pageX, arg.event.Ha.pageY);
+                console.log(arg.placeId);
+                this.curentPlaceId = arg.placeId;
                 this.placeForContextMenu = arg.marker;
             }
         })
@@ -66,37 +68,52 @@ export class MainMapComponent implements OnInit {
 
         this.placesService.map.addListener('click',(e)=>{
             if (e.placeId) {
+                console.log(' MAP click click');
                 e.stop();
                 this.placesService.deleteMarkers();
                 this.placesService.addMarker(e);
-                this.zone.run(() => {
-                    this.router.navigate(['/places', e.placeId])
-                });
             }
             this.contextMenu ? this.contextMenuOf() : "" ;
         });
+
+
+
         this.placesService.map.addListener('center_changed', (e)=> {
             this.contextMenu ? this.contextMenuOf() : "" ;
         });
     }
 
     CreateNews(e){
-		let currentPlace;
-		let indexPlace : number;
-        if (this.placesService.listPlaces.length == 0) {
-        	currentPlace = this.placesService.currentPlace$.getValue();
-        } else {
-        	for (var i = this.placesService.markers.length - 1; i >= 0; i--) {
-        		(this.placesService.markers[i] == this.placeForContextMenu) ? indexPlace = i : "";
-        	}
-        	currentPlace = this.placesService.listPlaces[indexPlace];
-        }
+		// let currentPlace;
+		// let indexPlace : number;
+  //       if (this.placesService.listPlaces.length == 0) {
+  //       	currentPlace = this.placesService.currentPlace$.getValue();
+  //       } else {
+  //       	for (var i = this.placesService.markers.length - 1; i >= 0; i--) {
+  //       		(this.placesService.markers[i] == this.placeForContextMenu) ? indexPlace = i : "";
+  //       	}
+  //       	currentPlace = this.placesService.listPlaces[indexPlace];
+  //       }
 		// currentPlace
 
         this.contextMenuOf();
     }
 
  
+
+    goToDetails(){
+        this.zone.run(() => {
+            this.router.navigate(['/places', this.curentPlaceId])
+        });
+        this.contextMenuOf();
+    }
+
+
+
+
+
+
+
 
 
     contextMenuOn(x, y){

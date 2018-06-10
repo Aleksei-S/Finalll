@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject }    from 'rxjs/BehaviorSubject';
 import { PlacesService, Places }  from './places.service';
-import { Subscription }   from 'rxjs';
+import { Subscription }   from 'rxjs/Subscription';
 import { Subject }    from 'rxjs/Subject';
 import { Router, NavigationStart }  from '@angular/router';
 import { LoadMapService }  from '../main-map/load-map.service';
@@ -79,7 +79,7 @@ if (this.placesService.listPlaces.length != 0) {
                 let input = document.getElementById('searchBox');
                 // let output = document.getElementById('searchBoxOutput');
                 var searchBox = new google.maps.places.SearchBox(input);
-
+searchBox.setBounds(this.placesService.map.getBounds());
             // this.placesService.map.controls[google.maps.ControlPosition.TOP_RIGHT].push(output);
             // searchBox.setBounds(this.placesService.map.getBounds());
 
@@ -163,7 +163,9 @@ mouseLeave(index, pl){
 ngOnDestroy(){
     google.maps.event.clearListeners(this.placesService.map, 'bounds_changed');
     for (var i = this.placesService.markers.length - 1; i >= 0; i--) {
-        google.maps.event.clearInstanceListeners(this.placesService.markers[i]);
+        // google.maps.event.clearInstanceListeners(this.placesService.markers[i]);
+        google.maps.event.clearListeners(this.placesService.markers[i], 'mouseover');
+        google.maps.event.clearListeners(this.placesService.markers[i], 'mouseout');
    }
 }
 

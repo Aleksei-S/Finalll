@@ -1,35 +1,46 @@
 
 <h2>places  works!</h2>
+<form class="ui form">
 
-<div class="ui search">
-    <div class="ui icon input">
-        <input class="prompt" id = "searchBox" type="text" placeholder="Поиск мест..." />
-        <i class="search icon"></i>
-    </div>
-    <i class="filter icon"></i>
-    <div class="results" id = "searchBoxOutput"></div>
-</div>
+        <div class="ui search list-place-search">
+            <div class="ui icon input">
+                <input class="prompt" id = "searchBox" type="text" placeholder="Поиск мест..." />
+                <i class="search icon"></i>
+            </div>
+            <i class="filter icon"></i>
+            <div class="results" id = "searchBoxOutput"></div>
+        </div>
+
+</form>
 
 
 <div class="ui list-place" *ngFor="let place of places;let i = index"
-                (mouseenter)="mouseHover(i, place)"
-                (mouseleave)="mouseLeave(i, place)"
-                (click)="clickOnPlace(i, place)"
-                [class.selectedMarker] = "i === indexSelectedMarker">
-                <div class="ui divider"></div>
-    <form class="ui form">
-        <div class="fields">
-            <div class="nine wide field">
-                <label>{{place.name}}</label>
-                {{place.rating}}
-                <br><p>{{place.formatted_address}}</p>
-            </div>
-            <div class="seven wide field">
-                <img class="ui image " [src]="(place.photos) ? place.photos[0].getUrl({'maxWidth': 250, 'maxHeight': 250}) : ''">
-            </div>
-        </div>
-    </form>
-    <div class="ui divider"></div>
+(mouseenter)="mouseHover(i, place)"
+(mouseleave)="mouseLeave(i, place)"
+(click)="clickOnPlace(i, place)"
+[class.selectedMarker] = "i === indexSelectedMarker">
+<div class="ui divider"></div>
+<form class="ui form">
+    <div class="fields">
+        <div class="nine wide field">
+            <label>{{place.name}}</label>
+            <span *ngIf="place.rating">
+                <i class="star icon stars-outer" *ngFor="let star of [1,2,3,4,5]" 
+                [class.outline] = "(place.rating - star) < -0.21">
+                <i class="star half icon stars-inner" *ngIf="((+place.rating - star) < -0.20) && ((+place.rating - star) > -0.79 ) "></i>  
+            </i>
+            {{place.rating}}   
+        </span>
+
+        <br><p>{{place.formatted_address}}</p>
+    </div>
+    <div class="seven wide field">
+
+        <img class="ui image" [src]="(place.photos) ? place.photos[0].getUrl({'maxWidth': 130, 'maxHeight': 130}) : ''">
+    </div>
+</div>
+</form>
+<div class="ui divider"></div>
 </div>
 
 

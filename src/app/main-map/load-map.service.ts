@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-const url = "https://maps.googleapis.com/maps/api/js?key=AIzaSyB6oLxb_fQkQD9b0m0w8Siiix8VEvRVjIc&libraries=places&callback=__onGoogleLoaded";
+const url = "https://maps.googleapis.com/maps/api/js?key=AIzaSyAjIoN3WveCBJsKiEcXQ6y0WmKGXyxVrus&libraries=places&callback=__onGoogleLoaded";
 @Injectable()
 export class LoadMapService {
   private static promise;

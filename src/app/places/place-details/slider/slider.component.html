@@ -1,23 +1,11 @@
-<p>
-  slider works!
-</p>
-<p>
-  {{photo}}
-</p>
+<div class="slideshow-container">
 
-
-
-
-<!-- <div (mouseenter)="pause()" (mouseleave)="play()" class="carousel slide">
-  <ol class="carousel-indicators" [hidden]="slides.length <= 1">
-    <li *ngFor="let slidez of slides" [class.active]="slidez.active === true" (click)="select(slidez)"></li>
-  </ol>
-  <div class="carousel-inner"><ng-content></ng-content></div>
-  <a class="left carousel-control" (click)="prev()" [hidden]="slides.length <= 1">
-    <span class="glyphicon glyphicon-chevron-left"></span>
-  </a>
-  <a class="right carousel-control" (click)="next()" [hidden]="slides.length <= 1">
-    <span class="glyphicon glyphicon-chevron-right"></span>
-  </a>
+  <div class="mySlides fade" *ngFor="let url of photoArr; let i = index">
+      <img [src]="url" style="width:100%"
+      [class.urlPhoto] = "i !== indexphotoArr"
+      >
+  </div>
+  <a id="slider-buttons-left" (click)="moveLeft()">&#10094;</a>
+  <a id="slider-buttons-right" (click)="moveRight()">&#10095;</a>
 </div>
- -->
+

@@ -1,3 +1,69 @@
 <p>
   news works!
 </p>
+
+<form class="ui form">
+    <div class="fields">
+        <div class="field">
+        	<button type="button" [routerLink]="['createNews']">Создать Новость</button>
+    	</div>
+	</div>
+</form>
+
+
+
+
+
+
+
+
+
+
+<!-- <form class="ui form">
+    <div class="fields">
+        <div class="field">
+        	Фото 
+    	</div>
+        <div class="field">
+        	Название 
+    	</div>
+    	<div class="field">
+        	Время проведение 
+    	</div>
+    	<div class="field">
+        	Место
+    	</div>
+    	 <div class="field">
+        	Место
+    	</div>
+	</div>
+</form> -->
+
+<div class="ui news-place" >
+<!-- <div class="ui divider"></div>
+<form class="ui form">
+    <div class="fields">
+        <div class="nine wide field">
+            <label>{{place.name}}</label>
+            <span *ngIf="place.rating">
+                <i class="star icon stars-outer" *ngFor="let star of [1,2,3,4,5]" 
+                [class.outline] = "(place.rating - star) < -0.21">
+                <i class="star half icon stars-inner" *ngIf="((+place.rating - star) < -0.20) && ((+place.rating - star) > -0.79 ) "></i>  
+            </i>
+            {{place.rating}}   
+        </span>
+
+        <br><p>{{place.formatted_address}}</p>
+    </div>
+    <div class="seven wide field">
+
+        <img class="ui image" [src]="(place.photos) ? place.photos[0].getUrl({'maxWidth': 130, 'maxHeight': 130}) : ''">
+    </div>
+</div>
+</form>
+<div class="ui divider"></div> -->
+</div>
+
+
+
+<button (click) = "bclick()" >click</button>

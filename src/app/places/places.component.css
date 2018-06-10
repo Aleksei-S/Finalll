@@ -5,9 +5,10 @@
   -ms-transform:scale(1.03); /* IE 9 */
   -o-transform:scale(1.03); /* Opera */
   transform:scale(1.03);
+  /*transform:scaleY(1.05);*/
   /*box-shadow: 0 0 10px rgba(0, 0, 0, .5);*/
   /*transform: translateY(20px);*/
-  background-color: #80808058;
+  background-color: #F4F4F4;
 }
 
 .list-place {
@@ -17,10 +18,36 @@
   -ms-transition: all 0.8s ease; /* IE 9 */
   -o-transition: all 0.8s ease; /* Opera */
   transition: all 0.8s ease;
+  max-height: 150px;
   /*transform-style: preserve-3d;*/
 }
 
 .selectedMarker {
-  background-color: #80808058;
+  background-color: #F4F4F4;
    box-shadow: 0 0 10px rgba(0, 0, 0, .5);
 }
+
+
+
+.list-place-search {
+width: 100%
+}
+
+.stars-outer {
+  display: inline-block;
+  position: relative;
+  color: #2B2A2A;
+}
+
+
+.stars-inner {
+  color: #2B2A2A;
+  position: absolute;
+  top: 0;
+  left: 0;
+  /*white-space: nowrap;*/
+  /*overflow: hidden;*/
+  width: 80%;
+  /*z-index: 156464;*/
+}
+

@@ -5,13 +5,18 @@ import { Component, Input } from '@angular/core';
   templateUrl: './slider.component.html',
   styleUrls: ['./slider.component.css']
 })
-export class SliderComponent {
+export class SliderComponent   {
 
- @Input() photo: string;
+ @Input() photoArr : any[];
+	public indexphotoArr = 0;
+  	constructor() { }
 
+    moveLeft() {
+		(this.indexphotoArr == 0) ? this.indexphotoArr = this.photoArr.length-1 : this.indexphotoArr--;
+    }
 
-  constructor() { }
-
-
+    moveRight() {
+		(this.photoArr.length-1 == this.indexphotoArr) ? this.indexphotoArr = 0: this.indexphotoArr++;
+    }
 
 }

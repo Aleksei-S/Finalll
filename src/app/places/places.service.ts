@@ -88,14 +88,16 @@ deleteMarkers(){
 
 addMarker(e){
     console.log("addMarker");
-
+console.log(e);
     if (e.placeId || e.place_id) {
+
         let marker = new this.google.maps.Marker({
             position: e.latLng || e.geometry.location,
             map: this.map
         });
-        marker.addListener('rightclick',(e)=>{
-            this.emitRightClickOnMarker.emit({'marker':marker, 'event':e});
+        marker.addListener('rightclick',(event)=>{
+            console.log('rightclick');
+            this.emitRightClickOnMarker.emit({'marker':marker, 'event':event, 'placeId':e.placeId || e.place_id});
         });
         this.markers.push(marker);
     }
