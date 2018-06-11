@@ -17,8 +17,8 @@ export class MainMapComponent implements OnInit {
 
     private rightClickOnMarker;
     private contextMenu : boolean = false;
-    private placeForContextMenu: any; 
-    private curentPlaceId: string; 
+    private placeForContextMenu: any;
+    private curentPlaceId: string;
     // private placeForContextMenu = new Subject<any>();
 
     constructor(public router:Router,
@@ -67,6 +67,7 @@ export class MainMapComponent implements OnInit {
         });
 
         this.placesService.map.addListener('click',(e)=>{
+          console.log(' MAP MAPMAPMAP');
             if (e.placeId) {
                 console.log(' MAP click click');
                 e.stop();
@@ -99,7 +100,7 @@ export class MainMapComponent implements OnInit {
         this.contextMenuOf();
     }
 
- 
+
 
     goToDetails(){
         this.zone.run(() => {

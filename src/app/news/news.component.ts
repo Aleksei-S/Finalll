@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { Subscription }   from 'rxjs/Subscription';
 import { PlacesService, Places }  from '../places/places.service';
 
@@ -10,33 +9,27 @@ import { PlacesService, Places }  from '../places/places.service';
   styleUrls: ['./news.component.css']
 })
 export class NewsComponent implements OnInit {
-private subscriptionMap: Subscription;
+
+  private subscriptionMap: Subscription;
+
   constructor(private placesService:PlacesService) { }
 
   ngOnInit() {
   	console.log('OnInit!!!!!  NEWS NEWS NEWS');
-  	 this.subscriptionMap = this.placesService.mapReady
+    this.subscriptionMap = this.placesService.mapReady
     .subscribe(
-        (mission) => {
-            if(mission == true){
-            	console.log('NEWS NEWS MAP READY');
-            	this.placesService.map.addListener('click',(e)=>{
-            		e.stop();
-            		console.log(e);	
-            		e.Ha.preventDefault();
-            	console.log('NEWS MAP click');	
-
-        		});
-               
+      (mission) => {
+        if(mission == true){
+          console.log('NEWS NEWS MAP READY');
         }
-    });
+      });
   }
 
 
 
-bclick(){
+  bclick(){
 
-}
+  }
 
 
 
