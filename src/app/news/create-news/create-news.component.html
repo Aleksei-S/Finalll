@@ -9,23 +9,27 @@
 <form class="ui form">
   <div class="field">
     <label>Название</label>
-    <input type="text"  placeholder="название события">
+    <input type="text" [(ngModel)]="news.name"  placeholder="Название события" name="name">
   </div>
   <div class="field">
     <label>Фото</label>
     <input type="text" placeholder="Фото url">
   </div>
   <div class="field">
-    <label>time</label>
-    <input type="datetime-local" placeholder="Время проведение">
+    <label>Дата и время события</label>
+    <!-- <input type="datetime-local" [(ngModel)]="news.dateTimeEvent" value="2017-06-01T08:30" name="datetimeEvent"> -->
+
+<input type="datetime-local" [(ngModel)]="news.dateTimeEvent" name="datetimeEvent">
   </div>
   <div class="field">
     <label>Место</label>
-    <input type="text" placeholder="Место" value ="{{adressPlace}}" >
+   <!--  <textarea class="textarea-adress" type="text" rows="2" placeholder="нажмите на карту для добавления места" readonly >{{adressPlace}}</textarea> -->
+    <input type="text" placeholder="нажмите на карту" value ="{{adressPlace}}" readonly >
+
   </div>
   <div class="field">
     <label>Описание</label>
-    <input type="text" placeholder="Описание">
+    <textarea  type="text" rows="2" placeholder="Описание"></textarea>
   </div>
   <button class="ui button" type="submit">Submit</button>
 </form>

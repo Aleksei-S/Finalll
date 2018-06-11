@@ -1,6 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { PlacesService, Places }  from '../../places/places.service';
+import { Component, OnInit, ChangeDetectorRef, OnDestroy  } from '@angular/core';
 import { Subscription }   from 'rxjs/Subscription';
+import { PlacesService, Places }  from '../../places/places.service';
+import { NewsService, NEWS }  from '../news.service';
+
+
+const now = new Date(Date.now()).toISOString();
 
 @Component({
     selector: 'app-create-news',
@@ -11,79 +15,49 @@ import { Subscription }   from 'rxjs/Subscription';
 export class CreateNewsComponent implements OnInit {
     private subscriptionMap: Subscription;
     public adressPlace: any;
+    private listenerClick:  any;
+	public news: NEWS = new NEWS ('', now, '', {}, '');
 
-    constructor(private placesService:PlacesService) { }
+    constructor(private placesService:PlacesService,
+    	private cdRef: ChangeDetectorRef) { }
 
     ngOnInit() {
-
+    	console.log(now);
         this.subscriptionMap = this.placesService.mapReady
-        .subscribe(
-            (mission) => {
+        .subscribe((mission) => {
                 if(mission == true){
-                    this.placesService.map.addListener('click',(e)=>{
-                        if (!e.placeId) {
-                           console.log("NEEEETY ID");
-                        }
-
+                    this.listenerClick = this.placesService.map.addListener('click',(e)=>{
                         let geocoder = new this.placesService.google.maps.Geocoder;
+				        geocoder.geocode({'location': e.latLng}, (results, status) => {
+				            if (status === 'OK') {
+				                if (results[0]) {
+				                	if (!e.placeId) {
+				                       	this.placesService.deleteMarkers();
+				                        this.placesService.addMarker(results[0]); 
+									}
+				                    this.adressPlace = results[0].formatted_address;
+				                    this.cdRef.detectChanges();
+				                }
+				            }
+				        });
 
-        // geocoder.geocode({'location': e.latLng}, function(results, status) {
-        //     if (status === 'OK') {
-        //         if (results[0]) {
-        //             console.log(results[0].formatted_address);
-        //             this.adressPlace = results[0].formatted_address;
-        //             console.log(this.adressPlace);
-        //         }
-        //     }
-        // });
-
-
-this.wwww(e);
-                        // geocoder.geocode({'location': e.latLng}, function(results, status) {
-                        //     if (status === 'OK') {
-                        //         if (results[0]) {
-                        //             console.log(results[0].formatted_address);
-                        //             this.adressPlace = results[0].formatted_address;
-                        //             console.log(this.adressPlace);
-                        //         }
-                        //     }
-                        // });
                     });
 
                 }
-            });
-
-
-    }
-
-
-
-
-    wwww(e){
-        let geocoder = new this.placesService.google.maps.Geocoder;
-        // return function() {
-
-        // }
-        geocoder.geocode({'location': e.latLng}, function(results, status) {
-            if (status === 'OK') {
-                // if (results[0]) {
-                //     console.log(results[0].formatted_address);
-                    console.log(this);
-                    console.log(results);
-                    console.log(status);
-                //     this.adressPlace = results[0].formatted_address;
-                //     console.log(this.adressPlace);
-                // }
-            }
         });
-
-
     }
+
+
+ngOnDestroy() {
+   this.placesService.google.maps.event.removeListener(this.listenerClick);
+}
+
 
 
 
     ewclick(){
-        console.log(this.adressPlace);
+        console.log(this.news);
+        console.log(now);
     }
 
 
