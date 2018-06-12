@@ -1,50 +1,45 @@
 
 <a class="button-actions" [routerLink]="['/news']"> Назад к результатам</a>
 
-<p>
-  create-news works!
-</p>
-
-
 <form class="ui form" [formGroup]="newsForm" (submit)="onSubmit()">
-  <div class="field">
-    <label>Название</label>
-    <input type="text" placeholder="Название события" formControlName="name">
-  </div>
-  <div class="field">
-    <label>Фото</label>
-    <input type="text" placeholder="Фото url" formControlName="photoUrl">
-  </div>
+	<div class="field">
+		<label>Название</label>
+		<input type="text" placeholder="Название события" formControlName="name" required>
+		<div class="error" *ngIf="isControlInvalid('name')">
+			Введите название события
+		</div>
+	</div>
+	<div class="field">
+		<label>Фото</label>
+		<input type="text" placeholder="Фото url" formControlName="photoUrl">
+	</div>
 
-  <div class="field">
-    <label>Дата и время события</label>
-    <input type="datetime-local" [(ngModel)] ="dateNowISO" (ngModelChange)="dataChange(dateNowISO)" [ngModelOptions]="{standalone: true}">
-      </div>
-  <div class="field">
-    <label>Место</label>
-    <input type="text" placeholder="нажмите на карту" formControlName="adress" readonly >
+	<div class="field">
+		<label>Дата и время события</label>
+		<input type="datetime-local"  formControlName="dateTimeEvent" >
+		<div class="error" *ngIf="isControlInvalid('dateTimeEvent')">
+			{{newsForm.get('dateTimeEvent').getError('invalidDateTimeEvent')}}
+		</div>
+	</div>
+	<div class="field">
+		<label>Место</label>
+		<input type="text" placeholder="нажмите на карту" formControlName="adress" readonly >
+		<div class="error" *ngIf="isControlInvalid('adress')">
+			Выберете место на карте
+		</div>
+	</div>
 
-  </div>
+	<div class="field">
+		<label>Описание</label>
+		<textarea  type="text" rows="2" formControlName="description" placeholder="Описание"></textarea>
+	</div>
 
-
-
-<!--   <div class="field">
-    <label>Дата и время события</label>
-<input type="datetime-local" [(ngModel)] ="dateNowISO" name="datetimeEvent" (ngModelChange)="dataChange(dateNowISO)">
-  </div>
-  <div class="field">
-    <label>Место</label>
-    <input type="text" placeholder="нажмите на карту" value ="{{news.adress}}" readonly >
-
-  </div>
-  <div class="field">
-    <label>Описание</label>
-    <textarea  type="text" rows="2" placeholder="Описание"></textarea>
-  </div>
- -->  <button class="ui button" type="submit">Submit</button>
+	<button class="ui button" type="submit">Submit</button>
 </form>
 
 <div>
-  {{newsForm.value | json}}
+	{{newsForm.value | json}}
 </div>
+
+
 <button (click) = "ewclick()" >click</button>
