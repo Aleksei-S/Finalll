@@ -6,34 +6,45 @@
 </p>
 
 
-<form class="ui form">
+<form class="ui form" [formGroup]="newsForm" (submit)="onSubmit()">
   <div class="field">
     <label>Название</label>
-    <input type="text" [(ngModel)]="news.name"  placeholder="Название события" name="name">
+    <input type="text" placeholder="Название события" formControlName="name">
   </div>
   <div class="field">
     <label>Фото</label>
-    <input type="text" placeholder="Фото url">
+    <input type="text" placeholder="Фото url" formControlName="photoUrl">
   </div>
+
   <div class="field">
     <label>Дата и время события</label>
-    <!-- <input type="datetime-local" [(ngModel)]="news.dateTimeEvent" value="2017-06-01T08:30" name="datetimeEvent"> -->
+    <input type="datetime-local" [(ngModel)] ="dateNowISO" (ngModelChange)="dataChange(dateNowISO)" [ngModelOptions]="{standalone: true}">
+      </div>
+  <div class="field">
+    <label>Место</label>
+    <input type="text" placeholder="нажмите на карту" formControlName="adress" readonly >
 
-<input type="datetime-local" [(ngModel)]="news.dateTimeEvent" name="datetimeEvent">
+  </div>
+
+
+
+<!--   <div class="field">
+    <label>Дата и время события</label>
+<input type="datetime-local" [(ngModel)] ="dateNowISO" name="datetimeEvent" (ngModelChange)="dataChange(dateNowISO)">
   </div>
   <div class="field">
     <label>Место</label>
-   <!--  <textarea class="textarea-adress" type="text" rows="2" placeholder="нажмите на карту для добавления места" readonly >{{adressPlace}}</textarea> -->
-    <input type="text" placeholder="нажмите на карту" value ="{{adressPlace}}" readonly >
+    <input type="text" placeholder="нажмите на карту" value ="{{news.adress}}" readonly >
 
   </div>
   <div class="field">
     <label>Описание</label>
     <textarea  type="text" rows="2" placeholder="Описание"></textarea>
   </div>
-  <button class="ui button" type="submit">Submit</button>
+ -->  <button class="ui button" type="submit">Submit</button>
 </form>
 
-
-
+<div>
+  {{newsForm.value | json}}
+</div>
 <button (click) = "ewclick()" >click</button>
