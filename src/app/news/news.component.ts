@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 import { Subscription }   from 'rxjs/Subscription';
 import { PlacesService, Places }  from '../places/places.service';
+import { NewsService, NEWS }  from './news.service';
 
 
 @Component({
@@ -11,8 +13,23 @@ import { PlacesService, Places }  from '../places/places.service';
 export class NewsComponent implements OnInit {
 
   private subscriptionMap: Subscription;
+  private subscriptionNews: Subscription;
+public fruits = [];
 
-  constructor(private placesService:PlacesService) { }
+public message: any;
+public subscription: Subscription;
+
+
+heroes$: Observable<NEWS[]>;
+
+
+
+
+
+
+
+  constructor(private placesService:PlacesService,
+              private newsService:NewsService,) {}
 
   ngOnInit() {
   	console.log('OnInit!!!!!  NEWS NEWS NEWS');
@@ -23,15 +40,56 @@ export class NewsComponent implements OnInit {
           console.log('NEWS NEWS MAP READY');
         }
       });
+
+
+    this.heroes$ = this.newsService.getNews();
+
+
+
+
+
+
   }
 
 
 
   bclick(){
-
+    console.log(this.newsService.fruits);
+    // console.log(this.message);
   }
 
 
 
 
 }
+
+// <li *ngFor="let hero of heroes$ | async"
+//         [class.selected]="hero.id === selectedId">
+//         <a [routerLink]="['/hero', hero.id]">
+//           <span class="badge">{{ hero.id }}</span>{{ hero.name }}
+//         </a>
+//       </li>
+//     </ul>
+
+//     <button routerLink="/sidekicks">Go to sidekicks</button>
+//   `
+// })
+// export class HeroListComponent implements OnInit {
+//   heroes$: Observable<Hero[]>;
+
+//   private selectedId: number;
+
+//   constructor(
+//     private service: HeroService,
+//     private route: ActivatedRoute
+//   ) {}
+
+//   ngOnInit() {
+//     this.heroes$ = this.route.paramMap
+//       .switchMap((params: ParamMap) => {
+//         // (+) before `params.get()` turns the string into a number
+//         this.selectedId = +params.get('id');
+//         return this.service.getHeroes();
+//       });
+//   }
+// }

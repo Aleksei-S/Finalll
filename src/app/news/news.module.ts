@@ -5,6 +5,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NewsRoutingModule } from './news-routing.module';
 import { NewsComponent } from './news.component';
 import { CreateNewsComponent } from './create-news/create-news.component';
+import { NewsService } from './news.service';
 
 @NgModule({
   imports: [
@@ -13,6 +14,7 @@ import { CreateNewsComponent } from './create-news/create-news.component';
     FormsModule,
     NewsRoutingModule
   ],
-  declarations: [NewsComponent, CreateNewsComponent]
+  declarations: [NewsComponent, CreateNewsComponent],
+  providers: [ NewsService ]
 })
 export class NewsModule { }
