@@ -14,13 +14,13 @@ export class NewsComponent implements OnInit {
 
   private subscriptionMap: Subscription;
   private subscriptionNews: Subscription;
-public fruits = [];
+  public fruits = [];
 
-public message: any;
-public subscription: Subscription;
+  public message: any;
+  public subscription: Subscription;
 
 
-heroes$: Observable<NEWS[]>;
+  heroes$: Observable<NEWS[]>;
 
 
 
@@ -42,14 +42,13 @@ heroes$: Observable<NEWS[]>;
       });
 
 
-    this.heroes$ = this.newsService.getNews();
+  this.heroes$ = this.newsService.getNews();
+
+// this.heroes$ = this.newsService.getNews()
+// .subscribe((e)=> {});
 
 
-
-
-
-
-  }
+}
 
 
 
