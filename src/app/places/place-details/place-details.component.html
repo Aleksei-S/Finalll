@@ -6,12 +6,12 @@
      <div class="item">
           <a class="button-actions" [routerLink]="['/places']"> Назад к результатам</a>
      </div>
-
-     <div class="item">
-          <app-slider [photoArr] = "placeDetail.photoUrlarr">
-          </app-slider>
+     <div class="center aligned  column">
+          <div class="item">
+               <app-slider [photoArr] = "placeDetail.photoUrlarr">
+               </app-slider>
+          </div>
      </div>
-
 
      <div class="item">
           <div class="content">
@@ -31,10 +31,9 @@
                     <LABEL>Телефонный Номер</LABEL>
                     <p>{{placeDetail.phone_number}}</p>
                </div>
+          </div>
      </div>
 </div>
-
-
 
 
 

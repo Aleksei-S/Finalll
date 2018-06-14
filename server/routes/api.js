@@ -45,24 +45,24 @@ router.get('/auth/github', passport.authenticate('github',{
 	scope:['profile']
 }));
 
-// router.get('/auth/facebook', passport.authenticate('facebook',{
-// 	scope: ['publish_actions']
-// }));
+router.get('/auth/facebook', passport.authenticate('facebook',{
+	scope: ['publish_actions']
+}));
 
 // router.get('/auth/google/redirect', passport.authenticate('google'), user.loginWithGoogle);
 router.get('/auth/github/redirect', passport.authenticate('github'), user.loginWithGitHub);
-// router.get('/auth/facebook/redirect', passport.authenticate('facebook'), user.loginWithFacebook);
+router.get('/auth/facebook/redirect', passport.authenticate('facebook'), user.loginWithFacebook);
 
 
-// router.post('/getUser', user.authenticate, function(req, res, next) {
-// 		return res.status(201).json({
-// 			success : true,
-// 			token : req.body.token,
-// 			// user : req.session.passport.user
-// 			user : req.decoded.data
-// 		});
+router.post('/getUser', user.authenticate, function(req, res, next) {
+		return res.status(201).json({
+			success : true,
+			token : req.body.token,
+			// user : req.session.passport.user
+			user : req.decoded.data
+		});
 
-// });
+});
 
 
 

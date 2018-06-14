@@ -1,15 +1,46 @@
 <p>
-  home works!
+	home works!
 </p>
 <br>
 
 
-<!--  <button class="ui large button"  (click)="git()">currentUser</button>
+<div class="ui items" *ngIf="loginService.currentUser">
+
+	<div class="ui centered  aligned grid">
+		<div class="ui centered  aligned image">
+			<img class="ui image" [src]="loginService.currentUser.photoUrl">
+		</div>
+	</div>
 
 
+	<div class="ui hidden divider">
+		
+	</div>
+	
+	<div class="item">
+		<div class="content">
+			<a class="header">{{loginService.currentUser.username}}</a>
 
- <p  *ngIf="loginService.currentUser">
-  hello {{loginService.currentUser.username}}
-  <img [src]="loginService.currentUser.photoUrl">
-</p>
- -->
+			<div class="meta">
+				<i class="clock outline icon"></i>		
+
+				<span >
+					{{loginService.currentUser.lastlogin | date: 'dd MMMM yyyy H-m'}}
+				</span>
+			</div>
+
+			<div class="extra">
+				Непросмотренных новостей 
+			</div>
+		</div>
+	</div>
+
+</div>
+<!-- </div> -->
+
+<div class="ui hidden divider"></div>
+<div class="ui hidden divider"></div>
+
+<div>
+	{{loginService.currentUser | json}}
+</div>

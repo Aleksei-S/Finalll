@@ -39,7 +39,7 @@ passport.use(new FacebookStrategy({
 	clientID: keys.facebook.clientID,
 	clientSecret: keys.facebook.clientSecret,
 	callbackURL: "http://localhost:3000/api/auth/facebook/redirect",
-	 profileFields: ['id', 'displayName', 'photos']
+	 profileFields: ['id', 'displayName', 'picture.type(large)']
 },
 	function(accessToken, refreshToken, profile, done) {
 		return done(null, profile);

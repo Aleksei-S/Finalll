@@ -2,27 +2,29 @@
 
 <a href="#" class="header item">
       <i class="list icon"></i>
-    </a>
+</a>
     <a routerLink="/" class="item">home</a>
-    <a routerLink="/login" class="item">login</a>
+    <!-- <a routerLink="/login" class="item">login</a> -->
     <a routerLink="/news" class="item">События</a>
     <a routerLink="/places" class="item">Places</a>
 
 
 
-    <div class="right menu">
-      <div class="ui transparent icon input">
-        <input type="text" placeholder="Search...">
-        <i class=" circular search link icon"></i>
-      </div>
-    </div>
+    <div class="right menu" *ngIf="loginService.currentUser">
 
-<!--     <div *ngIf="loginService.currentUser" class="ui form">
+
+    <div class="item">
       <img class="ui avatar image " [src]="loginService.currentUser.photoUrl">
       <span>{{loginService.currentUser.username}}</span>
-      <button class="circular ui icon basic button" (click)="loginService.logout()">
-        <i class="icon power off"></i>
-      </button>
-    </div> -->
+    </div>
+
+
+    <a class="item" (click)="loginService.logout()">
+      Logout
+    </a>
+
+    </div>
+
+
 
 </div>

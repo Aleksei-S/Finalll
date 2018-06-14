@@ -93,7 +93,7 @@ var config = require('../config/keys');
 // 				let token = jwt.sign({data : user}, config.token.secretJWT, {
 // 					expiresIn: config.token.exp
 // 				});
-// 				res.redirect("/?token=" + token);
+// 				res.redirect("/login/?token=" + token);
 // 			});
 // 		} else {
 // 			let createUser = new User({
@@ -107,46 +107,47 @@ var config = require('../config/keys');
 // 				let token = jwt.sign({data : user}, config.token.secretJWT, {
 // 					expiresIn: config.token.exp
 // 				});
-// 				res.redirect("/?token=" + token);
+// 				res.redirect("/login/?token=" + token);
 // 			});
 // 		}
 // 	});
 // };
 
 
-// exports.loginWithFacebook = function (req, res, next) {
-//  console.log('req.body.loginWithFacebook   '+req.user.id);
-// 	User.findOne({socialNetworkId : 'facebookId_' + req.user.id}, function (err, user) {
-// 		if (err) { return res.status(400).json({success:false, message:'Error processing request '+err});}
-// 		if (user) {
-// 			console.log('loginWithFacebook!!!!' );
-// 			user.lastlogin = new Date();
-// 			user.save(function (err) {
-// 				if (err) { res.status(400).json({succes:false, message:'Error processing request '+err});}
-// 				let token = jwt.sign({data : user}, config.token.secretJWT, {
-// 					expiresIn: config.token.exp
-// 				});
-// 				res.redirect("/?token=" + token);
-// 			});
-// 		} else {
+exports.loginWithFacebook = function (req, res, next) {
+ console.log(req.body);
+	User.findOne({socialNetworkId : 'facebookId_' + req.user.id}, function (err, user) {
+		if (err) { return res.status(400).json({success:false, message:'Error processing request '+err});}
+		if (user) {
+			console.log('loginWithFacebook!!!!' );
+			user.lastlogin = new Date();
+			user.save(function (err) {
+				if (err) { res.status(400).json({succes:false, message:'Error processing request '+err});}
+				let token = jwt.sign({data : user}, config.token.secretJWT, {
+					expiresIn: config.token.exp
+				});
 
-// 			let createUser = new User({
-// 				username : req.user.displayName,
-// 				socialNetworkId : 'facebookId_' + req.user.id,
-// 				photoUrl : req.user.photos[0].value,
-// 				lastlogin : new Date()
-// 			});
-// 			createUser.save(function (err, user) {
-// 				if (err) { res.status(400).json({succes:false, message:'Error processing request! on save'+err});}
-// 				let token = jwt.sign({data : user}, config.token.secretJWT, {
-// 					expiresIn: config.token.exp
-// 				});
-//         console.log(token );
-// 				res.redirect("/?token=" + token);
-// 			});
-// 		}
-// 	});
-// };
+				res.redirect("/login/?token=" + token);
+			});
+		} else {
+console.log('NOT LOGIN!!!!' );
+			let createUser = new User({
+				username : req.user.displayName,
+				socialNetworkId : 'facebookId_' + req.user.id,
+				photoUrl : req.user.photos[0].value,
+				lastlogin : new Date()
+			});
+			createUser.save(function (err, user) {
+				if (err) { res.status(400).json({succes:false, message:'Error processing request! on save'+err});}
+				let token = jwt.sign({data : user}, config.token.secretJWT, {
+					expiresIn: config.token.exp
+				});
+        		console.log(token );
+				res.redirect("/login/?token=" + token);
+			});
+		}
+	});
+};
 
 
 
@@ -184,7 +185,7 @@ exports.loginWithGitHub = function (req, res, next) {
 				let token = jwt.sign({data : user}, config.token.secretJWT, {
 					expiresIn: config.token.exp
 				});
-				res.redirect("/login/?token=" + req.user);
+				res.redirect("/login/?token=" + token);
 			});
 		}
 	});
@@ -193,28 +194,29 @@ exports.loginWithGitHub = function (req, res, next) {
 
 
 
-// exports.authenticate = function (req, res, next) {
-// 	let token = req.headers['authorization'] || req.body.token;
-// 	console.log('authorization');
-// 	console.log(token);
-// 	if (token) {
-// 		jwt.verify(token, config.token.secretJWT, function (err, decoded) {
-// 			if (err) {
-// 				return res.status(201).json({success:false, message:'Auth token expired please login again '})
-// 			} else {
-// 				req.decoded = decoded;
-// 				console.log('next');
-// 				next();
-// 			}
-// 		});
-// 	} else {
-// 		return res.status(201).json({
-// 			success:false,
-// 			message:'fatal error, Auth token not available!!!&&',
-// 			errcode: 'no-token'
-// 		});
-// 	}
-// }
+exports.authenticate = function (req, res, next) {
+	let token = req.headers['authorization'] || req.body.token;
+	console.log('authorization');
+	// console.log(req.body);
+	// console.log(token);
+	if (token) {
+		jwt.verify(token, config.token.secretJWT, function (err, decoded) {
+			if (err) {
+				return res.status(201).json({success:false, message:'Auth token expired please login again '})
+			} else {
+				req.decoded = decoded;
+				console.log('next');
+				next();
+			}
+		});
+	} else {
+		return res.status(201).json({
+			success:false,
+			message:'fatal error, Auth token not available!!!&&',
+			errcode: 'no-token'
+		});
+	}
+}
 
 
 

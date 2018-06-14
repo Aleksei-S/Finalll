@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators, ValidationErrors } from '@angular/forms';
 import { Router, ActivatedRoute, Params, ParamMap} from '@angular/router';
+import { LoginService }  from './login.service';
+
 
 @Component({
   selector: 'app-login',
@@ -11,15 +13,17 @@ export class LoginComponent implements OnInit {
 
   public loginForm: FormGroup;
   private token: string;
-  constructor(private fb: FormBuilder, private route: ActivatedRoute) { }
+  constructor(private fb: FormBuilder, 
+              private route: ActivatedRoute, 
+              public loginService:LoginService) { }
 
   ngOnInit() {
- console.log("ngOnInit");
+
     this.token = this.route.snapshot.queryParams["token"];
     if (this.token) {
       console.log("this.token");
       console.log(this.token);
-      // this.loginService.getUser(this.token);
+      this.loginService.getUser(this.token);
       }
 
     // this.token = this.route.snapshot.queryParams["token"];

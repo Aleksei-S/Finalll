@@ -2,10 +2,11 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { NewsComponent } from './news.component';
 import { CreateNewsComponent } from './create-news/create-news.component';
+import { AuthGuard } from '../routing/auth.guard';
 
 const newsRoutes: Routes = [
-{ path: 'news', component: NewsComponent},
-{ path: 'news/createNews', component: CreateNewsComponent},
+{ path: 'news', component: NewsComponent,canActivate:[AuthGuard] },
+{ path: 'news/createNews', component: CreateNewsComponent, canActivate:[AuthGuard]},
 ];
 
 @NgModule({

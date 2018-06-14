@@ -1,6 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './routing/app-routing.module';
@@ -11,6 +13,8 @@ import { NewsModule } from './news/news.module';
 import { MainMapComponent } from './main-map/main-map.component';
 import { MainHeaderComponent } from './main-header/main-header.component';
 import { LoadMapService } from './main-map/load-map.service';
+import { JwtInterceptorProvider } from './routing/jwt.interceptor';
+import { AuthGuard } from './routing/auth.guard';
 //https://stackblitz.com/angular/omplpnlkrdx?file=src%2Fapp%2Fcrisis-center%2Fcrisis.service.ts
 
 @NgModule({
@@ -26,9 +30,11 @@ import { LoadMapService } from './main-map/load-map.service';
 		PlacesModule,
 		LoginModule,
 		HomeModule,
-		NewsModule
+		NewsModule,
+		HttpClientModule
+		
 	],
-	providers: [LoadMapService],
+	providers: [LoadMapService, JwtInterceptorProvider, AuthGuard],
 	bootstrap: [AppComponent]
 })
 export class AppModule { }
