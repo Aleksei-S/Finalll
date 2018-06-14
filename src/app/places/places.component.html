@@ -2,6 +2,7 @@
 
 
 
+<<<<<<< HEAD
 <div class="ui fluid action input">
      <input id = "searchBox" type="text" placeholder="Поиск мест..." />
      <div class="ui button"><i class="filter icon"></i></div>
@@ -14,6 +15,46 @@
 
 
 
+=======
+<div class="ui two column grid">
+	<div class="row">
+		<div class="column">
+
+			<div class="ui fluid category search">
+				<div class="ui icon input">
+					<input class="prompt" id = "searchBox" type="text" placeholder="Поиск мест..." />
+					<i class="search icon"></i>
+				</div>
+				<div class="results"></div>
+			</div>
+		</div>
+		<div class="column">
+			
+			<i class="filter icon"></i>
+			<div class="ui tiny compact menu">
+				<div class="ui simple dropdown item">
+					По дате начала
+					<i class="dropdown icon"></i>
+					<div class="menu">
+						<div class="item">По дате создания</div>
+						<div class="item">Ближайщие</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
+<div class="ui divider"></div>
+
+
+
+>>>>>>> eca8eff2c67b20df94dc8e114cf90bfb282746cb
 
 <div class="ui items" *ngFor="let place of places;let i = index"
 (mouseenter)="mouseHover(i, place)"
@@ -22,6 +63,7 @@
 [class.selectedMarker] = "i === indexSelectedMarker">
 
 
+<<<<<<< HEAD
      <div class="item">
 
 
@@ -47,6 +89,33 @@
 
 
      </div>
+=======
+	<div class="item">
+
+
+		<div class="content"> 
+			<a class="header">{{place.name}}</a>
+
+			<div class="meta">
+				<span *ngIf="place.rating">
+					<i class="star icon stars-outer" *ngFor="let star of [1,2,3,4,5]" 
+					[class.outline] = "(place.rating - star) < -0.21">
+					<i class="star half icon stars-inner" *ngIf="((+place.rating - star) < -0.20) && ((+place.rating - star) > -0.79 ) "></i></i>
+				{{place.rating}}   
+				</span>
+			</div>
+
+			<div class="extra">
+				{{place.formatted_address}}
+			</div>
+		</div>
+		<div class="image">
+			<img class="ui image" [src]="(place.photos) ? place.photos[0].getUrl({'maxWidth': 130, 'maxHeight': 130}) : ''">
+		</div>
+
+
+	</div>
+>>>>>>> eca8eff2c67b20df94dc8e114cf90bfb282746cb
 </div>
 
 
