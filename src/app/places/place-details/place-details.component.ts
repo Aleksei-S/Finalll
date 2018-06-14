@@ -17,15 +17,15 @@ export class PlaceDetailsComponent implements OnInit {
 	private subscriptionPlace: Subscription;
 	public placeId:any;
 	public placeDetail:any;
-	
+
 	constructor(private placesService:PlacesService,
 				private activatedRoute:ActivatedRoute,
 				private cdRef: ChangeDetectorRef) { }
 
 	ngOnInit() {
-		console.log( "PLACE DEATAILSS");
+		// console.log( "PLACE DEATAILSS");
 		this.subscriptionPlace = this.placesService.currentPlace$.subscribe((u) => {
-			console.log(u);
+			// console.log(u);
 			this.placeDetail = u;
 			this.cdRef.detectChanges();
 		});
@@ -34,10 +34,9 @@ export class PlaceDetailsComponent implements OnInit {
 		this.subscriptionMap = this.placesService.mapReady
 		.subscribe( (mission) => {
 			if(mission == true){
-				console.log("mapReadymapReadymapReady");
+				// console.log("mapReadymapReadymapReady");
 				this.activatedRoute.params.subscribe((u) => {
-					console.log(u);
-					console.log(u.placeId);
+					// console.log(u);
 					this.placesService.getDetails(u.placeId);
 
 				});

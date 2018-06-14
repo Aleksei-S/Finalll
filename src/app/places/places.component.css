@@ -1,4 +1,4 @@
-.list-place:hover {
+.items:hover {
   cursor: pointer;
   -webkit-transform:scale(1.03); /* Safari and Chrome */
   -moz-transform:scale(1.03); /* Firefox */
@@ -8,10 +8,10 @@
   /*transform:scaleY(1.05);*/
   /*box-shadow: 0 0 10px rgba(0, 0, 0, .5);*/
   /*transform: translateY(20px);*/
-  background-color: #F4F4F4;
+  background-color: #DBDBDB;
 }
 
-.list-place {
+.items {
   transform-style: preserve-3d;
   -webkit-transition: all 0.8s ease; /* Safari and Chrome */
   -moz-transition: all 0.8s ease; /* Firefox */
@@ -22,9 +22,16 @@
   /*transform-style: preserve-3d;*/
 }
 
+
+.items img{
+  max-height: 120px;
+}
+
+
 .selectedMarker {
-  background-color: #F4F4F4;
-   box-shadow: 0 0 10px rgba(0, 0, 0, .5);
+  background-color: #DBDBDB;
+  /*transform:scale(1.03);*/
+  transform: translateY(-10px);
 }
 
 

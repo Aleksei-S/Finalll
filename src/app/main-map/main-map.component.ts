@@ -39,7 +39,7 @@ export class MainMapComponent implements OnInit {
         this.rightClickOnMarker = this.placesService.emitRightClickOnMarker.subscribe({
             next: (arg) => {
                 this.contextMenuOn(arg.event.Ha.pageX, arg.event.Ha.pageY);
-                console.log(arg.placeId);
+                // console.log(arg.placeId);
                 this.curentPlaceId = arg.placeId;
                 this.placeForContextMenu = arg.marker;
             }
@@ -67,9 +67,7 @@ export class MainMapComponent implements OnInit {
         });
 
         this.placesService.map.addListener('click',(e)=>{
-          console.log(' MAP MAPMAPMAP');
             if (e.placeId) {
-                console.log(' MAP click click');
                 e.stop();
                 this.placesService.deleteMarkers();
                 this.placesService.addMarker(e);

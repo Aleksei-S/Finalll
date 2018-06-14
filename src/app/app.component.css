@@ -13,7 +13,8 @@
 .menu-segment{
   height: 100%;
   /*background-color: red;*/
-   overflow-y:auto;
+   overflow-y: auto;
    overflow-x: hidden;
+
 /*  white-space:nowrap;*/
 }

@@ -1,81 +1,86 @@
 
-<div *ngIf = "placeDetail" >
-	<form class="ui form">
-		<div class="field">
-			<a class="button-actions" [routerLink]="['/places']"> Назад к результатам</a>
-		</div>
 
 
 
-<!-- 		<div class="field" *ngFor="let photo of placeDetail.photoUrlarr;let i = index">
-			<img class="ui image" [src]="photo">
-		</div>
- -->
-    <div class="field">
-      <app-slider [photoArr] = "placeDetail.photoUrlarr">
-      </app-slider>
-    </div>
+<div class="ui items" *ngIf = "placeDetail" >
+     <div class="item">
+          <a class="button-actions" [routerLink]="['/places']"> Назад к результатам</a>
+     </div>
+
+     <div class="item">
+          <app-slider [photoArr] = "placeDetail.photoUrlarr">
+          </app-slider>
+     </div>
 
 
+     <div class="item">
+          <div class="content">
+               <a class="header">{{placeDetail.name}}</a>
 
+               <div class="meta">
+                    <LABEL>Адрес : </LABEL>
+                    {{placeDetail.adress}}
+               </div>
 
-		<div class="field">
-			<h3>{{placeDetail.name}}</h3>
-		</div>
-		<div class="field">
-			<LABEL>Адрес:</LABEL>
-			<p>{{placeDetail.adress}}</p>
-		</div>
-		<div class="field" >
-			<LABEL>Телефонный Номер</LABEL>
-			<p>{{placeDetail.phone_number}}</p>
-		</div>
-		<div class="field" >
-			<LABEL>Рейтинг google</LABEL>
-			<p>{{placeDetail.rate}}</p>
-		</div>
-		<div class="field">
+               <div class="meta">
+                    <LABEL>Рейтинг google</LABEL>
+                    <p>{{placeDetail.rate}}</p>
+               </div>
 
-			<!-- КАМЕНТАРИИ -->
-			<a class="button-actions" (click) = "showAddcomments = !showAddcomments" >Показать коментарии</a>
-			<div class="ui" [hidden]="!showAddcomments" >
-				<form class="ui reply form">
-					<div class="field">
-						<textarea rows="2"></textarea>
-					</div>
-					<div class="ui primary submit labeled icon button">
-						<i class="icon edit"></i> Add Comment
-					</div>
-				</form>
-
-				<div class="ui comments">
-					<!-- comment -->
-					<div class="comment">
-						<a class="avatar">
-							<img src="">
-						</a>
-						<div class="content">
-							<a class="author">author  author</a>
-							<div class="metadata">
-								<div class="date">1 day ago</div>
-							</div>
-							<div class="text">
-								<p>ТЕКСТ  ТЕКСТ  ТЕКСТ  ТЕКСТ</p>
-							</div>
-							<div class="actions">
-								<a class="reply">Reply</a>
-							</div>
-						</div>
-					</div>
-					<!-- comment -->
-				</div>
-			</div>
-			<!-- КАМЕНТАРИИ -->
-
-		</div>
-	</form>
-
+               <div class="meta">
+                    <LABEL>Телефонный Номер</LABEL>
+                    <p>{{placeDetail.phone_number}}</p>
+               </div>
+     </div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+<!-- КАМЕНТАРИИ -->
+<a class="button-actions" (click) = "showAddcomments = !showAddcomments" >Показать коментарии</a>
+<div class="ui" [hidden]="!showAddcomments" >
+     <form class="ui reply form">
+          <div class="field">
+               <textarea rows="2"></textarea>
+          </div>
+          <div class="ui primary submit labeled icon button">
+               <i class="icon edit"></i> Add Comment
+          </div>
+     </form>
+
+     <div class="ui comments">
+          <!-- comment -->
+          <div class="comment">
+               <a class="avatar">
+                    <img src="">
+               </a>
+               <div class="content">
+                    <a class="author">author  author</a>
+                    <div class="metadata">
+                         <div class="date">1 day ago</div>
+                    </div>
+                    <div class="text">
+                         <p>ТЕКСТ  ТЕКСТ  ТЕКСТ  ТЕКСТ</p>
+                    </div>
+                    <div class="actions">
+                         <a class="reply">Reply</a>
+                    </div>
+               </div>
+          </div>
+          <!-- comment -->
+     </div>
+</div>
+<!-- КАМЕНТАРИИ -->
+
+
 
 <button (click) = "bclick()" >click</button>
 

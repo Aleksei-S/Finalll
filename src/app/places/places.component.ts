@@ -48,7 +48,7 @@ constructor(
 }
 
 ngOnInit() {
-    console.log('OnInit!!!!!  component');
+    // console.log('OnInit!!!!!  component');
 
 if (this.placesService.listPlaces.length != 0) {
     this.places$.next(this.placesService.listPlaces);
@@ -75,9 +75,8 @@ if (this.placesService.listPlaces.length != 0) {
         (mission) => {
             if(mission == true){
 
-                console.log('LoadMapService LoadMapService');
+                // console.log('LoadMapService LoadMapService');
                 let input = document.getElementById('searchBox');
-                // let output = document.getElementById('searchBoxOutput');
                 var searchBox = new google.maps.places.SearchBox(input);
 searchBox.setBounds(this.placesService.map.getBounds());
             // this.placesService.map.controls[google.maps.ControlPosition.TOP_RIGHT].push(output);
@@ -87,12 +86,12 @@ searchBox.setBounds(this.placesService.map.getBounds());
                 searchBox.setBounds(this.placesService.map.getBounds());
             });
             searchBox.addListener('places_changed', () =>{
-              console.log('places_changed');
+              // console.log('places_changed');
                 let places = searchBox.getPlaces();
                 this.places$.next(places);
                 this.placesService.listPlaces = places;
 
-                console.log(places);
+                // console.log(places);
                 if (places.length == 0) {
                     return;
                 }

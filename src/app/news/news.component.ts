@@ -14,13 +14,13 @@ export class NewsComponent implements OnInit {
 
   private subscriptionMap: Subscription;
   private subscriptionNews: Subscription;
-public fruits = [];
+  public fruits = [];
 
-public message: any;
-public subscription: Subscription;
+  public message: any;
+  public subscription: Subscription;
 
 
-heroes$: Observable<NEWS[]>;
+  heroes$: Observable<NEWS[]>;
 
 
 
@@ -32,30 +32,28 @@ heroes$: Observable<NEWS[]>;
               private newsService:NewsService,) {}
 
   ngOnInit() {
-  	console.log('OnInit!!!!!  NEWS NEWS NEWS');
+  	// console.log('OnInit!!!!!  NEWS NEWS NEWS');
     this.subscriptionMap = this.placesService.mapReady
     .subscribe(
       (mission) => {
         if(mission == true){
-          console.log('NEWS NEWS MAP READY');
+          // console.log('NEWS NEWS MAP READY');
         }
       });
 
 
-    this.heroes$ = this.newsService.getNews();
+  this.heroes$ = this.newsService.getNews();
+
+// this.heroes$ = this.newsService.getNews()
+// .subscribe((e)=> {});
 
 
-
-
-
-
-  }
+}
 
 
 
   bclick(){
-    console.log(this.newsService.fruits);
-    // console.log(this.message);
+
   }
 
 

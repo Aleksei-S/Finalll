@@ -1,181 +1,21 @@
-<p>
-  news works!
-</p>
-
-<form class="ui form">
-  <div class="fields">
-    <div class="field">
-     <button type="button" [routerLink]="['createNews']">Создать Новость</button>
-   </div>
- </div>
-</form>
 
 
 
-
-
-
-
-
-<div class="ui items">
-  <div class="item">
-    <div class="image">
-      <img src="/images/wireframe/image.png">
-    </div>
-    <div class="content">
-      <a class="header">Header</a>
-      <div class="meta">
-        <span>Description</span>
-      </div>
-      <div class="description">
-        <p></p>
-      </div>
-      <div class="extra">
-        Additional Details
-      </div>
-    </div>
+<div class="ui stackable two column grid">
+  <div class="column">
+      <button class=" tiny ui button" [routerLink]="['createNews']">Создать Новость</button>
   </div>
-  <div class="item">
-    <div class="image">
-      <img src="/images/wireframe/image.png">
-    </div>
-    <div class="content">
-      <a class="header">Header</a>
-      <div class="meta">
-        <span>Description</span>
-      </div>
-      <div class="description">
-        <p></p>
-      </div>
-      <div class="extra">
-        Additional Details
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<div class="ui comments">
-  <h3 class="ui dividing header">Comments</h3>
-  <div class="comment">
-    <a class="avatar">
-      <img src="/images/avatar/small/matt.jpg">
-    </a>
-    <div class="content">
-      <a class="author">Matt</a>
-      <div class="metadata">
-        <span class="date">Today at 5:42PM</span>
-      </div>
-      <div class="text">
-        How artistic!
-      </div>
-      <div class="actions">
-        <a class="reply">Reply</a>
-      </div>
-    </div>
-  </div>
-  <div class="comment">
-    <a class="avatar">
-      <img src="/images/avatar/small/elliot.jpg">
-    </a>
-    <div class="content">
-      <a class="author">Elliot Fu</a>
-      <div class="metadata">
-        <span class="date">Yesterday at 12:30AM</span>
-      </div>
-      <div class="text">
-        <p>This has been very useful for my research. Thanks as well!</p>
-      </div>
-      <div class="actions">
-        <a class="reply">Reply</a>
-      </div>
-    </div>
-    <div class="comments">
-      <div class="comment">
-        <a class="avatar">
-          <img src="/images/avatar/small/jenny.jpg">
-        </a>
-        <div class="content">
-          <a class="author">Jenny Hess</a>
-          <div class="metadata">
-            <span class="date">Just now</span>
-          </div>
-          <div class="text">
-            Elliot you are always so right :)
-          </div>
-          <div class="actions">
-            <a class="reply">Reply</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="comment">
-    <a class="avatar">
-      <img src="/images/avatar/small/joe.jpg">
-    </a>
-    <div class="content">
-      <a class="author">Joe Henderson</a>
-      <div class="metadata">
-        <span class="date">5 days ago</span>
-      </div>
-      <div class="text">
-        Dude, this is awesome. Thanks so much
-      </div>
-      <div class="actions">
-        <a class="reply">Reply</a>
-      </div>
-    </div>
-  </div>
-  <form class="ui reply form">
-    <div class="field">
-      <textarea></textarea>
-    </div>
-    <div class="ui blue labeled submit icon button">
-      <i class="icon edit"></i> Add Reply
-    </div>
-  </form>
-</div>
-
-
-
-<div class="ui card">
-  <div class="content">
-    <div class="header">Cute Dog</div>
-    <div class="meta">
-      <span class="right floated time">2 days ago</span>
-      <span class="category">Animals</span>
-    </div>
-    <div class="description">
-      <p></p>
-    </div>
-  </div>
-  <div class="extra content">
-    <div class="right floated author">
-      <img class="ui avatar image" src="/images/avatar/small/matt.jpg"> Matt
-    </div>
-  </div>
-</div>
-
-
-<div class="ui card">
-  <div class="content">
-    <i class="right floated like icon"></i>
-    <i class="right floated star icon"></i>
-    <div class="header">Cute Dog</div>
-    <div class="description">
-      <p></p>
-    </div>
-  </div>
-  <div class="extra content">
-    <span class="left floated like">
-      <i class="like icon"></i>
-      Like
-    </span>
-    <span class="right floated star">
-      <i class="star icon"></i>
-      Favorite
-    </span>
+  <div class="column">
+                  <div class="ui tiny compact menu ">
+                        <div class="ui simple dropdown item">
+                              По дате начала
+                              <i class="dropdown icon"></i>
+                              <div class="menu">
+                                    <div class="item">По дате создания</div>
+                                    <div class="item">Ближайщие</div>
+                              </div>
+                        </div>
+                  </div>
   </div>
 </div>
 
@@ -183,31 +23,47 @@
 
 
 
-<!--
 
 
+<div class="ui divider"></div>
 
-<div class="ui" *ngFor="let hero of heroes$ | async">
+<div class="ui items" *ngFor="let hero of heroes$ | async">
 
-  <form class="ui form">
-    <div class="ui" *ngFor="let hero of heroes$ | async">
-      <div class="fields">
-        <div class="nine wide field">
-          <label>{{hero.name}}</label>
-          <br><p>{{hero.dateTimeEvent}}</p>
-          <br><p>{{hero.adress}}</p>
-          <br><p>{{hero.description}}</p>
-        </div>
-        <div class="seven wide field">
-
-          <img class="ui image" [src]="hero.photoUrl">
-        </div>
+      <div class="item">
+            <div class="content">
+                  <img class="ui mini right spaced image" src="https://telegraf.com.ua/files/2018/02/1-3268.jpg">
+                  <span>Username</span>
+                  <span class="right floated time">2 days ago</span>
+            </div>
       </div>
-    </div>
-  </form>
- -->
+
+      <div class="item">
+            <div class="content">
+                  <a class="header">{{hero.name}}</a>
+                  <div class="meta">
+                        <span class="left time">
+                              <i class="calendar alternate outline icon"></i>
+                              {{hero.dateTimeEvent | date: 'dd/MM/yyyy H-m'}}
+                        </span>
+                  </div>
+                  <div class="meta">
+                        <span class="left time">
+                              <i class="map marker alternate icon"></i>
+                              {{ hero.adress | slice:0:hero.adress.indexOf(',')}}
+                        </span>
+                  </div>
+                  <div class="extra">
+                        {{hero.description}}
+                  </div>
+            </div>
+            <div class="image">
+                  <img src="https://telegraf.com.ua/files/2018/02/1-3268.jpg">
+            </div>
+      </div>
+</div>
 
 
 
 
-  <button (click) = "bclick()" >click</button>
+
+
