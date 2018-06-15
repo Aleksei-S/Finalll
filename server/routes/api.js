@@ -24,22 +24,13 @@ router.get('/', function(req, res, next) {
 
 
 
-// /////////// 	news
-// router.post('/news', newsFeed.createNews);
-// router.get('/news', newsFeed.getAllNews);
-// router.get('/news/:id', newsFeed.getnewsFeedDetails);
+
 
 
 //////<<<<<<<<SOCIAL NET>>>>>>>///////   api/auth/
-
-
-
-
-
-
-// router.get('/auth/google', passport.authenticate('google',{
-// 	scope:['profile']
-// }));
+router.get('/auth/google', passport.authenticate('google',{
+	scope:['profile']
+}));
 
 router.get('/auth/github', passport.authenticate('github',{
 	scope:['profile']
@@ -49,9 +40,10 @@ router.get('/auth/facebook', passport.authenticate('facebook',{
 	scope: ['publish_actions']
 }));
 
-// router.get('/auth/google/redirect', passport.authenticate('google'), user.loginWithGoogle);
-router.get('/auth/github/redirect', passport.authenticate('github'), user.loginWithGitHub);
-router.get('/auth/facebook/redirect', passport.authenticate('facebook'), user.loginWithFacebook);
+router.get('/auth/google/redirect', passport.authenticate('google'), user.loginWithSocialNetwork);
+router.get('/auth/github/redirect', passport.authenticate('github'), user.loginWithSocialNetwork);
+router.get('/auth/facebook/redirect', passport.authenticate('facebook'), user.loginWithSocialNetwork);
+//////<<<<<<<<SOCIAL NET>>>>>>>///////   api/auth/
 
 
 router.post('/getUser', user.authenticate, function(req, res, next) {
@@ -63,6 +55,24 @@ router.post('/getUser', user.authenticate, function(req, res, next) {
 		});
 
 });
+
+
+
+///////////   NEWS ////////////////
+router.post('/createNews', user.authenticate, newsFeed.createNews);
+router.get('/getNews', newsFeed.getAllNews);
+// router.get('/news/:id', newsFeed.getNewsDetails);
+
+
+// router.post('/createNews', function(req, res, next) {
+//     console.log(req);
+//   console.log(req.news);
+// console.log(req.body);
+//   console.log(req.user);
+//   res.send({ff:'fffffff'});
+
+// });
+
 
 
 

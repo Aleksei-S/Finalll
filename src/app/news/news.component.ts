@@ -22,10 +22,10 @@ export class NewsComponent implements OnInit {
 
   heroes$: Observable<NEWS[]>;
 
+ newsArr: any[];
 
 
-
-
+//https://stackblitz.com/angular/ebmyakqmmgg?file=src%2Fapp%2Fheroes%2Fheroes.component.ts
 
 
   constructor(private placesService:PlacesService,
@@ -37,18 +37,35 @@ export class NewsComponent implements OnInit {
     .subscribe(
       (mission) => {
         if(mission == true){
+
+
+
+
           // console.log('NEWS NEWS MAP READY');
         }
       });
 
-
-  this.heroes$ = this.newsService.getNews();
-
-// this.heroes$ = this.newsService.getNews()
-// .subscribe((e)=> {});
-
+this.getNews();
 
 }
+
+
+
+
+
+getNews(): void{
+this.newsService.getNews().subscribe(newsArr => this.newsArr = newsArr);
+}
+
+
+
+
+
+
+
+
+
+
 
 
 

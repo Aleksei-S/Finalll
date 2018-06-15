@@ -83,9 +83,7 @@ export class CreateNewsComponent implements OnInit {
 
     /////////* Обработка данных формы *//////////
     console.log(this.newsForm.value);
-
-    // this.newsService.createNews(this.newsForm.value);
-    this.newsService.sendMessage(this.newsForm.value);
+    this.newsService.createNews(this.newsForm.value);
 
 
 }

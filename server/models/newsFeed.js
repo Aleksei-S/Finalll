@@ -3,28 +3,37 @@ var Schema = mongoose.Schema;
 
 
 var newsSchema = new Schema({
-  createdUser : {
+  createdUserId : {
     type: String,
     required: true
   },
-  topic : {
-    type: String,
+  createDate : {
+    type: Date,
+    default: Date.now,
     required: true
   },
-  description : {
+  topicNews : {
     type: String,
     required: true
   },
   photoUrl : {
     type: String
   },
-  dateEvent : {
+  dateTimeEvent : {
     type: Date
   },
-  createDate : {
-    type: Date,
-    default: Date.now
+  adress : {
+    type: String,
+    required: true
+  },
+  place_id : {
+    type: String,
+    required: true
+  },
+  description : {
+    type: String
   }
+
 });
 
 exports.NewsFeed = mongoose.model('NewsFeed', newsSchema);

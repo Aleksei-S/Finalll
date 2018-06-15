@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject }    from 'rxjs/BehaviorSubject';
 import { Subject }    from 'rxjs/Subject';
-
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 export class NEWS {
-    constructor(
+  constructor(
         // public datetimeCreate: Date,
         // public userId: string,
         public name: string,
@@ -40,58 +40,70 @@ export class NewsService {
 // public arrNews$: Subject<NEWS> = new Subject<NEWS>();
  // public News$: BehaviorSubject<any> = new BehaviorSubject<any>([]);
  // public arrNews$: Subject<NEWS> = new Subject<NEWS>();
-public fruits = [];
-private subject = new Subject<any>();
-  constructor() { }
+ public fruits = [];
+ private subject = new Subject<any>();
+ constructor(private http: HttpClient) { }
 
 
 
+  // getHeroes(): Observable<any[]> {
+  //   // TODO: send the message _after_ fetching the heroes
+  //   this.messageService.add('HeroService: fetched heroes');
+  //   return of(HEROES);
+  // }
 
 
 
+ getNews(): Observable<any> {
+   // return Observable.of(arrNEEWS);
+let headers = new HttpHeaders({'Content-Type':'application/json'});
+let options = {headers:headers};
+    return  this.http.get('/api/getNews', options);
+ }
 
-  getNews() {
-    return Observable.of(arrNEEWS);
-  }
-
-  getOneNews(id: number | string) {
-    return this.getNews()
+ getOneNews(id: number | string) {
+   return this.getNews()
       // (+) before `id` turns the string into a number
       // .map(heroes => heroes.find(hero => hero.id === +id));
-  }
+    }
+
+
+
+// addHero (hero: Hero): Observable<Hero> {
+//   return this.http.post<Hero>(this.heroesUrl, hero, httpOptions).pipe(
+//     tap((hero: Hero) => this.log(`added hero w/ id=${hero.id}`)),
+//     catchError(this.handleError<Hero>('addHero'))
+//   );
+// }
 
 
 
 
 
+createNews(news:NEWS){
+  console.log(news);
+  let headers = new HttpHeaders({'Content-Type':'application/json'});
+  let options = {headers:headers};
+  this.http.post('/api/createNews', news, options )
+  .subscribe((response: any) => {
+    console.log(response);
+       // if (response.success) {
+       //   console
+       // }
+     });
 
 
-
-
-
-
-
-
-
-    createNews(news:NEWS){
-      //     this.arrNews$.next(news);
-      // this.currentNews = new Observable(observer =>
-      //     observer.next(news)
-      //     // { setTimeout(() =>{
-      //     //      observer.next(news);
-      //     // }, 2000); });
-      //     );
-      }
+}
 
 
 sendMessage(message: any) {
-        console.log(message);
-        this.fruits.push(message);
-        this.subject.next( message );
-    }
-    getMessage(): Observable<any> {
-        return this.subject;
-    }
+  console.log(message);
+  this.fruits.push(message);
+  this.subject.next( message );
+}
+getMessage(): Observable<any> {
+  return this.subject;
+}
 // COMPONENT
 //     sendMessage(): void {
 //         // send message to subscribers via observable subject
@@ -115,15 +127,15 @@ sendMessage(message: any) {
 
 
 
-    getAllNews(){
+getAllNews(){
 
-    }
-    editNews(){
+}
+editNews(){
 
-    }
+}
 
-    deleteNews(){
+deleteNews(){
 
-    }
+}
 
 }

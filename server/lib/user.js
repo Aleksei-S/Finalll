@@ -78,125 +78,55 @@ var config = require('../config/keys');
 // };
 
 
-// exports.loginWithGoogle = function (req, res, next) {
-// 	console.log('req.body.idGoogle'+req.user.id);
-// logWithSocialNetwork('google');
-// 	User.findOne({socialNetworkId : 'googleId_' + req.user.id}, function (err, user) {
-// 		if (err) { return res.status(400).json({success:false, message:'Error processing request '+err});}
-// 		if (user) {
-// 			//passwprd crypt
-// 			//update last date visit
-// 			console.log('loginWithGoogle!!!!' );
-// 			user.lastlogin = new Date();
-// 			user.save(function (err) {
-// 				if (err) { res.status(400).json({succes:false, message:'Error processing request '+err});}
-// 				let token = jwt.sign({data : user}, config.token.secretJWT, {
-// 					expiresIn: config.token.exp
-// 				});
-// 				res.redirect("/login/?token=" + token);
-// 			});
-// 		} else {
-// 			let createUser = new User({
-// 				username : req.user.displayName,
-// 				socialNetworkId : 'googleId_' + req.user.id,
-// 				photoUrl : req.user.photos[0].value,
-// 				lastlogin : new Date()
-// 			});
-// 			createUser.save(function (err, user) {
-// 				if (err) { res.status(400).json({succes:false, message:'Error processing request! on save'+err});}
-// 				let token = jwt.sign({data : user}, config.token.secretJWT, {
-// 					expiresIn: config.token.exp
-// 				});
-// 				res.redirect("/login/?token=" + token);
-// 			});
-// 		}
-// 	});
-// };
 
 
-exports.loginWithFacebook = function (req, res, next) {
- console.log(req.body);
-	User.findOne({socialNetworkId : 'facebookId_' + req.user.id}, function (err, user) {
-		if (err) { return res.status(400).json({success:false, message:'Error processing request '+err});}
-		if (user) {
-			console.log('loginWithFacebook!!!!' );
-			user.lastlogin = new Date();
-			user.save(function (err) {
-				if (err) { res.status(400).json({succes:false, message:'Error processing request '+err});}
-				let token = jwt.sign({data : user}, config.token.secretJWT, {
-					expiresIn: config.token.exp
-				});
+exports.loginWithSocialNetwork = function (req, res, next) {
 
-				res.redirect("/login/?token=" + token);
-			});
-		} else {
-console.log('NOT LOGIN!!!!' );
-			let createUser = new User({
-				username : req.user.displayName,
-				socialNetworkId : 'facebookId_' + req.user.id,
-				photoUrl : req.user.photos[0].value,
-				lastlogin : new Date()
-			});
-			createUser.save(function (err, user) {
-				if (err) { res.status(400).json({succes:false, message:'Error processing request! on save'+err});}
-				let token = jwt.sign({data : user}, config.token.secretJWT, {
-					expiresIn: config.token.exp
-				});
-        		console.log(token );
-				res.redirect("/login/?token=" + token);
-			});
-		}
-	});
-};
-
-
-
-
-
-
-exports.loginWithGitHub = function (req, res, next) {
-
-	console.log(req.user.id);
-	console.log(req.user.username);
-	console.log(req.user.photos[0].value);
-	User.findOne({socialNetworkId : 'gitHubId_' + req.user.id}, function (err, user) {
-		if (err) { return res.status(400).json({success:false, message:'Error processing request '+err});}
-		if (user) {
-			//update last date visit
-			console.log('loginWithGitHub!!!!' );
-			user.lastlogin = new Date();
-			user.save(function (err) {
-				if (err) { res.status(400).json({succes:false, message:'Error processing request '+err});}
-				let token = jwt.sign({data : user}, config.token.secretJWT, {
-					expiresIn: config.token.exp
-				});
-				res.redirect("/login/?token=" + token);
-			});
-		} else {
+console.log(req.user.provider);
+console.log(req.user.id);
+let socialNetwork = req.user.provider + 'Id_';
+  User.findOne({socialNetworkId : socialNetwork + req.user.id}, function (err, user) {
+    if (err) { return res.status(400).json({success:false, message:'Error processing request '+err});}
+    if (user) {
+      //update last date visit
+      console.log(socialNetwork );
+      user.lastlogin = new Date();
+      user.save(function (err) {
+        if (err) { res.status(400).json({succes:false, message:'Error processing request '+err});}
+        let token = jwt.sign({data : user}, config.token.secretJWT, {
+          expiresIn: config.token.exp
+        });
+        res.redirect("/login/?token=" + token);
+      });
+    } else {
       console.log('NOT LOGIN!!!!' );
-			let createUser = new User({
-				username : req.user.username,
-				socialNetworkId : 'gitHubId_' + req.user.id,
-				photoUrl : req.user.photos[0].value,
-				lastlogin : new Date()
-			});
-			createUser.save(function (err, user) {
-				if (err) { res.status(400).json({succes:false, message:'Error processing request! on save '+err});}
-				let token = jwt.sign({data : user}, config.token.secretJWT, {
-					expiresIn: config.token.exp
-				});
-				res.redirect("/login/?token=" + token);
-			});
-		}
-	});
+      let createUser = new User({
+        username : req.user.username,
+        socialNetworkId : socialNetwork + req.user.id,
+        photoUrl : req.user.photos[0].value,
+        lastlogin : new Date()
+      });
+      createUser.save(function (err, user) {
+        if (err) { res.status(400).json({succes:false, message:'Error processing request! on save '+err});}
+        let token = jwt.sign({data : user}, config.token.secretJWT, {
+          expiresIn: config.token.exp
+        });
+        res.redirect("/login/?token=" + token);
+      });
+    }
+  });
 };
-
 
 
 
 exports.authenticate = function (req, res, next) {
+  console.log(  req.user);
+  // console.log(  req.body);
+
 	let token = req.headers['authorization'] || req.body.token;
 	console.log('authorization');
+  // console.log(  req.headers);
+
 	// console.log(req.body);
 	// console.log(token);
 	if (token) {
@@ -217,6 +147,11 @@ exports.authenticate = function (req, res, next) {
 		});
 	}
 }
+
+
+
+
+
 
 
 

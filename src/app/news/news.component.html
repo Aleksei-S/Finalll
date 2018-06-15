@@ -19,13 +19,13 @@
 
 <div class="ui divider"></div>
 
-<div class="ui items" *ngFor="let hero of heroes$ | async">
-	
+<div class="ui items" *ngFor="let news of newsArr">
+
 	<div class="item">
 		<div class="content">
 			<img class="ui mini right spaced image" src="https://telegraf.com.ua/files/2018/02/1-3268.jpg">
 			<span>Username</span>
-			<span class="right floated time">2 days ago</span>      
+			<span class="right floated time">2 days ago</span>
 		</div>
 	</div>
 
@@ -33,21 +33,21 @@
 
       <div class="item">
             <div class="content">
-                  <a class="header">{{hero.name}}</a>
+                  <a class="header">{{news.name}}</a>
                   <div class="meta">
                         <span class="left time">
                               <i class="calendar alternate outline icon"></i>
-                              {{hero.dateTimeEvent | date: 'dd/MM/yyyy H-m'}}
+                              {{news.dateTimeEvent | date: 'dd/MM/yyyy H-m'}}
                         </span>
                   </div>
                   <div class="meta">
                         <span class="left time">
                               <i class="map marker alternate icon"></i>
-                              {{ hero.adress | slice:0:hero.adress.indexOf(',')}}
+                              {{ news.adress | slice:0:news.adress.indexOf(',')}}
                         </span>
                   </div>
                   <div class="extra">
-                        {{hero.description}}
+                        {{news.description}}
                   </div>
             </div>
             <div class="image">

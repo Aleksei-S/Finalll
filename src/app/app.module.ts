@@ -13,8 +13,11 @@ import { NewsModule } from './news/news.module';
 import { MainMapComponent } from './main-map/main-map.component';
 import { MainHeaderComponent } from './main-header/main-header.component';
 import { LoadMapService } from './main-map/load-map.service';
-import { JwtInterceptorProvider } from './routing/jwt.interceptor';
+
 import { AuthGuard } from './routing/auth.guard';
+
+ import { JwtInterceptorProvider } from './routing/jwt.interceptor';
+
 //https://stackblitz.com/angular/omplpnlkrdx?file=src%2Fapp%2Fcrisis-center%2Fcrisis.service.ts
 
 @NgModule({
@@ -32,9 +35,9 @@ import { AuthGuard } from './routing/auth.guard';
 		HomeModule,
 		NewsModule,
 		HttpClientModule
-		
+
 	],
-	providers: [LoadMapService, JwtInterceptorProvider, AuthGuard],
+	providers: [LoadMapService, JwtInterceptorProvider, AuthGuard], //JwtInterceptorProvider
 	bootstrap: [AppComponent]
 })
 export class AppModule { }

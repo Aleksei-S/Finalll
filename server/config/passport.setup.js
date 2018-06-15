@@ -1,5 +1,5 @@
 var passport = require('passport');
-// var GoogleStrategy = require('passport-google-oauth20');
+var GoogleStrategy = require('passport-google-oauth20');
 // var TokenFacebookStrategy = require('passport-facebook-token');
 var FacebookStrategy = require('passport-facebook').Strategy;
 var GitHubStrategy = require('passport-github').Strategy;
@@ -24,15 +24,15 @@ passport.deserializeUser(function(user, done) {
 
 });
 
-// passport.use(new GoogleStrategy({
-// 	clientID: keys.google.clientID,
-// 	clientSecret: keys.google.clientSecret,
-// 	callbackURL: "/api/auth/google/redirect"
-// },
-// 	function(accessToken, refreshToken, profile, done) {
-// 	return done(null, profile);
-// 	}
-// ));
+passport.use(new GoogleStrategy({
+	clientID: keys.google.clientID,
+	clientSecret: keys.google.clientSecret,
+	callbackURL: "/api/auth/google/redirect"
+},
+	function(accessToken, refreshToken, profile, done) {
+	return done(null, profile);
+	}
+));
 
 
 passport.use(new FacebookStrategy({

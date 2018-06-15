@@ -14,23 +14,23 @@
 
 
 	<div class="ui hidden divider">
-		
+
 	</div>
-	
+
 	<div class="item">
 		<div class="content">
 			<a class="header">{{loginService.currentUser.username}}</a>
 
 			<div class="meta">
-				<i class="clock outline icon"></i>		
+				<i class="clock outline icon"></i>
 
 				<span >
-					{{loginService.currentUser.lastlogin | date: 'dd MMMM yyyy H-m'}}
+					{{loginService.currentUser.lastlogin | date: 'dd MMMM yyyy HH-mm'}}
 				</span>
 			</div>
 
 			<div class="extra">
-				Непросмотренных новостей 
+				Непросмотренных новостей
 			</div>
 		</div>
 	</div>

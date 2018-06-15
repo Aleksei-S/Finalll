@@ -27,7 +27,7 @@ public currentUser: USER;
     this.http.post('/api/getUser', JSON.stringify({token : jwtToken}), options )
     .subscribe((response: any) => {
       // console.log(response);
-       if (response.success) {    
+       if (response.success) {
           this.currentUser = <USER>response.user;
           console.log(this.currentUser);
           let userObj: any = {};
