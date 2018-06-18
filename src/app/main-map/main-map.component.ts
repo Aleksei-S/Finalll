@@ -67,8 +67,14 @@ export class MainMapComponent implements OnInit {
         });
 
         this.placesService.map.addListener('click',(e)=>{
+            console.log('click');
+            // this.placesService.preventLeftclick ? return : "";
+            // условие ? значение1 : значение2
             if (e.placeId) {
                 e.stop();
+                if (this.placesService.preventLeftclick) {
+                    return
+                }
                 this.placesService.deleteMarkers();
                 this.placesService.addMarker(e);
             }

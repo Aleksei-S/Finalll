@@ -31,6 +31,7 @@ export class PlacesService {
     public mapReady: BehaviorSubject<any> = new BehaviorSubject<any>(false);
     public currentPlace$ : BehaviorSubject<Places> = new BehaviorSubject<Places>(new Places ('', '','' , [], '', {}));
     public emitRightClickOnMarker = new EventEmitter();
+    public preventLeftclick = false;
 
     constructor(public router:Router,
         private zone: NgZone) {}
@@ -87,8 +88,8 @@ deleteMarkers(){
 }
 
 addMarker(e){
-    console.log("addMarker");
-console.log(e);
+// console.log("addMarker");
+// console.log(e);
     if (e.placeId || e.place_id) {
 
         let marker = new this.google.maps.Marker({
@@ -100,6 +101,7 @@ console.log(e);
             this.emitRightClickOnMarker.emit({'marker':marker, 'event':event, 'placeId':e.placeId || e.place_id});
         });
         this.markers.push(marker);
+        return marker;
     }
 
 }

@@ -84,6 +84,7 @@ exports.loginWithSocialNetwork = function (req, res, next) {
 
 console.log(req.user.provider);
 console.log(req.user.id);
+console.log(req.user);
 let socialNetwork = req.user.provider + 'Id_';
   User.findOne({socialNetworkId : socialNetwork + req.user.id}, function (err, user) {
     if (err) { return res.status(400).json({success:false, message:'Error processing request '+err});}
@@ -101,7 +102,7 @@ let socialNetwork = req.user.provider + 'Id_';
     } else {
       console.log('NOT LOGIN!!!!' );
       let createUser = new User({
-        username : req.user.username,
+        username : req.user.username || req.user.displayName,
         socialNetworkId : socialNetwork + req.user.id,
         photoUrl : req.user.photos[0].value,
         lastlogin : new Date()

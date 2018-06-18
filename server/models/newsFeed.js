@@ -3,9 +3,9 @@ var Schema = mongoose.Schema;
 
 
 var newsSchema = new Schema({
-  createdUserId : {
-    type: String,
-    required: true
+  createdUser : {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
   },
   createDate : {
     type: Date,
@@ -22,6 +22,9 @@ var newsSchema = new Schema({
   dateTimeEvent : {
     type: Date
   },
+  latLng : {
+    type: Object
+  }, 
   adress : {
     type: String,
     required: true

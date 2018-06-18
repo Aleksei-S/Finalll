@@ -1,7 +1,7 @@
 
 <div class="ui items">
 	<div class="item">
-		<a class="button-actions" [routerLink]="['/news']"> Назад к cобытиям </a>
+		<a class="button-actions" [routerLink]="['/news']"> Назад к новостям </a>
 	</div>
 </div>
 
@@ -9,8 +9,8 @@
 <form class="ui form" [formGroup]="newsForm" (submit)="onSubmit()">
 	<div class="field">
 		<label>Название</label>
-		<input type="text" placeholder="Название события" formControlName="name" required>
-		<div class="error" *ngIf="isControlInvalid('name')">
+		<input type="text" placeholder="Название события" formControlName="topicNews" (change)="changePlace($event)" required>
+		<div class="error" *ngIf="isControlInvalid('topicNews')">
 			Введите название события
 		</div>
 	</div>
@@ -28,7 +28,7 @@
 	</div>
 	<div class="field">
 		<label>Место</label>
-		<input type="text" placeholder="Выберете место на карте" formControlName="adress" readonly >
+		<input type="text" placeholder="Выберете место на карте" formControlName="adress"  readonly >
 		<div class="error" *ngIf="isControlInvalid('adress')">
 			Не выбрано место на карте
 		</div>

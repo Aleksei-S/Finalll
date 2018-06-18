@@ -1,58 +1,86 @@
 
 <div class="ui stackable two column grid">
-  <div class="column">
-      <button class=" tiny ui button" [routerLink]="['createNews']">Создать Новость</button>
-  </div>
-  <div class="column">
-                  <div class="ui tiny compact menu ">
-                        <div class="ui simple dropdown item">
-                              По дате начала
-                              <i class="dropdown icon"></i>
-                              <div class="menu">
-                                    <div class="item">По дате создания</div>
-                                    <div class="item">Ближайщие</div>
-                              </div>
-                        </div>
-                  </div>
-  </div>
+     <div class="column">
+          <button class=" tiny ui button" [routerLink]="['createNews']">Создать Новость
+          </button>
+     </div>
+     <div class="column">
+          <div class="ui tiny compact menu ">
+               <div class="ui simple dropdown item">
+                    По дате начала
+                    <i class="dropdown icon">
+
+                    </i>
+                    <div class="menu">
+                         <div class="item">По дате создания</div>
+                         <div class="item">Ближайщие</div>
+                    </div>
+               </div>
+          </div>
+     </div>
 </div>
 
 <div class="ui divider"></div>
 
-<div class="ui items" *ngFor="let news of newsArr">
-
-	<div class="item">
-		<div class="content">
-			<img class="ui mini right spaced image" src="https://telegraf.com.ua/files/2018/02/1-3268.jpg">
-			<span>Username</span>
-			<span class="right floated time">2 days ago</span>
-		</div>
-	</div>
 
 
 
-      <div class="item">
-            <div class="content">
-                  <a class="header">{{news.name}}</a>
-                  <div class="meta">
-                        <span class="left time">
-                              <i class="calendar alternate outline icon"></i>
-                              {{news.dateTimeEvent | date: 'dd/MM/yyyy H-m'}}
-                        </span>
-                  </div>
-                  <div class="meta">
-                        <span class="left time">
-                              <i class="map marker alternate icon"></i>
-                              {{ news.adress | slice:0:news.adress.indexOf(',')}}
-                        </span>
-                  </div>
-                  <div class="extra">
-                        {{news.description}}
-                  </div>
-            </div>
-            <div class="image">
-                  <img src="https://telegraf.com.ua/files/2018/02/1-3268.jpg">
-            </div>
-      </div>
+
+
+
+<div class="ui items" *ngFor="let news of newsArr; let i = index"
+[class.selectedMarker] = "i === indexSelectedMarker"
+(mouseenter)="mouseHover(news)"
+(mouseleave)="mouseLeave(news)">
+
+<div class="ui feed" >
+     <div class="event">
+          <div class="label">
+               <img [src]="news.createdUser.photoUrl">
+          </div>
+          <div class="content">
+               <div class="date-left">
+                    <app-timeCalculation [time] = "news.createDate">
+                    </app-timeCalculation>
+               </div>
+               <span>{{news.createdUser.username}}
+               </span>
+          </div>
+     </div>
 </div>
 
+<div class="item">
+     <div class="content">
+          <h4 class="ui header">
+               <a routerLink="/news/{{news._id}}">
+                    {{news.topicNews}}
+               </a>
+          </h4>
+
+          <div class="meta">
+               <span class="left time">
+                    <i class="calendar alternate outline icon"></i>
+                    {{news.dateTimeEvent | date: 'dd/MM/yyyy H-m'}}
+               </span>
+          </div>
+          <div class="meta">
+               <span class="left time">
+                    <i class="map marker alternate icon"></i>
+                    {{ news.adress | slice:0:news.adress.indexOf(',')}}
+               </span>
+          </div>
+     </div>
+     <div class="image">
+          <img [src]="news.photoUrl">
+     </div>
+</div>
+</div>
+
+
+
+
+
+<!-- //////////////////////////////////////////////////////////////// -->
+
+
+<button (click) = "bclick()">BBBBBB</button>

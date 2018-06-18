@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subscription }   from 'rxjs/Subscription';
 import { PlacesService, Places }  from '../places/places.service';
 import { NewsService, NEWS }  from './news.service';
-
+import { Router, NavigationStart }  from '@angular/router';
 
 @Component({
   selector: 'app-news',
@@ -14,38 +14,35 @@ export class NewsComponent implements OnInit {
 
   private subscriptionMap: Subscription;
   private subscriptionNews: Subscription;
-  public fruits = [];
 
-  public message: any;
-  public subscription: Subscription;
+  public indexSelectedMarker: any;
 
+  today  = new Date(Date.now());
 
-  heroes$: Observable<NEWS[]>;
-
- newsArr: any[];
+   newsArr: NEWS[] = [];
 
 
-//https://stackblitz.com/angular/ebmyakqmmgg?file=src%2Fapp%2Fheroes%2Fheroes.component.ts
+
 
 
   constructor(private placesService:PlacesService,
-              private newsService:NewsService,) {}
+              private newsService:NewsService,
+              private cdRef: ChangeDetectorRef,
+              private router: Router) {}
 
   ngOnInit() {
-  	// console.log('OnInit!!!!!  NEWS NEWS NEWS');
+
     this.subscriptionMap = this.placesService.mapReady
     .subscribe(
       (mission) => {
         if(mission == true){
-
-
-
-
-          // console.log('NEWS NEWS MAP READY');
+            this.placesService.preventLeftclick = true;
+            this.placesService.deleteMarkers();
+            this.getNews();
         }
       });
 
-this.getNews();
+// this.getNews();
 
 }
 
@@ -54,57 +51,65 @@ this.getNews();
 
 
 getNews(): void{
-this.newsService.getNews().subscribe(newsArr => this.newsArr = newsArr);
+this.newsService.getNews().subscribe(
+    (data) => {
+      this.newsArr = data.data;
+      for (var i = this.newsArr.length - 1; i >= 0; i--) {
+        // let marker = this.placesService.addMarker(this.newsArr[i]);
+        this.newsArr[i].marker = this.placesService.addMarker(this.newsArr[i]);
+        // console.log(this.newsArr)
+      this.addListenerOnMarker(this.newsArr[i].marker, i); 
+      }
+      console.log(this.newsArr)},
+    (err) => {console.log(err)},
+    () => {
+      console.log('done loading news');
+    }
+  )
+};
+
+
+
+addListenerOnMarker(marker, i){
+        this.placesService.google.maps.event.addListener(marker, "mouseover", () =>{
+          this.indexSelectedMarker = i;
+          this.cdRef.detectChanges();
+        });
+
+        this.placesService.google.maps.event.addListener(marker, "mouseout", () =>{
+          this.indexSelectedMarker = undefined;
+          this.cdRef.detectChanges();
+        });
 }
 
 
+mouseHover(news){
+   news.marker.setAnimation(this.placesService.google.maps.Animation.BOUNCE);
+}
+
+mouseLeave(news){
+    news.marker.setAnimation(null);
+}
 
 
-
-
-
-
-
-
+ ngOnDestroy() {
+        this.placesService.preventLeftclick = false;
+         for (var i = this.placesService.markers.length - 1; i >= 0; i--) {
+              // google.maps.event.clearInstanceListeners(this.placesService.markers[i]);
+              this.placesService.google.maps.event.clearListeners(this.placesService.markers[i], 'mouseover');
+              this.placesService.google.maps.event.clearListeners(this.placesService.markers[i], 'mouseout');
+         }
+    }
 
 
 
   bclick(){
-
+console.log(this.indexSelectedMarker)
+console.log(this.placesService.markers.length);
+// this.newsArr = this.newsService.ar;
   }
 
 
 
 
 }
-
-// <li *ngFor="let hero of heroes$ | async"
-//         [class.selected]="hero.id === selectedId">
-//         <a [routerLink]="['/hero', hero.id]">
-//           <span class="badge">{{ hero.id }}</span>{{ hero.name }}
-//         </a>
-//       </li>
-//     </ul>
-
-//     <button routerLink="/sidekicks">Go to sidekicks</button>
-//   `
-// })
-// export class HeroListComponent implements OnInit {
-//   heroes$: Observable<Hero[]>;
-
-//   private selectedId: number;
-
-//   constructor(
-//     private service: HeroService,
-//     private route: ActivatedRoute
-//   ) {}
-
-//   ngOnInit() {
-//     this.heroes$ = this.route.paramMap
-//       .switchMap((params: ParamMap) => {
-//         // (+) before `params.get()` turns the string into a number
-//         this.selectedId = +params.get('id');
-//         return this.service.getHeroes();
-//       });
-//   }
-// }

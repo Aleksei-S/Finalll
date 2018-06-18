@@ -9,12 +9,24 @@
   min-width: 21em;
   height: 700px;
   z-index: 100;
+  overflow: hidden;
+/*  display: flex;
+  justify-content: center;*/
 }
 .menu-segment{
   height: 100%;
-  /*background-color: red;*/
-   overflow-y: auto;
-   overflow-x: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
+  transform: translateX(0%);
+  transition: 1s;
 
-/*  white-space:nowrap;*/
 }
+
+.hide-menu{
+  transition: 1s;
+  transform-origin: left top;
+  transform: translateX(-100%);
+
+}
+
+

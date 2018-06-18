@@ -1,7 +1,8 @@
 <div class="ui menu header-menu">
 
-<a href="#" class="header item">
-      <i class="list icon"></i>
+<a href="#" id="menu-btn" class="menu-btn" (click) = "clickMenuBtn($event)" [class.menu-btn-active] = "togleMenu">
+  <span></span>
+     <!--  <i class="list icon"></i> -->
 </a>
     <a routerLink="/" class="item">home</a>
     <!-- <a routerLink="/login" class="item">login</a> -->

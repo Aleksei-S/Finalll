@@ -2,31 +2,43 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject }    from 'rxjs/BehaviorSubject';
 import { Subject }    from 'rxjs/Subject';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {  HttpParams, HttpClient , HttpHeaders } from '@angular/common/http';
+import { Router }  from '@angular/router';
+
+
+
+
+
+
+
+
+
+
 
 export class NEWS {
   constructor(
-        // public datetimeCreate: Date,
-        // public userId: string,
-        public name: string,
+        public createdUser: string,
+        public createDate: Date,
+        public topicNews: string,
         public photoUrl: string,
         public dateTimeEvent: Date,
+        public latLng: Object,
         public adress: string,
         public place_id: string,
         public description: any,
+        public marker: Object,
         ) { }
 }
 
-const arrNEEWS = [
-new NEWS("СОБЫТИE", "https://telegraf.com.ua/files/2018/02/1-3268.jpg", new Date("2018-06-18T14:15"),
-  "ул. Московская 204Б, Брест, Беларусь", "ChIJw3Y8N6EOIUcREw0zVaQ-Bqc", "OPIS"),
-new NEWS("NAMEEEEEE", "https://telegraf.com.ua/files/2018/02/1-3268.jpg", new Date("2018-06-19T14:25"),
-  "ул. Советской Конституции 2, Брест, Беларусь", "Ek_QstGD0LsuINCh0LDQstC10YbQutCw0Lkg0JrQsNC90YHRgtGL0YLRg9GG0YvRliAyLCDQkdGA0Y3RgdGCLCDQkdC10LvQsNGA0YPRgdGMIhoSGAoUChIJU-keL6MOIUcRy-xP-Ndq_e0QAg", "ahahaha"),
-new NEWS("HRRRRRRRR", "https://telegraf.com.ua/files/2018/02/1-3268.jpg", new Date("2018-06-18T14:15"),
-  "ул. Киевская, Брест, Беларусь", "ChIJ9_7ZEqwOIUcRbl8rmDtWoxI", "op99999rrrr"),
-new NEWS("ggggggggg ggg", "https://telegraf.com.ua/files/2018/02/1-3268.jpg", new Date("2018-06-16T14:35"),
-  "ул. Пионерская 85, Брест, Беларусь", "ChIJb4lHIh0MIUcRyrdz8rzbnZ4", "hai my name is vasty"),
-];
+export class MESSAGE {
+  constructor(
+        public message: string,
+
+        ) { }
+}
+
+
+
 
 
 
@@ -34,23 +46,17 @@ new NEWS("ggggggggg ggg", "https://telegraf.com.ua/files/2018/02/1-3268.jpg", ne
 export class NewsService {
 
     // public currentNews : NEWS;
-    public currentNews : Observable<NEWS> = new Observable<NEWS>();
-    public arrNews$ : Observable<NEWS[]> = new Observable<NEWS[]>();
-    // public arrNews$ : Observable<NEWS>;
-// public arrNews$: Subject<NEWS> = new Subject<NEWS>();
- // public News$: BehaviorSubject<any> = new BehaviorSubject<any>([]);
- // public arrNews$: Subject<NEWS> = new Subject<NEWS>();
- public fruits = [];
- private subject = new Subject<any>();
- constructor(private http: HttpClient) { }
+    public currentNews$ : Observable<NEWS> = new Observable<NEWS>();
+public currentNews : NEWS;
 
 
 
-  // getHeroes(): Observable<any[]> {
-  //   // TODO: send the message _after_ fetching the heroes
-  //   this.messageService.add('HeroService: fetched heroes');
-  //   return of(HEROES);
-  // }
+
+
+ constructor(private http: HttpClient, private router:Router) { }
+
+
+
 
 
 
@@ -61,22 +67,13 @@ let options = {headers:headers};
     return  this.http.get('/api/getNews', options);
  }
 
- getOneNews(id: number | string) {
-   return this.getNews()
-      // (+) before `id` turns the string into a number
-      // .map(heroes => heroes.find(hero => hero.id === +id));
+ getOneNews(id: string) : Observable<any> {
+let headers = new HttpHeaders({'Content-Type':'application/json'});
+let params = new HttpParams();
+params = params.append("_id", id);
+    return  this.http.get('/api/getOneNews', {headers:headers, params: params});
+
     }
-
-
-
-// addHero (hero: Hero): Observable<Hero> {
-//   return this.http.post<Hero>(this.heroesUrl, hero, httpOptions).pipe(
-//     tap((hero: Hero) => this.log(`added hero w/ id=${hero.id}`)),
-//     catchError(this.handleError<Hero>('addHero'))
-//   );
-// }
-
-
 
 
 
@@ -87,23 +84,42 @@ createNews(news:NEWS){
   this.http.post('/api/createNews', news, options )
   .subscribe((response: any) => {
     console.log(response);
-       // if (response.success) {
-       //   console
-       // }
+    this.router.navigate(['/news']);
      });
 
 
 }
 
 
-sendMessage(message: any) {
+addMessage(message:MESSAGE){
   console.log(message);
-  this.fruits.push(message);
-  this.subject.next( message );
+  let headers = new HttpHeaders({'Content-Type':'application/json'});
+  let options = {headers:headers};
+  this.http.post('/api/createMessage', message, options )
+  .subscribe((response: any) => {
+    console.log(response);
+    // refresh
+  });
 }
-getMessage(): Observable<any> {
-  return this.subject;
-}
+
+  getMessages(_idNews: string) : Observable<any> {
+    let headers = new HttpHeaders({'Content-Type':'application/json'});
+    let params = new HttpParams();
+    params = params.append("_idNews", _idNews);
+    return  this.http.get('/api/getMessages', {headers:headers, params: params});
+  }
+
+
+
+
+// sendMessage(message: any) {
+//   console.log(message);
+//   this.fruits.push(message);
+//   this.subject.next( message );
+// }
+// getMessage(): Observable<any> {
+//   return this.subject;
+// }
 // COMPONENT
 //     sendMessage(): void {
 //         // send message to subscribers via observable subject
@@ -123,19 +139,5 @@ getMessage(): Observable<any> {
 // this.subscription = this.messageService.getMessage().subscribe(message => { this.message = message; });
 
 
-
-
-
-
-getAllNews(){
-
-}
-editNews(){
-
-}
-
-deleteNews(){
-
-}
 
 }

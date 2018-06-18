@@ -7,16 +7,15 @@ import { LoginService }  from '../login/login.service';
   styleUrls: ['./main-header.component.css']
 })
 export class MainHeaderComponent implements OnInit {
-
+togleMenu = false;
   constructor(public loginService: LoginService) { }
 
   ngOnInit() {
   }
 
-	logout(): void {
-		console.log(this.loginService.currentUser);
-	}
-
-
+clickMenuBtn(e){
+e.preventDefault();
+	this.togleMenu = !this.togleMenu;
+}
 
 }

@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var user = require('../lib/user');
 var newsFeed = require('../lib/newsFeed');
+var message = require('../lib/message');
 
 var passport = require('passport');
 ///////////passport-github
@@ -58,24 +59,16 @@ router.post('/getUser', user.authenticate, function(req, res, next) {
 
 
 
-///////////   NEWS ////////////////
+///////////   NEWS  ////////////////
 router.post('/createNews', user.authenticate, newsFeed.createNews);
 router.get('/getNews', newsFeed.getAllNews);
+router.get('/getOneNews', newsFeed.getOneNews);
 // router.get('/news/:id', newsFeed.getNewsDetails);
 
 
-// router.post('/createNews', function(req, res, next) {
-//     console.log(req);
-//   console.log(req.news);
-// console.log(req.body);
-//   console.log(req.user);
-//   res.send({ff:'fffffff'});
-
-// });
-
-
-
-
+///////////   Message  ////////////////
+router.post('/createMessage', user.authenticate, message.createMessage);
+router.get('/getMessages', message.getMessages);
 
 
 

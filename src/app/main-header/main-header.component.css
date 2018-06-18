@@ -1,3 +1,46 @@
-.header-menu{
+.menu-btn{
+	display: block;
 	max-height: 40px;
+	width: 40px;
+	height: 40px;
+	position: relative;
+}
+.item{
+	max-height: 40px;
+}
+.menu-btn span,
+.menu-btn span::before,
+.menu-btn span::after{
+	position: absolute;
+	top: 50%; margin-top: -1px;
+	left: 50%; margin-left: -10px;
+	width: 20px; 
+	height: 2px;
+	background-color: #1B1B1B;
+}
+
+
+.menu-btn span::before,
+.menu-btn span::after {
+	content: "";
+	transition: 0.5s;
+}
+
+.menu-btn span::before{
+	transform: translateY(-5px);
+}
+
+.menu-btn span::after{
+	transform: translateY(5px);
+}
+
+.menu-btn-active span:before{
+	transform: rotate(35deg);
+	transform-origin: left bottom;
+	width: 11px;
+}
+.menu-btn-active span:after{
+	transform: rotate(-35deg);
+	transform-origin: left bottom;
+	width: 11px;
 }

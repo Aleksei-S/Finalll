@@ -38,8 +38,21 @@ export class CreateNewsComponent implements OnInit {
                                     this.placesService.deleteMarkers();
                                     this.placesService.addMarker(results[0]);
                                 }
+                                 console.log('results[0]');
+                                console.log(results[0]);
+                                   console.log('results');
+                                console.log(results);
+                                   console.log('e');
+                                console.log(e);
                                 this.newsForm.patchValue ({'adress': results[0].formatted_address});
                                 this.newsForm.patchValue ({'place_id': results[0].place_id});
+                                this.newsForm.patchValue ({'latLng': e.latLng});
+                                // if (results[0].geometry) {
+                                //     // this.newsForm.patchValue ({'place_id': results[0].place_id});
+                                //     console.log('results[0].geometry');
+                                //     console.log(results[0].geometry);
+                                // }
+
                                 this.cdRef.detectChanges();
                             }
                         }
@@ -50,6 +63,9 @@ export class CreateNewsComponent implements OnInit {
             }
         });
     }
+
+
+
 
 
     setTime() :string {
@@ -64,10 +80,11 @@ export class CreateNewsComponent implements OnInit {
 
     private initForm() {
         this.newsForm = this.fb.group({
-            name: ['СОБЫТИЕ ИМЕНИ ПУШКИНА', [Validators.required,  Validators.maxLength(25)]],
+            topicNews: ['СОБЫТИЕ ИМЕНИ ПУШКИНА', [Validators.required,  Validators.maxLength(25)]],
             photoUrl: ['https://telegraf.com.ua/files/2018/02/1-3268.jpg', []],
             dateTimeEvent: [this.dateNowISO, [Validators.required, this.passwordValidator]],
-            adress: ['', [Validators.required]],
+            latLng: [],
+            adress: ['', [Validators.required]],    
             place_id: ['', []],
             description: ['', []],
         });
@@ -85,7 +102,6 @@ export class CreateNewsComponent implements OnInit {
     console.log(this.newsForm.value);
     this.newsService.createNews(this.newsForm.value);
 
-
 }
 
     isControlInvalid(controlName: string): boolean {
@@ -102,6 +118,14 @@ export class CreateNewsComponent implements OnInit {
         }
         return null;
     }
+changePlace($event){
+    console.log($event);
+}
+
+
+
+
+
 
     ngOnDestroy() {
         this.placesService.google.maps.event.removeListener(this.listenerClick);
@@ -111,9 +135,7 @@ export class CreateNewsComponent implements OnInit {
 
 
     ewclick(){
-console.log(this.newsService.fruits);
         // console.log(this.newsService.arrNews$);
-
     }
 
 
