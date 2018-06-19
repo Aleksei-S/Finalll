@@ -63,19 +63,19 @@
           </div>
      </form>
 
-     <div class="ui comments">
+     <div class="ui comments"  *ngFor="let message of messageArr;">
           <!-- comment -->
           <div class="comment">
                <a class="avatar">
-                    <img src="">
+                    <img [src]="message.idUser.photoUrl">
                </a>
                <div class="content">
-                    <a class="author">author  author</a>
+                    <a class="author">{{message.idUser.username}}</a>
                     <div class="metadata">
                          <div class="date">1 day ago</div>
                     </div>
                     <div class="text">
-                         <p>ТЕКСТ  ТЕКСТ  ТЕКСТ  ТЕКСТ</p>
+                         <p>{{message.message}}</p>
                     </div>
                     <div class="actions">
                          <a class="reply">Reply</a>
@@ -87,6 +87,8 @@
 </div>
 <!-- КАМЕНТАРИИ -->
 
-<div>
+<!-- <div>
      {{messageForm.value | json}}
-</div>
+</div> -->
+
+<button (click) = "bclick()">BBBBBB</button>

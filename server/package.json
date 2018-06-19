@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "heroku-postbuild": "cd ../ npm i && npm build",
+    "heroku-postbuild": "cd ../ npm i && npm build"
   },
   "dependencies": {
     "body-parser": "~1.16.0",

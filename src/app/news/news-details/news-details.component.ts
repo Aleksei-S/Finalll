@@ -3,6 +3,7 @@ import { FormControl, FormGroup, FormBuilder, Validators, ValidationErrors } fro
 import { ActivatedRoute } from '@angular/router';
 import { NewsService, NEWS }  from '../news.service';
 import { PlacesService }  from '../../places/places.service';
+import { Subscription }   from 'rxjs/Subscription';
 
 @Component({
 	selector: 'app-news-details',
@@ -13,6 +14,17 @@ export class NewsDetailsComponent implements OnInit {
 	public currentNews : any;
 	public messageForm: FormGroup;
 	private idNews : any;
+private messageArr: Subscription;
+
+
+
+
+
+
+
+
+
+
 	constructor(private activatedRoute: ActivatedRoute, 
 				private newsService: NewsService,
 				private placesService: PlacesService,
@@ -71,7 +83,8 @@ export class NewsDetailsComponent implements OnInit {
 		.map(e => {return e.data})
 		.subscribe(news => {
 			console.log(news);
-			// this.currentNews = news;
+			this.messageArr = news;
+
 		},
 		(err) => {console.log(err)}
 		);
@@ -87,5 +100,18 @@ export class NewsDetailsComponent implements OnInit {
 	ngOnDestroy() {
 	    this.placesService.preventLeftclick = false;
 	}
+
+
+
+  bclick(){
+console.log(this.messageArr)
+
+// this.newsArr = this.newsService.ar;
+  }
+
+
+
+
+
 
 }
