@@ -38,7 +38,7 @@ passport.use(new GoogleStrategy({
 passport.use(new FacebookStrategy({
 	clientID: keys.facebook.clientID,
 	clientSecret: keys.facebook.clientSecret,
-	callbackURL: "http://localhost:3000/api/auth/facebook/redirect",
+	callbackURL: "/api/auth/facebook/redirect",
 	 profileFields: ['id', 'displayName', 'picture.type(large)']
 },
 	function(accessToken, refreshToken, profile, done) {
