@@ -27,16 +27,15 @@ export class MainMapComponent implements OnInit {
         public LoadMapService: LoadMapService) {}
 
     ngOnInit() {
-        // this.LoadMapService.load().then((dd)=>{
-        //     if (navigator.geolocation) {
-        //         navigator.geolocation.getCurrentPosition((pos)=>{
-                     this.initMap();
-        //         });
-        //     } else {
-        //         console.log('net');
-        //     }
-        // });
-
+        this.LoadMapService.load().then((dd)=>{
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition((pos)=>{
+                    this.initMap(pos);
+                });
+            } else {
+                console.log('net');
+            }
+        });
         this.rightClickOnMarker = this.placesService.emitRightClickOnMarker.subscribe({
             next: (arg) => {
                 this.contextMenuOn(arg.event.Ha.pageX, arg.event.Ha.pageY);
@@ -47,12 +46,12 @@ export class MainMapComponent implements OnInit {
         })
     }
 
-    public initMap(): void{
+    public initMap(pos): void{
         console.log('initMap');
         let mapmy = document.getElementById('map');
-        // let myCenter = new google.maps.LatLng( pos.coords.latitude, pos.coords.longitude );
+        let myCenter = new google.maps.LatLng( pos.coords.latitude, pos.coords.longitude );
         let myOptions = {
-            // center: myCenter,
+            center: myCenter,
             zoom: 15,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
@@ -61,7 +60,7 @@ export class MainMapComponent implements OnInit {
         this.placesService.mapReady.next(true);
 
         let marker = new google.maps.Marker({
-            // position: {lat:pos.coords.latitude, lng:pos.coords.longitude },
+            position: {lat:pos.coords.latitude, lng:pos.coords.longitude },
             map: this.placesService.map,
             title: 'Hello World!',
             icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
