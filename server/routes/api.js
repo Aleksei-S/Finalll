@@ -44,9 +44,9 @@ router.get('/auth/facebook', passport.authenticate('facebook',{
 router.get('/auth/google/redirect', passport.authenticate('google'), user.loginWithSocialNetwork);
 router.get('/auth/github/redirect', passport.authenticate('github'), user.loginWithSocialNetwork);
 router.get('/auth/facebook/redirect', passport.authenticate('facebook'), user.loginWithSocialNetwork);
-//////<<<<<<<<SOCIAL NET>>>>>>>///////   api/auth/
 
 
+//////<<<<<<<<authenticate>>>>>>>/////// 
 router.post('/getUser', user.authenticate, function(req, res, next) {
 		return res.status(201).json({
 			success : true,

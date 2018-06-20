@@ -72,7 +72,10 @@
                <div class="content">
                     <a class="author">{{message.idUser.username}}</a>
                     <div class="metadata">
-                         <div class="date">1 day ago</div>
+                         <div class="date">
+               <app-timeCalculation [time] = "message.createDate">
+                    </app-timeCalculation>
+               </div>
                     </div>
                     <div class="text">
                          <p>{{message.message}}</p>
