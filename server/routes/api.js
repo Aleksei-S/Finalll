@@ -15,7 +15,7 @@ router.get('/', function(req, res, next) {
 
 // /////////// 	user
 // router.post('/signup', user.signup);
-// router.post('/login', user.login);
+router.post('/login', user.login);
 // router.post('/authenticate', user.authenticate);
 // router.get('/user/:id', user.getUserDetails);
 // router.put('/user/:id', user.updateUser);
@@ -68,6 +68,7 @@ router.get('/getOneNews', newsFeed.getOneNews);
 
 ///////////   Message  ////////////////
 router.post('/createMessage', user.authenticate, message.createMessage);
+router.post('/deleteMessage', user.authenticate, message.deleteMessage);
 router.get('/getMessages', message.getMessages);
 
 

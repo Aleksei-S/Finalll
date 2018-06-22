@@ -3,6 +3,7 @@ import { FormControl, FormGroup, FormBuilder, Validators, ValidationErrors } fro
 import { ActivatedRoute } from '@angular/router';
 import { NewsService, NEWS }  from '../news.service';
 import { PlacesService }  from '../../places/places.service';
+import { LoginService }  from '../../login/login.service';
 import { Subscription }   from 'rxjs/Subscription';
 
 @Component({
@@ -15,12 +16,9 @@ export class NewsDetailsComponent implements OnInit {
 	public messageForm: FormGroup;
 	private idNews : any;
 private messageArr: Subscription;
+private messageFormControl: boolean = false;
 
-
-
-
-
-
+public editMessages: boolean = false;
 
 
 
@@ -28,6 +26,7 @@ private messageArr: Subscription;
 	constructor(private activatedRoute: ActivatedRoute, 
 				private newsService: NewsService,
 				private placesService: PlacesService,
+				private loginService: LoginService,
 				private fb: FormBuilder) { }
 
 	ngOnInit() {
@@ -58,23 +57,19 @@ private messageArr: Subscription;
 	        });
 	    }
 
-	    isControlInvalid(controlName: string): boolean {
-	        const control = this.messageForm.controls[controlName];
-	        const result = control.invalid && control.touched;
-	        return result;
-	    }
+
 
 		onSubmit() {
 			console.log('onSubmit');
-        const controls = this.messageForm.controls;
-        if (this.messageForm.invalid) {
-            Object.keys(controls)
-            .forEach(controlName => controls[controlName].markAsTouched());
-            return;
-        }
-	    /////////* Обработка данных формы *//////////
-	    console.log(this.messageForm.value);
-	    this.newsService.addMessage(this.messageForm.value);
+	        const controls = this.messageForm.controls;
+	        if (this.messageForm.invalid) {
+				this.messageFormControl = true;
+	            return;
+	        }
+		    /////////* Обработка данных формы *//////////
+		    console.log(this.messageForm.value);
+		    this.newsService.addMessage(this.messageForm.value);
+ 			this.ngOnInit();
 		}
 
 
@@ -91,10 +86,27 @@ private messageArr: Subscription;
 	}
 
 
+	editMessage(): void {
+		// this.newsService.getMessages(this.idNews)
+		// .map(e => {return e.data})
+		// .subscribe(news => {
+		// 	console.log(news);
+		// 	this.messageArr = news;
 
+		// },
+		// (err) => {console.log(err)}
+		// );
+	}
 
+	deleteMessage(_id){
+		 this.newsService.deleteMessage(_id)
+		 .subscribe((response: any) => {
+          console.log(response);
+          this.ngOnInit();
+     });
+	}
 
-
+ // this.newsService.addMessage(this.messageForm.value);
 
 
 	ngOnDestroy() {
@@ -104,9 +116,13 @@ private messageArr: Subscription;
 
 
   bclick(){
-console.log(this.messageArr)
+console.log(this.messageArr);
 
-// this.newsArr = this.newsService.ar;
+const theUser: any = JSON.parse(localStorage.getItem('currentUser'));
+// console.log(theUser);
+console.log(this.loginService.currentUser._id);
+
+
   }
 
 

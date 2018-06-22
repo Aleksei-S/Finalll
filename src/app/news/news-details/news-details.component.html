@@ -50,12 +50,10 @@
      <form class="ui reply form" [formGroup]="messageForm">
           <div class="field">
                <textarea rows="2" formControlName="message"></textarea>
+                   <div class="ui pointing red basic label" *ngIf="messageFormControl">
+                     Введите сообщение длиной не более 250 символов
+                   </div>
           </div>
-<div class="field">
-          <div class="error" *ngIf="isControlInvalid('message')">
-               Введите сообщение длиной не более 250 символов
-          </div>
-</div>
 
 
           <div class="ui primary submit labeled icon button" (click)="onSubmit()">
@@ -63,7 +61,8 @@
           </div>
      </form>
 
-     <div class="ui comments"  *ngFor="let message of messageArr;">
+     <div class="ui comments someClass"  *ngFor="let message of messageArr; let i = index;"
+[class.selected] = "i === editMessageTextarrea">
           <!-- comment -->
           <div class="comment">
                <a class="avatar">
@@ -78,11 +77,42 @@
                </div>
                     </div>
                     <div class="text">
-                         <p>{{message.message}}</p>
+                         <p >{{message.message}}</p>
+
+
+<!--                 <form class="ui form hidenForm" *ngIf="editMessageTextarrea">
+                   <div class="field">
+                     <textarea rows="2" >{{message.message}}</textarea>
+                   </div>
+                   <div class="field">
+                      <div class="ui blue labeled icon tiny button">
+                        <i class="icon edit"></i> edit
+                      </div>
+                      <div class="ui blue labeled icon tiny button">
+                        <i class="icon cancel" (click) = "editMessageTextarrea = -1"></i> cancel
+                      </div>                 
+                   </div>
+                </form>  -->
+
                     </div>
-                    <div class="actions">
-                         <a class="reply">Reply</a>
+
+
+                    <div class="actions butEditAndDel" *ngIf="message.idUser._id == this.loginService.currentUser._id ">
+                        <div class="ui right aligned grid">
+                          <div class="center two column row">
+                             <div class="left floated left aligned six wide column">
+                               <a class="ui" (click) = "editMessageTextarrea = i" >edit</a>
+                             </div>
+                             <div class="right floated left aligned six wide column">
+                               <a class="ui" (click) = "deleteMessage(message._id)" >delete</a>
+                             </div>
+                           </div>
+                         </div>
                     </div>
+
+
+
+
                </div>
           </div>
           <!-- comment -->

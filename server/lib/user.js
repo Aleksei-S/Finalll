@@ -35,9 +35,9 @@ var config = require('../config/keys');
 // };
 
 
-// exports.login = function (req, res, next) {
-// 	console.log('req.body.username' + req.body.username);
-// 	console.log('req.body.password' + req.body.password);
+exports.login = function (req, res, next) {
+	console.log('req.body.username' + req.body.username);
+	console.log('req.body.password' + req.body.password);
 // 	User.findOne({username : req.body.username }, function (err, user) {
 // 		if (err) { res.status(400).json({success:false, message:'Error processing request '+err});}
 
@@ -75,7 +75,7 @@ var config = require('../config/keys');
 // 	return res.status(201).json({success:false, message:'Incorect login credentials '});
 // }
 // });
-// };
+};
 
 
 
