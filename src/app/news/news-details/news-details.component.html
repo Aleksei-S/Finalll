@@ -72,12 +72,70 @@
                     <a class="author">{{message.idUser.username}}</a>
                     <div class="metadata">
                          <div class="date">
-               <app-timeCalculation [time] = "message.createDate">
-                    </app-timeCalculation>
-               </div>
+                            <app-timeCalculation [time] = "message.createDate">
+                            </app-timeCalculation>
+                          </div>
                     </div>
-                    <div class="text">
+<!--                     <div class="text">
                          <p >{{message.message}}</p>
+                    </div> -->
+
+<!--  ///////editMessages -->
+<!-- <div class="text" *ngIf="editMessages">
+      <div class="field">
+                     <textarea rows="2">{{message.message}}</textarea>
+
+       </div>
+       <div class="ui right aligned grid">
+               <div class="center two column row">
+                                 <div class="left floated left aligned six wide column">
+                                   <a class="ui" (click) = "saveMessage = i" >save</a>
+                                 </div>
+                                 <div class="right floated left aligned six wide column">
+                                   <a class="ui" (click) = "cangelMessage()" >cangel</a>
+                                 </div>
+             </div>
+       </div>
+</div> -->
+
+<!--  ///////!!!!!!!!!!!!!!!!!!editMessages -->
+<!-- <div class="text" *ngIf="!editMessages">
+   <p >{{message.message}}</p>
+</div> -->
+<!-- 
+                    <div class="text" *ngIf="message.idUser._id == this.loginService.currentUser._id && !editMessages">
+                        <div class="ui right aligned grid">
+                          <div class="center two column row">
+                             <div class="left floated left aligned six wide column">
+                               <a class="ui" (click) = "editMessage(message)" >edit</a>
+                             </div>
+                             <div class="right floated left aligned six wide column">
+                               <a class="ui" (click) = "deleteMessage(message._id)" >delete</a>
+                             </div>
+                           </div>
+                         </div>
+                    </div> -->
+
+
+
+ <app-edit type="text" [parentMessage]="message" canEdit="{{message.idUser._id==this.loginService.currentUser._id}}" 
+  (updateMessage)="saveMessage($event, message)" (removeMessage)="deleteMessage($event)">
+    <p #comment>{{message.message}}</p>
+ </app-edit>
+
+
+
+
+
+
+
+
+
+<!-- <div>
+  <app-inline-edit [(ngModel)]="name" label="Name" [required]="true" type="text">
+  </app-inline-edit>
+</div> -->
+
 
 
 <!--                 <form class="ui form hidenForm" *ngIf="editMessageTextarrea">
@@ -93,24 +151,6 @@
                       </div>                 
                    </div>
                 </form>  -->
-
-                    </div>
-
-
-                    <div class="actions butEditAndDel" *ngIf="message.idUser._id == this.loginService.currentUser._id ">
-                        <div class="ui right aligned grid">
-                          <div class="center two column row">
-                             <div class="left floated left aligned six wide column">
-                               <a class="ui" (click) = "editMessageTextarrea = i" >edit</a>
-                             </div>
-                             <div class="right floated left aligned six wide column">
-                               <a class="ui" (click) = "deleteMessage(message._id)" >delete</a>
-                             </div>
-                           </div>
-                         </div>
-                    </div>
-
-
 
 
                </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators, ValidationErrors } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NewsService, NEWS }  from '../news.service';
@@ -12,15 +12,12 @@ import { Subscription }   from 'rxjs/Subscription';
 	styleUrls: ['./news-details.component.css']
 })
 export class NewsDetailsComponent implements OnInit {
+
 	public currentNews : any;
 	public messageForm: FormGroup;
 	private idNews : any;
-private messageArr: Subscription;
-private messageFormControl: boolean = false;
-
-public editMessages: boolean = false;
-
-
+	private messageArr: Subscription;
+	private messageFormControl: boolean = false;
 
 
 	constructor(private activatedRoute: ActivatedRoute, 
@@ -33,8 +30,9 @@ public editMessages: boolean = false;
 		this.getNews();
 		this.placesService.preventLeftclick = true;
 		this.initFormMessage();
-		///make bounds
+
 	}
+
 
 	getNews(): void {
 		this.idNews = this.activatedRoute.snapshot.paramMap.get('_id');
@@ -86,27 +84,25 @@ public editMessages: boolean = false;
 	}
 
 
-	editMessage(): void {
-		// this.newsService.getMessages(this.idNews)
-		// .map(e => {return e.data})
-		// .subscribe(news => {
-		// 	console.log(news);
-		// 	this.messageArr = news;
 
-		// },
-		// (err) => {console.log(err)}
-		// );
-	}
+	  saveMessage(value, parentMessage){
+	    console.log(value);
+	    console.log(parentMessage);
+	    alert("ПОТОМ ДОПИШУ СЕРВЕРНУЮ ЧАСТЬ");
+	  }
+
 
 	deleteMessage(_id){
+		console.log('value');
 		 this.newsService.deleteMessage(_id)
 		 .subscribe((response: any) => {
           console.log(response);
+          if (response.success == false) {
+          	alert(response.message);
+          }
           this.ngOnInit();
      });
 	}
-
- // this.newsService.addMessage(this.messageForm.value);
 
 
 	ngOnDestroy() {
@@ -119,8 +115,7 @@ public editMessages: boolean = false;
 console.log(this.messageArr);
 
 const theUser: any = JSON.parse(localStorage.getItem('currentUser'));
-// console.log(theUser);
-console.log(this.loginService.currentUser._id);
+
 
 
   }

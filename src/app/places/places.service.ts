@@ -108,7 +108,6 @@ addMarker(e){
 
 
 
-
 getDetails(e){
     console.log('getDetailsMarker SERVICE');
     var service = new this.google.maps.places.PlacesService(this.map);
