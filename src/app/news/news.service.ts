@@ -6,15 +6,6 @@ import {  HttpParams, HttpClient , HttpHeaders } from '@angular/common/http';
 import { Router }  from '@angular/router';
 
 
-
-
-
-
-
-
-
-
-
 export class NEWS {
      constructor(
           public createdUser: string,
@@ -45,9 +36,8 @@ export class MESSAGE {
 @Injectable()
 export class NewsService {
 
-// public currentNews : NEWS;
-public currentNews$ : Observable<NEWS> = new Observable<NEWS>();
-public currentNews : NEWS;
+     public currentNews$ : Observable<NEWS> = new Observable<NEWS>();
+     public currentNews : NEWS;
 
 
 
@@ -56,26 +46,19 @@ public currentNews : NEWS;
 constructor(private http: HttpClient, private router:Router) { }
 
 
+     getNews(): Observable<any> {
 
+          let headers = new HttpHeaders({'Content-Type':'application/json'});
+          let options = {headers:headers};
+          return  this.http.get('/api/getNews', options);
+     }
 
-
-
-getNews(): Observable<any> {
-// return Observable.of(arrNEEWS);
-let headers = new HttpHeaders({'Content-Type':'application/json'});
-let options = {headers:headers};
-return  this.http.get('/api/getNews', options);
-}
-
-getOneNews(id: string) : Observable<any> {
-     let headers = new HttpHeaders({'Content-Type':'application/json'});
-     let params = new HttpParams();
-     params = params.append("_id", id);
-     return  this.http.get('/api/getOneNews', {headers:headers, params: params});
-
-}
-
-
+     getOneNews(id: string) : Observable<any> {
+          let headers = new HttpHeaders({'Content-Type':'application/json'});
+          let params = new HttpParams();
+          params = params.append("_id", id);
+          return  this.http.get('/api/getOneNews', {headers:headers, params: params});
+     }
 
      createNews(news:NEWS){
           console.log(news);
@@ -113,7 +96,11 @@ getOneNews(id: string) : Observable<any> {
           return this.http.post('/api/deleteMessage', obj, options )
      }
 
-     editMessage(_idMessage: string){
+     editMessage(_idMessage: string, newMessage: string){
+          let headers = new HttpHeaders({'Content-Type':'application/json'});
+          let options = {headers:headers};
+          let obj = {id:_idMessage, message:newMessage}
+          return this.http.post('/api/editMessage', obj, options )
      }
 
 

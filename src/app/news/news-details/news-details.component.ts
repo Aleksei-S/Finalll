@@ -21,10 +21,10 @@ export class NewsDetailsComponent implements OnInit {
 
 
 	constructor(private activatedRoute: ActivatedRoute, 
-				private newsService: NewsService,
-				private placesService: PlacesService,
-				private loginService: LoginService,
-				private fb: FormBuilder) { }
+		private newsService: NewsService,
+		private placesService: PlacesService,
+		private loginService: LoginService,
+		private fb: FormBuilder) { }
 
 	ngOnInit() {
 		this.getNews();
@@ -48,27 +48,26 @@ export class NewsDetailsComponent implements OnInit {
 	}
 
 
-		private initFormMessage() {
-	        this.messageForm = this.fb.group({
-	            message: ['', [Validators.required,  Validators.maxLength(250)]],
-	            idNews: [this.idNews],
-	        });
-	    }
+	private initFormMessage() {
+		this.messageForm = this.fb.group({
+			message: ['', [Validators.required,  Validators.maxLength(250)]],
+			idNews: [this.idNews],
+		});
+	}
 
 
-
-		onSubmit() {
-			console.log('onSubmit');
-	        const controls = this.messageForm.controls;
-	        if (this.messageForm.invalid) {
-				this.messageFormControl = true;
-	            return;
-	        }
-		    /////////* Обработка данных формы *//////////
-		    console.log(this.messageForm.value);
-		    this.newsService.addMessage(this.messageForm.value);
- 			this.ngOnInit();
+	addMessage() {
+		console.log('addMessage');
+		const controls = this.messageForm.controls;
+		if (this.messageForm.invalid) {
+			this.messageFormControl = true;
+			return;
 		}
+		/////////* Обработка данных формы *//////////
+		console.log(this.messageForm.value);
+		this.newsService.addMessage(this.messageForm.value);
+		this.ngOnInit();
+	}
 
 
 	getMessages(): void {
@@ -85,41 +84,34 @@ export class NewsDetailsComponent implements OnInit {
 
 
 
-	  saveMessage(value, parentMessage){
-	    console.log(value);
-	    console.log(parentMessage);
-	    alert("ПОТОМ ДОПИШУ СЕРВЕРНУЮ ЧАСТЬ");
-	  }
+	editMessage(value, parentMessage){
+		this.newsService.editMessage(parentMessage._id, value)
+		.subscribe((response: any) => {
+			console.log(response);
+			if (response.success == false) {
+				alert(response.message);
+			}
+			this.ngOnInit();
+		});
+	}
 
 
 	deleteMessage(_id){
 		console.log('value');
-		 this.newsService.deleteMessage(_id)
-		 .subscribe((response: any) => {
-          console.log(response);
-          if (response.success == false) {
-          	alert(response.message);
-          }
-          this.ngOnInit();
-     });
+		this.newsService.deleteMessage(_id)
+		.subscribe((response: any) => {
+			console.log(response);
+			if (response.success == false) {
+				alert(response.message);
+			}
+			this.ngOnInit();
+		});
 	}
 
 
 	ngOnDestroy() {
-	    this.placesService.preventLeftclick = false;
+		this.placesService.preventLeftclick = false;
 	}
-
-
-
-  bclick(){
-console.log(this.messageArr);
-
-const theUser: any = JSON.parse(localStorage.getItem('currentUser'));
-
-
-
-  }
-
 
 
 

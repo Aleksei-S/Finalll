@@ -68,6 +68,34 @@ Message.deleteOne({_id : req.body.id}, function (err) {
 
 
 
+
+
+///////////////////// edit Message ///////////////////////////
+exports.editMessage = function (req, res ,next) {
+  console.log('editMessage');
+
+    Message.findOne({_id : req.body.id}, function (err, message)  {
+     if (err) {return res.status(422).json({success:false, message:'Error processing request '+err});}
+      message.message = req.body.message;
+      message.save(function (err) {
+        if (err) { res.status(400).json({succes:false, message:'Error processing request '+err});}
+              res.status(201).json({
+              success:true,
+              message:'message edit a success!!'
+              });  
+      });
+   });
+};
+
+
+
+
+
+
+
+
+
+
 // Tank.updateOne({ size: 'large' }, { name: 'T-90' }, function(err, res) {
 //   // Updated at most one doc, `res.modifiedCount` contains the number
 //   // of docs that MongoDB updated

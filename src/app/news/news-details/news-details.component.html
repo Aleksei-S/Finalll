@@ -56,7 +56,7 @@
           </div>
 
 
-          <div class="ui primary submit labeled icon button" (click)="onSubmit()">
+          <div class="ui primary submit labeled icon button" (click)="addMessage()">
                <i class="icon edit" ></i> Add Comment
           </div>
      </form>
@@ -76,82 +76,10 @@
                             </app-timeCalculation>
                           </div>
                     </div>
-<!--                     <div class="text">
-                         <p >{{message.message}}</p>
-                    </div> -->
-
-<!--  ///////editMessages -->
-<!-- <div class="text" *ngIf="editMessages">
-      <div class="field">
-                     <textarea rows="2">{{message.message}}</textarea>
-
-       </div>
-       <div class="ui right aligned grid">
-               <div class="center two column row">
-                                 <div class="left floated left aligned six wide column">
-                                   <a class="ui" (click) = "saveMessage = i" >save</a>
-                                 </div>
-                                 <div class="right floated left aligned six wide column">
-                                   <a class="ui" (click) = "cangelMessage()" >cangel</a>
-                                 </div>
-             </div>
-       </div>
-</div> -->
-
-<!--  ///////!!!!!!!!!!!!!!!!!!editMessages -->
-<!-- <div class="text" *ngIf="!editMessages">
-   <p >{{message.message}}</p>
-</div> -->
-<!-- 
-                    <div class="text" *ngIf="message.idUser._id == this.loginService.currentUser._id && !editMessages">
-                        <div class="ui right aligned grid">
-                          <div class="center two column row">
-                             <div class="left floated left aligned six wide column">
-                               <a class="ui" (click) = "editMessage(message)" >edit</a>
-                             </div>
-                             <div class="right floated left aligned six wide column">
-                               <a class="ui" (click) = "deleteMessage(message._id)" >delete</a>
-                             </div>
-                           </div>
-                         </div>
-                    </div> -->
-
-
-
- <app-edit type="text" [parentMessage]="message" canEdit="{{message.idUser._id==this.loginService.currentUser._id}}" 
-  (updateMessage)="saveMessage($event, message)" (removeMessage)="deleteMessage($event)">
-    <p #comment>{{message.message}}</p>
- </app-edit>
-
-
-
-
-
-
-
-
-
-<!-- <div>
-  <app-inline-edit [(ngModel)]="name" label="Name" [required]="true" type="text">
-  </app-inline-edit>
-</div> -->
-
-
-
-<!--                 <form class="ui form hidenForm" *ngIf="editMessageTextarrea">
-                   <div class="field">
-                     <textarea rows="2" >{{message.message}}</textarea>
-                   </div>
-                   <div class="field">
-                      <div class="ui blue labeled icon tiny button">
-                        <i class="icon edit"></i> edit
-                      </div>
-                      <div class="ui blue labeled icon tiny button">
-                        <i class="icon cancel" (click) = "editMessageTextarrea = -1"></i> cancel
-                      </div>                 
-                   </div>
-                </form>  -->
-
+                     <app-edit type="text" [parentMessage]="message" canEdit="{{message.idUser._id==this.loginService.currentUser._id}}" 
+                      (updateMessage)="editMessage($event, message)" (removeMessage)="deleteMessage($event)">
+                        <p #comment>{{message.message}}</p>
+                     </app-edit>
 
                </div>
           </div>
@@ -164,4 +92,3 @@
      {{messageForm.value | json}}
 </div> -->
 
-<button (click) = "bclick()">BBBBBB</button>

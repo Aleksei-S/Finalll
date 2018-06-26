@@ -12,8 +12,51 @@
 
 <br>
 
-     <div class="ui stackable two column grid my-filter" [class.filter-active] = "showFilter" >
-          <div class="column">
+     <!-- <div class="ui stackable two column grid my-filter" [class.filter-active] = "showFilter" > -->
+<div class="my-filter" [class.filter-active] = "showFilter">
+                         <div class="ui form">
+
+
+                          <div class="two fields">
+                             <div class="field">
+                               <div class="ui radio checkbox">
+                                 <input type="radio" name="example2">
+                                 <label>Рестораны</label>
+                               </div>
+                             </div>
+                             <div class="field">
+                               <div class="ui radio checkbox">
+                                 <input type="radio" name="example2">
+                                 <label>Магазины</label>
+                               </div>
+                             </div>
+                          </div>
+
+                          <div class="two fields">
+                             <div class="field">
+                               <div class="ui radio checkbox">
+                                 <input type="radio" name="example2">
+                                 <label>Заправки</label>
+                               </div>
+                             </div>
+                             <div class="field">
+                               <div class="ui radio checkbox">
+                                 <input type="radio" name="example2">
+                                 <label>Банки</label>
+                               </div>
+                             </div>
+                          </div>
+
+
+
+                         </div>
+
+</div>
+
+
+
+
+<!--           <div class="column">
 
                <div class="item">
                     <ol class="ui list">
@@ -38,8 +81,8 @@
                     </ol>
                </div>
 
-          </div>
-     </div>
+          </div> -->
+     <!-- </div> -->
 
 
 
@@ -55,89 +98,28 @@
 [class.selectedMarker] = "i === indexSelectedMarker">
 
 
-<div class="item">
-     <div class="content">
-          <h4 class="ui header">{{place.name}}</h4>
-          <div class="meta">
-               <span *ngIf="place.rating">
-                    <i class="star icon stars-outer" *ngFor="let star of [1,2,3,4,5]"
-                    [class.outline] = "(place.rating - star) < -0.21">
-                    <i class="star half icon stars-inner" *ngIf="((+place.rating - star) < -0.20) && ((+place.rating - star) > -0.79 ) "></i></i>
-                    {{place.rating}}
-               </span>
-          </div>
+     <div class="item">
+          <div class="content">
+               <h4 class="ui header">{{place.name}}</h4>
+               <div class="meta">
+                    <span *ngIf="place.rating">
+                         <i class="star icon stars-outer" *ngFor="let star of [1,2,3,4,5]"
+                         [class.outline] = "(place.rating - star) < -0.21">
+                         <i class="star half icon stars-inner" *ngIf="((+place.rating - star) < -0.20) && ((+place.rating - star) > -0.79 ) "></i></i>
+                         {{place.rating}}
+                    </span>
+               </div>
 
-          <div class="extra">
-               {{place.formatted_address}}
+               <div class="extra">
+                    {{place.formatted_address}}
+               </div>
+          </div>
+          <div class="image">
+               <img class="ui image" [src]="(place.photos) ? place.photos[0].getUrl({'maxWidth': 130, 'maxHeight': 130}) : ''">
           </div>
      </div>
-     <div class="image">
-          <img class="ui image" [src]="(place.photos) ? place.photos[0].getUrl({'maxWidth': 130, 'maxHeight': 130}) : ''">
-     </div>
-</div>
 </div>
 
-
-
-
-
-
-<!-- <select class="ui dropdown">
-<option value="1">Male</option>
-<option value="0">Female</option>
-</select>
-<button class="ui icon button" (click) = "FilterVisible = !FilterVisible">
-<i class="filter icon"></i>
-</button>
--->
-
-<!-- <section [hidden]="!FilterVisible">
-<form class="ui form">
-<div class="two fields">
-<div class="field">
-<div class="ui checkbox">
-<input type="checkbox" name="example">
-<label>Магазины</label>
-</div>
-</div>
-<div class="field">
-<div class="ui checkbox">
-<input type="checkbox" name="example">
-<label>Рестораны</label>
-</div>
-</div>
-</div>
-<div class="two fields">
-<div class="field">
-<div class="ui checkbox">
-<input type="checkbox" name="example">
-<label>Банки</label>
-</div>
-</div>
-<div class="field">
-<div class="ui checkbox">
-<input type="checkbox" name="example">
-<label>Администрат</label>
-</div>
-</div>
-</div>
-<div class="two fields">
-<div class="field">
-<div class="ui checkbox">
-<input type="checkbox" name="example">
-<label>Школы</label>
-</div>
-</div>
-<div class="field">
-<div class="ui checkbox">
-<input type="checkbox" name="example">
-<label>Заправки</label>
-</div>
-</div>
-</div>
-</form>
-</section>
--->
 
 
 

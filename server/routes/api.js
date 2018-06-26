@@ -69,6 +69,7 @@ router.get('/getOneNews', newsFeed.getOneNews);
 ///////////   Message  ////////////////
 router.post('/createMessage', user.authenticate, message.createMessage);
 router.post('/deleteMessage', user.authenticate, message.deleteMessage);
+router.post('/editMessage', user.authenticate, message.editMessage);
 router.get('/getMessages', message.getMessages);
 
 

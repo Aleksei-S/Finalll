@@ -3,7 +3,6 @@
 <div *ngIf="canEdit == 'true'">
 
                   <div *ngIf="editing">  
-                        <!-- <input #editInput [type]="type" [placeholder]="message" /> -->
 
           <div class="field">
                <textarea #editInput rows="2" (blur)="onBlur()"   [(ngModel)]="_value" [placeholder]="message">{{message}}</textarea>
@@ -35,8 +34,6 @@
                         </div>
 
                   </div>
-
-
 </div>
 
 
