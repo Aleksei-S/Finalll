@@ -10,7 +10,7 @@ export class MainHeaderComponent implements OnInit {
   togleMenu = false;
   constructor(public loginService: LoginService) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   clickMenuBtn(e) {
     e.preventDefault();

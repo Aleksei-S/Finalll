@@ -1,19 +1,17 @@
+.date-left{
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 0.85em;
+}
+
+.selectedMarker{
+  background-color: red;
+}
+
 .time{
 	color: rgba(0, 0, 0, 0.6);
 	font-size: 0.95em;
 	text-align: inherit;
 }
-
-.date-left{
-font-size: 0.85em;
-color: rgba(0, 0, 0, 0.6);
-}
-
-.selectedMarker{
-background-color: red;
-}
-
-
 
 
 

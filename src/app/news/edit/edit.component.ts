@@ -8,36 +8,41 @@ import { Component, OnInit, ViewChild, Input, Renderer2, ElementRef, Output, Eve
 
 export class EditComponent implements OnInit {
 
+    @Input() canEdit: boolean;
+    @Input() parentMessage: any;
+    @Output() removeMessage: EventEmitter<string> = new EventEmitter<string>();
+    @Output() updateMessage: EventEmitter<string> = new EventEmitter<string>();
     @ViewChild('editInput') editInput: ElementRef; // input
 
-    @Input() parentMessage: any;
-    @Input() canEdit: boolean;
-    @Output() updateMessage: EventEmitter<string> = new EventEmitter<string>();
-    @Output() removeMessage: EventEmitter<string> = new EventEmitter<string>();
-
-    private editing = false;
     private _value: string;
+    private editing = false;
 
-    constructor(element: ElementRef, private renderer: Renderer2) {
-    }
+    constructor(
+      element: ElementRef,
+      private renderer: Renderer2
+    ) { }
 
     ngOnInit() {
         console.log(this.canEdit);
     }
 
-    edit(value) {
-        this.editing = true;
-        this._value = this.parentMessage.message;
-        setTimeout(() => {
-            this.renderer.selectRootElement('#editInput').focus();
-        }, 0);
+    delete(): void {
+      this.removeMessage.emit(this.parentMessage._id);
     }
 
-    onBlur(): void {
-        this.editing = false;
+    edit(value) {
+      this.editing = true;
+      this._value = this.parentMessage.message;
+      setTimeout(() => {
+          this.renderer.selectRootElement('#editInput').focus();
+      }, 0);
     }
 
     cancel(): void {
+      this.editing = false;
+    }
+
+    onBlur(): void {
         this.editing = false;
     }
 
@@ -45,7 +50,4 @@ export class EditComponent implements OnInit {
         this.updateMessage.emit(this._value);
     }
 
-    delete(): void {
-        this.removeMessage.emit(this.parentMessage._id);
-    }
 }

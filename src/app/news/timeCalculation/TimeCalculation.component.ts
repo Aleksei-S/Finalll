@@ -7,19 +7,17 @@ import { Component, Input, OnInit } from '@angular/core';
 export class TimeCalculationComponent implements OnInit {
 
     @Input() time: Date;
-
-    public serverTime = new Date();
     public culculateTime: any;
+    public serverTime = new Date();
     public timeLeft: string;
-
     constructor() { }
+
     ngOnInit() {
 
         this.culculateTime = new Date(this.time);
         const minutes = (this.culculateTime.getTime() - this.serverTime.getTime()) / 60000;
         const hours = minutes / 60;
         const days = hours / 24;
-
         if (Math.floor(days) === 0) {
             (Math.floor(hours) < 1) ? this.timeLeft = 'менее часа' : this.timeLeft = 'Осталось! ' + Math.ceil(hours) + ' часов';
         } else if (Math.floor(days) > -1) {

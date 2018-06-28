@@ -1,70 +1,54 @@
 .items:hover {
-  cursor: pointer;
-  -webkit-transform:scale(1.03); /* Safari and Chrome */
   -moz-transform:scale(1.03); /* Firefox */
   -ms-transform:scale(1.03); /* IE 9 */
   -o-transform:scale(1.03); /* Opera */
-  transform:scale(1.03);
-  /*transform:scaleY(1.05);*/
-  /*box-shadow: 0 0 10px rgba(0, 0, 0, .5);*/
-  /*transform: translateY(20px);*/
+  -webkit-transform:scale(1.03); /* Safari and Chrome */
   background-color: #DBDBDB;
+  cursor: pointer;
+  transform:scale(1.03);
 }
 
 .items {
-  transform-style: preserve-3d;
-  -webkit-transition: all 0.8s ease; /* Safari and Chrome */
   -moz-transition: all 0.8s ease; /* Firefox */
   -ms-transition: all 0.8s ease; /* IE 9 */
   -o-transition: all 0.8s ease; /* Opera */
-  transition: all 0.8s ease;
+  -webkit-transition: all 0.8s ease; /* Safari and Chrome */
   max-height: 150px;
-  /*transform-style: preserve-3d;*/
+  transform-style: preserve-3d;
+  transition: all 0.8s ease;
 }
-
 
 .items img{
   max-height: 120px;
 }
 
+.list-place-search {
+  width: 100%
+}
 
 .selectedMarker {
   background-color: #DBDBDB;
   transform: translateY(-10px);
 }
 
-
-
-.list-place-search {
-width: 100%
-}
-
 .stars-outer {
+  color: #2B2A2A;
   display: inline-block;
   position: relative;
-  color: #2B2A2A;
 }
-
 
 .stars-inner {
   color: #2B2A2A;
+  left: 0;
   position: absolute;
   top: 0;
-  left: 0;
   width: 80%;
 }
 
-
 .my-filter {
   display: none;
-
 }
 
-
-
-
 .filter-active {
-
   display: block;
-
 }

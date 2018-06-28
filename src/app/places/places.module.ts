@@ -1,11 +1,10 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
+import { NgModule } from '@angular/core';
+import { PlaceDetailsComponent } from './place-details/place-details.component';
 import { PlacesComponent } from './places.component';
 import { PlacesRoutingModule } from './places-routing.module';
 import { PlacesService } from './places.service';
-import { PlaceDetailsComponent } from './place-details/place-details.component';
 import { SliderComponent } from './place-details/slider/slider.component';
 
 @NgModule({
@@ -14,7 +13,11 @@ import { SliderComponent } from './place-details/slider/slider.component';
     FormsModule,
     PlacesRoutingModule
   ],
-  declarations: [ PlacesComponent, PlaceDetailsComponent, SliderComponent ],
+  declarations: [
+    PlaceDetailsComponent,
+    PlacesComponent,
+    SliderComponent
+  ],
   providers: [ PlacesService ]
 })
 export class PlacesModule { }

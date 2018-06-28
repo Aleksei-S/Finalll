@@ -1,69 +1,16 @@
-
-.slideshow-container {
-  max-width: 100%;
-  position: relative;
-  margin: auto;
-}
-
-#slider-buttons-left{
-  position: absolute;
-  z-index: 1000;
-  top: 45%;
-  float: left;
-  cursor: pointer;
-  font-size: 400%;
-  color: #0033F1;
-  left: 1px;
-}
-
-#slider-buttons-right{
-  position: absolute;
-  top: 45%;
-  z-index: 1000;
-  float: right;
-  cursor: pointer;
-  font-size: 400%;
-  color: #0033F1;
-  right: 1px;
-}
-
-#slider-buttons-right:hover{
-  color: #778899;
-  -webkit-animation-name: fade;
+.fade {
   -webkit-animation-duration: 1.5s;
-  animation-name: fade;
-  animation-duration: 1.5s;
-}
-
-#slider-buttons-left:hover{
- color: #778899;
   -webkit-animation-name: fade;
-  -webkit-animation-duration: 1.5s;
-  animation-name: fade;
   animation-duration: 1.5s;
+  animation-name: fade;
 }
-
-.urlPhoto {
-    display: none;
-}
-
-
 
 .mySlides img{
-    max-height: 300px;
     margin: 0;
-    overflow: hidden;
+    max-height: 300px;
     object-fit: cover;
+    overflow: hidden;
 }
-
-
-.fade {
-  -webkit-animation-name: fade;
-  -webkit-animation-duration: 1.5s;
-  animation-name: fade;
-  animation-duration: 1.5s;
-}
-
 
 @-webkit-keyframes fade {
   from {opacity: .4}
@@ -75,4 +22,50 @@
   to {opacity: 1}
 }
 
+.slideshow-container {
+  margin: auto;
+  max-width: 100%;
+  position: relative;
+}
 
+#slider-buttons-left{
+  color: #0033F1;
+  cursor: pointer;
+  float: left;
+  font-size: 400%;
+  left: 1px;
+  position: absolute;
+  top: 45%;
+  z-index: 1000;
+}
+
+#slider-buttons-right{
+  color: #0033F1;
+  cursor: pointer;
+  float: right;
+  font-size: 400%;
+  position: absolute;
+  right: 1px;
+  top: 45%;
+  z-index: 1000;
+}
+
+#slider-buttons-right:hover{
+  -webkit-animation-duration: 1.5s;
+  -webkit-animation-name: fade;
+  animation-duration: 1.5s;
+  animation-name: fade;
+  color: #778899;
+}
+
+#slider-buttons-left:hover{
+  -webkit-animation-duration: 1.5s;
+  -webkit-animation-name: fade;
+  animation-duration: 1.5s;
+  animation-name: fade;
+ color: #778899;
+}
+
+.urlPhoto {
+  display: none;
+}

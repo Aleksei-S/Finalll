@@ -1,11 +1,10 @@
-.error{
-  color: red;
-}
-
 .butEditAndDel { 
 	display: none;
 }
 
+.error{
+  color: red;
+}
 
 .someClass:hover .butEditAndDel { 
 	display: block !important; 

@@ -4,29 +4,24 @@
   padding-top: 10px;
   z-index: 99;
 }
+
 .menu-column {
+  height: 700px;
   margin-left: 1%;
   min-width: 21em;
-  height: 700px;
-  z-index: 100;
   overflow: hidden;
-/*  display: flex;
-  justify-content: center;*/
+  z-index: 100;
 }
 .menu-segment{
   height: 100%;
-  overflow-y: auto;
   overflow-x: hidden;
+  overflow-y: auto;
   transform: translateX(0%);
   transition: 1s;
-
 }
 
 .hide-menu{
-  transition: 1s;
   transform-origin: left top;
   transform: translateX(-100%);
-
+  transition: 1s;
 }
-
-
