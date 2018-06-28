@@ -23,11 +23,6 @@
 <div class="ui divider"></div>
 
 
-
-
-
-
-
 <div class="ui items" *ngFor="let news of newsArr; let i = index"
 [class.selectedMarker] = "i === indexSelectedMarker"
 (mouseenter)="mouseHover(news)"
@@ -40,8 +35,8 @@
           </div>
           <div class="content">
                <div class="date-left">
-                    <app-timeCalculation [time] = "news.dateTimeEvent">
-                    </app-timeCalculation>
+                    <app-time-calculation [time] = "news.dateTimeEvent">
+                    </app-time-calculation>
                </div>
                <span>{{news.createdUser.username}}
                </span>

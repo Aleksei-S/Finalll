@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginService }  from '../login/login.service';
+import { LoginService } from '../login/login.service';
 
 @Component({
   selector: 'app-main-header',
@@ -7,15 +7,14 @@ import { LoginService }  from '../login/login.service';
   styleUrls: ['./main-header.component.css']
 })
 export class MainHeaderComponent implements OnInit {
-togleMenu = false;
+  togleMenu = false;
   constructor(public loginService: LoginService) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
-clickMenuBtn(e){
-e.preventDefault();
-	this.togleMenu = !this.togleMenu;
-}
+  clickMenuBtn(e) {
+    e.preventDefault();
+    this.togleMenu = !this.togleMenu;
+  }
 
 }

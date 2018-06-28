@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
@@ -18,6 +18,8 @@ import { EditComponent } from './edit/edit.component';
     NewsRoutingModule
   ],
   declarations: [NewsComponent, CreateNewsComponent, TimeCalculationComponent, NewsDetailsComponent, EditComponent],
-  providers: [ NewsService ]
+  providers: [ NewsService ],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
+
 export class NewsModule { }

@@ -1,94 +1,92 @@
 <div class="ui items">
-	<div class="item">
-		<a class="button-actions" [routerLink]="['/news']"> Назад к новостям </a>
-	</div>
+    <div class="item">
+        <a class="button-actions" [routerLink]="['/news']"> Назад к новостям </a>
+    </div>
 </div>
 
 
-<div class="ui items" *ngIf = "currentNews" >
+<div class="ui items" *ngIf="currentNews">
 
 
 
-	<div class="ui centered  aligned image">
-		<div class="item">
-		<img class="ui image" [src]="currentNews.photoUrl">
-		</div>
-	</div>
-	
+    <div class="ui centered  aligned image">
+        <div class="item">
+            <img class="ui image" [src]="currentNews.photoUrl">
+        </div>
+    </div>
 
 
 
-     <div class="item">
-          <div class="content">
-				<h4 class="ui header">{{currentNews.topicNews}}</h4>
-<div class="meta">
-                    <span class="left time">
-                         <i class="map marker alternate icon"></i>
-                         {{ currentNews.adress }}
-                    </span>
-               </div>
 
-               <div class="meta">
-					<span class="left time">
-                         <i class="calendar alternate outline icon"></i>
-                         {{currentNews.dateTimeEvent | date: 'dd/MM/yyyy Hч-mминут'}}
-                    </span>
-               </div>
+    <div class="item">
+        <div class="content">
+            <h4 class="ui header">{{currentNews.topicNews}}</h4>
+            <div class="meta">
+                <span class="left time">
+                    <i class="map marker alternate icon"></i>
+                    {{ currentNews.adress }}
+                </span>
+            </div>
 
-               <div class="extra">
-                    <p>{{currentNews.description}}</p>
-               </div>
-          </div>
-     </div>
+            <div class="meta">
+                <span class="left time">
+                    <i class="calendar alternate outline icon"></i>
+                    {{currentNews.dateTimeEvent | date: 'dd/MM/yyyy Hч-mминут'}}
+                </span>
+            </div>
+
+            <div class="extra">
+                <p>{{currentNews.description}}</p>
+            </div>
+        </div>
+    </div>
 </div>
 
 
 
 <!-- КАМЕНТАРИИ -->
-<a class="button-actions" (click) = "showAddcomments = !showAddcomments" >Показать коментарии</a>
-<div class="ui" [hidden]="!showAddcomments" >
-     <form class="ui reply form" [formGroup]="messageForm">
-          <div class="field">
-               <textarea rows="2" formControlName="message"></textarea>
-                   <div class="ui pointing red basic label" *ngIf="messageFormControl">
-                     Введите сообщение длиной не более 250 символов
-                   </div>
-          </div>
+<a class="button-actions" (click)="showAddcomments = !showAddcomments">Показать коментарии</a>
+<div class="ui" [hidden]="!showAddcomments">
+    <form class="ui reply form" [formGroup]="messageForm">
+        <div class="field">
+            <textarea rows="2" formControlName="message"></textarea>
+            <div class="ui pointing red basic label" *ngIf="messageFormControl">
+                Введите сообщение длиной не более 250 символов
+            </div>
+        </div>
 
 
-          <div class="ui primary submit labeled icon button" (click)="addMessage()">
-               <i class="icon edit" ></i> Add Comment
-          </div>
-     </form>
+        <div class="ui primary submit labeled icon button" (click)="addMessage()">
+            <i class="icon edit"></i> Add Comment
+        </div>
+    </form>
 
-     <div class="ui comments someClass"  *ngFor="let message of messageArr; let i = index;"
-[class.selected] = "i === editMessageTextarrea">
-          <!-- comment -->
-          <div class="comment">
-               <a class="avatar">
-                    <img [src]="message.idUser.photoUrl">
-               </a>
-               <div class="content">
-                    <a class="author">{{message.idUser.username}}</a>
-                    <div class="metadata">
-                         <div class="date">
-                            <app-timeCalculation [time] = "message.createDate">
-                            </app-timeCalculation>
-                          </div>
+    <div class="ui comments someClass" *ngFor="let message of messageArr; let i = index;" [class.selected]="i === editMessageTextarrea">
+        <!-- comment -->
+        <div class="comment">
+            <a class="avatar">
+                <img [src]="message.idUser.photoUrl">
+            </a>
+            <div class="content">
+                <a class="author">{{message.idUser.username}}</a>
+                <div class="metadata">
+                    <div class="date">
+                        <app-timeCalculation [time]="message.createDate">
+                        </app-timeCalculation>
                     </div>
-                     <app-edit type="text" [parentMessage]="message" canEdit="{{message.idUser._id==this.loginService.currentUser._id}}" 
-                      (updateMessage)="editMessage($event, message)" (removeMessage)="deleteMessage($event)">
-                        <p #comment>{{message.message}}</p>
-                     </app-edit>
+                </div>
+                <app-edit type="text" [parentMessage]="message" canEdit="{{message.idUser._id==this.loginService.currentUser._id}}" (updateMessage)="editMessage($event, message)"
+                    (removeMessage)="deleteMessage($event)">
+                    <p #comment>{{message.message}}</p>
+                </app-edit>
 
-               </div>
-          </div>
-          <!-- comment -->
-     </div>
+            </div>
+        </div>
+        <!-- comment -->
+    </div>
 </div>
 <!-- КАМЕНТАРИИ -->
 
 <!-- <div>
-     {{messageForm.value | json}}
+{{messageForm.value | json}}
 </div> -->
-

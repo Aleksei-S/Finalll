@@ -1,45 +1,21 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<!-- <div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-<h2>Here are some links to help you start: </h2>
-
-
-    <nav>
-      <a routerLink="/" routerLinkActive="active">home</a>
-      <a routerLink="/places" routerLinkActive="active">places</a>
-      <a routerLink="/login" routerLinkActive="active">logins</a>
- -->
-<!--       <a routerLink="/admin" routerLinkActive="active">Admin</a>
-      <a routerLink="/login" routerLinkActive="active">Login</a>
-      <a [routerLink]="[{ outlets: { popup: ['compose'] } }]">Contact</a> -->
-    <!-- </nav> -->
-              <!-- ROUTING -->
-<!--         <router-outlet></router-outlet>
-
-
-</div> -->
-
-
 <div class="ui">
-  <div class="ui grid">
+    <div class="ui grid">
 
-    <div class="row">
-      <div class="column header-column">
+        <div class="row">
+            <div class="column header-column">
                 <!-- HEADER -->
-        <app-main-header> </app-main-header>
-      </div>
-    </div>
+                <app-main-header> </app-main-header>
+            </div>
+        </div>
 
-    <div  class="five wide column menu-column">
-      <div id="leftMenu" class="ui segment menu-segment">
-              <!-- ROUTING -->
-        <router-outlet></router-outlet>
-      </div>
-    </div>
+        <div class="five wide column menu-column">
+            <div id="leftMenu" class="ui segment menu-segment">
+                <!-- ROUTING -->
+                <router-outlet></router-outlet>
+            </div>
+        </div>
 
-  </div>
-         <!-- MAP -->
-  <app-main-map></app-main-map>
+    </div>
+    <!-- MAP -->
+    <app-main-map></app-main-map>
 </div>

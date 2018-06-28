@@ -6,13 +6,13 @@ import { NewsDetailsComponent } from './news-details/news-details.component';
 import { AuthGuard } from '../routing/auth.guard';
 
 const newsRoutes: Routes = [
-{ path: 'news', component: NewsComponent,canActivate:[AuthGuard] },
-{ path: 'news/createNews', component: CreateNewsComponent, canActivate:[AuthGuard]},
-{ path: 'news/:_id', component: NewsDetailsComponent, canActivate:[AuthGuard]},
+    { path: 'news', component: NewsComponent, canActivate: [AuthGuard] },
+    { path: 'news/createNews', component: CreateNewsComponent, canActivate: [AuthGuard] },
+    { path: 'news/:_id', component: NewsDetailsComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(newsRoutes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forChild(newsRoutes)],
+    exports: [RouterModule]
 })
 export class NewsRoutingModule { }

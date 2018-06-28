@@ -1,12 +1,9 @@
 import { Component, OnInit, NgZone, EventEmitter } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { PlacesService, Places }  from '../places/places.service';
-import { Router }  from '@angular/router';
-import { LoadMapService }  from './load-map.service';
-import { Subscription } from "rxjs/Subscription";
-import { Subject }    from 'rxjs/Subject'
+import { PlacesService, Places } from '../places/places.service';
+import { Router } from '@angular/router';
+import { LoadMapService } from './load-map.service';
 import 'rxjs/add/operator/toPromise';
-declare var google : any;
+declare var google: any;
 
 @Component({
     selector: 'app-main-map',
@@ -16,20 +13,19 @@ declare var google : any;
 export class MainMapComponent implements OnInit {
 
     private rightClickOnMarker;
-    private contextMenu : boolean = false;
+    private contextMenu = false;
     private placeForContextMenu: any;
     private curentPlaceId: string;
-    // private placeForContextMenu = new Subject<any>();
 
-    constructor(public router:Router,
-        public placesService:PlacesService,
+    constructor(public router: Router,
+        public placesService: PlacesService,
         private zone: NgZone,
-        public LoadMapService: LoadMapService) {}
+        public loadMapService: LoadMapService) { }
 
     ngOnInit() {
-        this.LoadMapService.load().then((dd)=>{
+        this.loadMapService.load().then((dd) => {
             if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition((pos)=>{
+                navigator.geolocation.getCurrentPosition((pos) => {
                     this.initMap(pos);
                 });
             } else {
@@ -43,14 +39,14 @@ export class MainMapComponent implements OnInit {
                 this.curentPlaceId = arg.placeId;
                 this.placeForContextMenu = arg.marker;
             }
-        })
+        });
     }
 
-    public initMap(pos): void{
+    public initMap(pos): void {
         console.log('initMap');
-        let mapmy = document.getElementById('map');
-        let myCenter = new google.maps.LatLng( pos.coords.latitude, pos.coords.longitude );
-        let myOptions = {
+        const mapmy = document.getElementById('map');
+        const myCenter = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+        const myOptions = {
             center: myCenter,
             zoom: 15,
             mapTypeId: google.maps.MapTypeId.ROADMAP
@@ -59,81 +55,59 @@ export class MainMapComponent implements OnInit {
         this.placesService.google = google;
         this.placesService.mapReady.next(true);
 
-        let marker = new google.maps.Marker({
-            position: {lat:pos.coords.latitude, lng:pos.coords.longitude },
+        const marker = new google.maps.Marker({
+            position: { lat: pos.coords.latitude, lng: pos.coords.longitude },
             map: this.placesService.map,
             title: 'Hello World!',
             icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
         });
 
-        this.placesService.map.addListener('click',(e)=>{
+        this.placesService.map.addListener('click', (e) => {
             console.log('click');
-            // this.placesService.preventLeftclick ? return : "";
-            // условие ? значение1 : значение2
             if (e.placeId) {
                 e.stop();
                 if (this.placesService.preventLeftclick) {
-                    return
+                    return false;
                 }
                 this.placesService.deleteMarkers();
                 this.placesService.addMarker(e);
             }
-            this.contextMenu ? this.contextMenuOf() : "" ;
+            if (this.contextMenu) {
+                this.contextMenuOf();
+            }
         });
 
-
-
-        this.placesService.map.addListener('center_changed', (e)=> {
-            this.contextMenu ? this.contextMenuOf() : "" ;
+        this.placesService.map.addListener('center_changed', (e) => {
+            if (this.contextMenu) {
+                this.contextMenuOf();
+            }
         });
     }
 
-    CreateNews(e){
-		// let currentPlace;
-		// let indexPlace : number;
-  //       if (this.placesService.listPlaces.length == 0) {
-  //       	currentPlace = this.placesService.currentPlace$.getValue();
-  //       } else {
-  //       	for (var i = this.placesService.markers.length - 1; i >= 0; i--) {
-  //       		(this.placesService.markers[i] == this.placeForContextMenu) ? indexPlace = i : "";
-  //       	}
-  //       	currentPlace = this.placesService.listPlaces[indexPlace];
-  //       }
-		// currentPlace
-
+    CreateNews(e) {
         this.contextMenuOf();
     }
 
-
-
-    goToDetails(){
+    goToDetails() {
         this.zone.run(() => {
-            this.router.navigate(['/places', this.curentPlaceId])
+            this.router.navigate(['/places', this.curentPlaceId]);
         });
         this.contextMenuOf();
     }
 
-
-
-
-
-
-
-
-
-    contextMenuOn(x, y){
-        let menu = <HTMLElement>document.getElementsByClassName("context-menu")[0];
-        menu.style.top = y + "px";
-        menu.style.left = x + "px";
+    contextMenuOn(x, y) {
+        const menu = <HTMLElement>document.getElementsByClassName('context-menu')[0];
+        menu.style.top = y + 'px';
+        menu.style.left = x + 'px';
         menu.style.display = 'block';
-        menu.addEventListener('contextmenu', function(e) {
+        menu.addEventListener('contextmenu', function (e) {
             e.preventDefault();
         });
-        this.contextMenu = true
+        this.contextMenu = true;
     }
 
-    contextMenuOf(){
-        let menu = <HTMLElement>document.getElementsByClassName("context-menu")[0];
+    contextMenuOf() {
+        const menu = <HTMLElement>document.getElementsByClassName('context-menu')[0];
         menu.style.display = 'none';
     }
 

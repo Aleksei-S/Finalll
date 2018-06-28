@@ -1,8 +1,8 @@
 import { Component, OnInit, ChangeDetectorRef, OnDestroy, Pipe, PipeTransform } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators, ValidationErrors } from '@angular/forms';
-import { Subscription }   from 'rxjs/Subscription';
-import { PlacesService, Places }  from '../../places/places.service';
-import { NewsService, NEWS }  from '../news.service';
+import { Subscription } from 'rxjs/Subscription';
+import { PlacesService, Places } from '../../places/places.service';
+import { NewsService, NEWS } from '../news.service';
 
 
 @Component({
@@ -13,13 +13,13 @@ import { NewsService, NEWS }  from '../news.service';
 
 export class CreateNewsComponent implements OnInit {
     private subscriptionMap: Subscription;
-    private listenerClick:  any;
+    private listenerClick: any;
 
     public newsForm: FormGroup;
-    public dateNowISO : string;
+    public dateNowISO: string;
 
-    constructor(private placesService:PlacesService,
-        private newsService :NewsService,
+    constructor(private placesService: PlacesService,
+        private newsService: NewsService,
         private cdRef: ChangeDetectorRef,
         private fb: FormBuilder) { }
 
@@ -27,64 +27,51 @@ export class CreateNewsComponent implements OnInit {
         this.dateNowISO = this.setTime();
         this.initForm();
         this.subscriptionMap = this.placesService.mapReady
-        .subscribe((mission) => {
-            if(mission == true){
-                this.listenerClick = this.placesService.map.addListener('click',(e)=>{
-                    let geocoder = new this.placesService.google.maps.Geocoder;
-                    geocoder.geocode({'location': e.latLng}, (results, status) => {
-                        if (status === 'OK') {
-                            if (results[0]) {
-                                if (!e.placeId) {
-                                    this.placesService.deleteMarkers();
-                                    this.placesService.addMarker(results[0]);
-                                }
-                                 console.log('results[0]');
-                                console.log(results[0]);
-                                   console.log('results');
-                                console.log(results);
-                                   console.log('e');
-                                console.log(e);
-                                this.newsForm.patchValue ({'adress': results[0].formatted_address});
-                                this.newsForm.patchValue ({'place_id': results[0].place_id});
-                                this.newsForm.patchValue ({'latLng': e.latLng});
-                                // if (results[0].geometry) {
-                                //     // this.newsForm.patchValue ({'place_id': results[0].place_id});
-                                //     console.log('results[0].geometry');
-                                //     console.log(results[0].geometry);
-                                // }
+            .subscribe((mission) => {
+                if (mission === true) {
+                    this.listenerClick = this.placesService.map.addListener('click', (e) => {
+                        const geocoder = new this.placesService.google.maps.Geocoder;
+                        geocoder.geocode({ 'location': e.latLng }, (results, status) => {
+                            if (status === 'OK') {
+                                if (results[0]) {
+                                    if (!e.placeId) {
+                                        this.placesService.deleteMarkers();
+                                        this.placesService.addMarker(results[0]);
+                                    }
+                                    console.log(results[0]);
+                                    console.log('results');
+                                    this.newsForm.patchValue({ 'adress': results[0].formatted_address });
+                                    this.newsForm.patchValue({ 'place_id': results[0].place_id });
+                                    this.newsForm.patchValue({ 'latLng': e.latLng });
 
-                                this.cdRef.detectChanges();
+                                    this.cdRef.detectChanges();
+                                }
                             }
-                        }
+                        });
+
                     });
 
-                });
-
-            }
-        });
+                }
+            });
     }
 
-
-
-
-
-    setTime() :string {
-        let timeNow = new Date(Date.now());
-        let tzoffset = timeNow.getTimezoneOffset() * 60000; //offset in milliseconds
-        let mins = timeNow.getMinutes();
-        let round = Math.ceil(mins / 15) * 15; // округляем до 15
+    setTime(): string {
+        const timeNow = new Date(Date.now());
+        const tzoffset = timeNow.getTimezoneOffset() * 60000;
+        const mins = timeNow.getMinutes();
+        const round = Math.ceil(mins / 15) * 15;
         timeNow.setMinutes(round);
-        let time = (new Date(timeNow.getTime()- (tzoffset))).toISOString().slice(0, 16);
+        const time = (new Date(timeNow.getTime() - (tzoffset))).toISOString().slice(0, 16);
         return time;
     }
 
     private initForm() {
         this.newsForm = this.fb.group({
-            topicNews: ['СОБЫТИЕ ИМЕНИ ПУШКИНА', [Validators.required,  Validators.maxLength(25)]],
+            topicNews: ['СОБЫТИЕ ИМЕНИ ПУШКИНА', [Validators.required, Validators.maxLength(25)]],
             photoUrl: ['https://telegraf.com.ua/files/2018/02/1-3268.jpg', []],
-            dateTimeEvent: [this.dateNowISO, [Validators.required, this.passwordValidator]],
+            dateTimeEvent: [this.dateNowISO, [Validators.required, this.dataValidator]],
             latLng: [],
-            adress: ['', [Validators.required]],    
+            adress: ['', [Validators.required]],
             place_id: ['', []],
             description: ['', []],
         });
@@ -94,15 +81,14 @@ export class CreateNewsComponent implements OnInit {
         const controls = this.newsForm.controls;
         if (this.newsForm.invalid) {
             Object.keys(controls)
-            .forEach(controlName => controls[controlName].markAsTouched());
+                .forEach(controlName => controls[controlName].markAsTouched());
             return;
         }
 
-    /////////* Обработка данных формы *//////////
-    console.log(this.newsForm.value);
-    this.newsService.createNews(this.newsForm.value);
-
-}
+        ///////// * Обработка данных формы *//////////
+        console.log(this.newsForm.value);
+        this.newsService.createNews(this.newsForm.value);
+    }
 
     isControlInvalid(controlName: string): boolean {
         const control = this.newsForm.controls[controlName];
@@ -110,31 +96,24 @@ export class CreateNewsComponent implements OnInit {
         return result;
     }
 
-    private passwordValidator(control: FormControl): ValidationErrors {
-        let userTimeDate = new Date(control.value);
-        let nowTimeDate = new Date(Date.now());
+    private dataValidator(control: FormControl): ValidationErrors {
+        const userTimeDate = new Date(control.value);
+        const nowTimeDate = new Date(Date.now());
         if (nowTimeDate > userTimeDate) {
             return { invalidDateTimeEvent: 'Дата должна быть позже текущего времени' };
         }
         return null;
     }
-changePlace($event){
-    console.log($event);
-}
 
+    changePlace($event) {
+        console.log($event);
+    }
 
-
-
-
-
-    ngOnDestroy() {
+    OnDestroy() {
         this.placesService.google.maps.event.removeListener(this.listenerClick);
     }
 
-
-
-
-    ewclick(){
+    ewclick() {
         // console.log(this.newsService.arrNews$);
     }
 
