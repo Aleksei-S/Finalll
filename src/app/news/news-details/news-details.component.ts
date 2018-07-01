@@ -1,5 +1,5 @@
-import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, FormBuilder, Validators, ValidationErrors } from '@angular/forms';
 import { LoginService } from '../../login/login.service';
 import { NewsService, NEWS } from '../news.service';

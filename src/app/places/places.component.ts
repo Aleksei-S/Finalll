@@ -30,7 +30,7 @@ export class PlacesComponent implements OnInit {
     private placesService: PlacesService,
     private router: Router,
     private zone: NgZone
-  ) {}
+  ) { }
 
   ngOnInit() {
     // console.log('OnInit!!!!!  component');
@@ -58,7 +58,6 @@ export class PlacesComponent implements OnInit {
       .subscribe(
         (mission) => {
           if (mission === true) {
-
             const input = document.getElementById('searchBox');
             const searchBox = new google.maps.places.SearchBox(input);
             searchBox.setBounds(this.placesService.map.getBounds());
@@ -66,54 +65,56 @@ export class PlacesComponent implements OnInit {
             this.placesService.map.addListener('bounds_changed', () => {
               searchBox.setBounds(this.placesService.map.getBounds());
             });
+
             searchBox.addListener('places_changed', () => {
-              // console.log('places_changed');
               const places = searchBox.getPlaces();
-              this.places$.next(places);
-              this.placesService.listPlaces = places;
-
-              // console.log(places);
-              if (places.length === 0) {
-                return;
-              }
-
-              const bounds = new google.maps.LatLngBounds();
-
-              places.forEach((place) => {
-                // смещение карты
-                if (place.geometry.viewport) {
-                  bounds.union(place.geometry.viewport);
-                } else {
-                  bounds.extend(place.geometry.location);
-                }
-              });
-              this.placesService.map.fitBounds(bounds);
+              this.setPlace(places);
             });
           }
         });
   }
 
+  setPlace(places) {
+    console.log(places);
+    this.places$.next(places);
+    this.placesService.listPlaces = places;
+    if (places.length === 0) {
+      return;
+    }
+    const bounds = new google.maps.LatLngBounds();
+    places.forEach((place) => {
+      // смещение карты
+      if (place.geometry.viewport) {
+        bounds.union(place.geometry.viewport);
+      } else {
+        bounds.extend(place.geometry.location);
+      }
+    });
+    this.placesService.map.fitBounds(bounds);
+  }
+
 
   addListenerOnMarker() {
     let marker;
-    let indexPlace;
     for (let i = this.placesService.markers.length - 1; i >= 0; i--) {
       marker = this.placesService.markers[i];
-      google.maps.event.addListener(marker, 'mouseover', (function (thisComponent) {
-        return function () {
-          for (let n = thisComponent.placesService.markers.length - 1; n >= 0; n--) {
-            (thisComponent.placesService.markers[n] === this) ? indexPlace = n : n = n;
-          }
-          thisComponent.indexSelectedMarker = indexPlace;
-          thisComponent.cdRef.detectChanges();
-        };
-      })(this));
+      google.maps.event.addListener(marker, 'mouseover', this.markerMouseover.bind(this, marker));
+
 
       google.maps.event.addListener(marker, 'mouseout', () => {
         this.indexSelectedMarker = undefined;
         this.cdRef.detectChanges();
       });
     }
+  }
+
+  markerMouseover(marker) {
+    let indexPlace: any;
+    for (let n = this.placesService.markers.length - 1; n >= 0; n--) {
+      (this.placesService.markers[n] === marker) ? indexPlace = n : n = n;
+    }
+    this.indexSelectedMarker = indexPlace;
+    this.cdRef.detectChanges();
   }
 
   clickOnPlace(index, pl) {
@@ -139,25 +140,17 @@ export class PlacesComponent implements OnInit {
     }
   }
 
+
   filterSearcPlace(type) {
-    // var request = {
-    //     location: pyrmont,
-    //     radius: '500',
-    //     type: ['restaurant']
-    //   };
-
-    //   service = new google.maps.places.PlacesService(map);
-    //   service.nearbySearch(request, callback);
-    // }
-
-    // function callback(results, status) {
-    //   if (status == google.maps.places.PlacesServiceStatus.OK) {
-    //     for (var i = 0; i < results.length; i++) {
-    //       var place = results[i];
-    //       createMarker(results[i]);
-    //     }
-    //   }
-    // }
+    const request = {
+      location: this.placesService.map.getCenter(),
+      radius: '20',
+      query: type
+    };
+    const service = new google.maps.places.PlacesService(this.placesService.map);
+    service.textSearch(request, (pl) => {
+      this.setPlace(pl);
+    });
   }
 
 }
