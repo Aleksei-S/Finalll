@@ -3,6 +3,7 @@ import { FormControl, FormGroup, FormBuilder, Validators, ValidationErrors } fro
 import { NewsService, NEWS } from '../news.service';
 import { PlacesService, Places } from '../../places/places.service';
 import { Subscription } from 'rxjs/Subscription';
+import { removeAllListeners } from 'cluster';
 
 
 @Component({
@@ -11,7 +12,7 @@ import { Subscription } from 'rxjs/Subscription';
   styleUrls: ['./create-news.component.css']
 })
 
-export class CreateNewsComponent implements OnInit {
+export class CreateNewsComponent implements OnInit, OnDestroy {
   private listenerClick: any;
   private subscriptionMap: Subscription;
   public dateNowISO: string;
@@ -31,8 +32,13 @@ export class CreateNewsComponent implements OnInit {
       .subscribe((mission) => {
         if (mission === true) {
           this.listenerClick = this.placesService.map.addListener('click', (e) => {
-            const geocoder = new this.placesService.google.maps.Geocoder;
-            geocoder.geocode({ 'location': e.latLng }, (results, status) => {
+            console.log('clickk credateNews');
+            console.log(e);
+
+             const geocoder = new this.placesService.google.maps.Geocoder;
+             geocoder.geocode({ 'location': e.latLng }, (results, status) => {
+              // console.log(results);
+              // console.log(this.placesService.preventLeftclick);
               if (status === 'OK') {
                 if (results[0]) {
                   if (!e.placeId) {
@@ -47,7 +53,7 @@ export class CreateNewsComponent implements OnInit {
                   this.cdRef.detectChanges();
                 }
               }
-            });
+             });
 
           });
 
@@ -57,8 +63,8 @@ export class CreateNewsComponent implements OnInit {
 
   private initForm() {
     this.newsForm = this.fb.group({
-      topicNews: ['СОБЫТИЕ ИМЕНИ ПУШКИНА', [Validators.required, Validators.maxLength(25)]],
-      photoUrl: ['https://telegraf.com.ua/files/2018/02/1-3268.jpg', []],
+      topicNews: ['', [Validators.required, Validators.maxLength(25)]],
+      photoUrl: ['', []],
       dateTimeEvent: [this.dateNowISO, [Validators.required, this.dataValidator]],
       latLng: [],
       adress: ['', [Validators.required]],
@@ -67,7 +73,8 @@ export class CreateNewsComponent implements OnInit {
     });
   }
 
-  OnDestroy() {
+  ngOnDestroy() {
+    console.log('removeAllListeners CREATE');
     this.placesService.google.maps.event.removeListener(this.listenerClick);
   }
 

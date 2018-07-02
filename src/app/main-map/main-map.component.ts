@@ -89,7 +89,7 @@ export class MainMapComponent implements OnInit {
   CreateNews(e) {
     this.contextMenuOf();
   }
-  
+
   contextMenuOn(x, y) {
     const menu = <HTMLElement>document.getElementsByClassName('context-menu')[0];
     menu.style.top = y + 'px';

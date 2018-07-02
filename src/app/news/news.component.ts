@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs/Subscription';
   templateUrl: './news.component.html',
   styleUrls: ['./news.component.css']
 })
-export class NewsComponent implements OnInit {
+export class NewsComponent implements OnInit, OnDestroy {
 
   private newsArr: NEWS[] = [];
   private subscriptionMap: Subscription;
@@ -29,12 +29,41 @@ export class NewsComponent implements OnInit {
       .subscribe(
         (mission) => {
           if (mission === true) {
-            this.placesService.preventLeftclick = true;
             this.placesService.deleteMarkers();
             this.getNews();
           }
         });
+        this.placesService.preventLeftclick = true;
   }
+
+  selectChange(e) {
+    console.log('selectChange');
+    if (e === 'По дате создания события') {
+      this.newsArr.sort(function(a, b) {
+          return (new Date(a.createDate)).getTime() - (new Date(b.createDate)).getTime();
+        });
+
+    }
+
+    if (e === 'По дате начала события') {
+      this.newsArr.sort(function(a, b) {
+          return (new Date(a.dateTimeEvent)).getTime() - (new Date(b.dateTimeEvent)).getTime();
+        });
+    }
+
+  }
+
+
+
+
+
+
+
+
+
+
+
+
 
   addListenerOnMarker(marker, i) {
     this.placesService.google.maps.event.addListener(marker, 'mouseover', () => {
@@ -73,7 +102,7 @@ export class NewsComponent implements OnInit {
     news.marker.setAnimation(null);
   }
 
-  OnDestroy(): void {
+  ngOnDestroy(): void {
     this.placesService.preventLeftclick = false;
     for (let i = this.placesService.markers.length - 1; i >= 0; i--) {
       // google.maps.event.clearInstanceListeners(this.placesService.markers[i]);
@@ -83,9 +112,15 @@ export class NewsComponent implements OnInit {
   }
 
   bclick() {
-    console.log(this.indexSelectedMarker);
-    console.log(this.placesService.markers.length);
+    console.log(this.newsArr);
+    // numbers.sort(function(a, b) {
+    //   return a - b;
+    // });
+
   }
+
+
+
 
 
 
