@@ -1,3 +1,48 @@
-<p>
-  signup works!
-</p>
+<form class="ui form" [formGroup]="signupForm">
+    <div class="field">
+         <label>Account Name</label>
+         <div class="ui left icon input">
+              <i class="user icon"></i>
+              <input type="text" formControlName="name" placeholder="Account name">
+         </div>
+         <div class="error" *ngIf="isControlInvalid('name')" required>
+              Введите account name. Мин символов 3. Макс 8. Первый символ не цифра.
+         </div>
+    </div>
+    <div class="field">
+        <label>photoUrl</label>
+        <div class="ui left icon input">
+            <i class="file image icon"></i>
+             <input type="text" formControlName="photoUrl" placeholder="photoUrl">
+        </div>
+   </div>
+    <div class="field">
+         <label>Password</label>
+         <div class="ui left icon input">
+              <i class="lock icon"></i>
+              <input type="password" formControlName="password"  placeholder="Password">
+         </div>
+         <div class="error" *ngIf="isControlInvalid('password')" required>
+              Введите password
+         </div>
+    </div>
+
+    <div class="field" *ngIf="errorMessage">
+        <div class="error">
+           {{errorMessage}}
+        </div>
+   </div>
+
+
+    <div class="field">
+         <div class="ui fluid large teal submit button" (click)="onSubmit()">
+            Register
+         </div>
+    </div>
+</form>
+
+
+
+<div>
+    {{signupForm.value | json}}
+</div>

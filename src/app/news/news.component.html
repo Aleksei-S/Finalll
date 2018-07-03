@@ -1,49 +1,59 @@
-<div class="ui stackable two column grid">
-  <div class="column">
-    <button class=" tiny ui button" [routerLink]="['createNews']">Создать Новость
-    </button>
-  </div>
-  <div class="column">
-    <select (ngModelChange)="selectChange($event)" [(ngModel)]="newsService.selectedSort">
-      <option *ngFor="let sort of newsService.listFilter" [value]="sort">{{sort}}</option>
-    </select>
-  </div>
-</div>
 
-<div class="ui divider"></div>
+<div class="ui divided items">
+  <div class="item">
 
-
-<div class="ui items" *ngFor="let news of newsArr; let i = index" [class.selectedMarker]="i === indexSelectedMarker" (mouseenter)="mouseHover(news)"
-  (mouseleave)="mouseLeave(news)">
-
-  <div class="ui feed">
-    <div class="event">
-      <div class="label">
-        <img [src]="news.createdUser.photoUrl">
-      </div>
-      <div class="content">
-        <div class="date-left">
-          <app-time-calculation [time]="news.dateTimeEvent">
-          </app-time-calculation>
-        </div>
-        <span>{{news.createdUser.username}}
-        </span>
-      </div>
+    <div class="ui icon buttons">
+      <button class=" tiny ui button" [routerLink]="['createNews']">Создать Новость
+      </button>
+      <button class="ui button" (click)="showSort = !showSort">
+        <i class="sort amount down icon"></i>
+      </button>
     </div>
   </div>
 
+  <div class="my-sort" [class.sort-active]="showSort">
+    <div class="item">
+      <div class="ui form">
+        <div class="field" *ngFor="let sort of newsService.listFilter">
+          <div class="ui checkbox">
+            <input type="radio" (change)="selectChange(sort);" name="example2">
+            <label>{{sort}}</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+</div>
+
+
+<div class="ui divider"></div>
+
+<div class="ui divided items" *ngFor="let news of newsArr; let i = index" [class.selectedMarker]="i === indexSelectedMarker"
+  (mouseenter)="mouseHover(news)" (mouseleave)="mouseLeave(news)">
+
   <div class="item">
     <div class="content">
-      <h4 class="ui header">
+      <div class="meta">
+        <div class="right floated meta">
+          <span class="cinema date-left">
+            <app-time-calculation [time]="news.dateTimeEvent">
+            </app-time-calculation>
+          </span>
+        </div>
+        <img class="ui avatar image" [src]="news.createdUser.photoUrl"> {{news.createdUser.username}}
+      </div>
+      <h3 class="ui header">
         <a routerLink="/news/{{news._id}}">
           {{news.topicNews}}
         </a>
-      </h4>
-
+      </h3>
       <div class="meta">
         <span class="left time">
           <i class="calendar alternate outline icon"></i>
-          {{news.dateTimeEvent | date: 'dd/MM/yyyy H-m'}}
+          {{news.dateTimeEvent | date: 'dd/MM/yyyy HH-mm'}}
         </span>
       </div>
       <div class="meta">
@@ -52,22 +62,31 @@
           {{ news.adress | slice:0:news.adress.indexOf(',')}}
         </span>
       </div>
+      <div class="meta">
+        <span class="left time">
+          created {{ news.createDate | date: 'dd/MM/yyyy HH-mm'}}
+        </span>
+      </div>
+
+
+
     </div>
     <div class="image">
       <img [src]="news.photoUrl">
     </div>
   </div>
-
-  <div class="item">
-      <div class="meta">
-          <span class="left time">
-              created {{ news.createDate | date: 'dd/MM/yyyy H-m'}}
-            </span>
-      </div>
-  </div>
-
-
 </div>
+
+
+
+
+
+
+
+
+
+
+
 
 
 

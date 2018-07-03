@@ -37,14 +37,13 @@ export class NewsComponent implements OnInit, OnDestroy {
   }
 
   selectChange(e) {
-    console.log('selectChange');
+
     if (e === 'По дате создания события') {
       this.newsArr.sort(function(a, b) {
           return (new Date(a.createDate)).getTime() - (new Date(b.createDate)).getTime();
         });
 
     }
-
     if (e === 'По дате начала события') {
       this.newsArr.sort(function(a, b) {
           return (new Date(a.dateTimeEvent)).getTime() - (new Date(b.dateTimeEvent)).getTime();
@@ -118,10 +117,6 @@ export class NewsComponent implements OnInit, OnDestroy {
     // });
 
   }
-
-
-
-
 
 
 

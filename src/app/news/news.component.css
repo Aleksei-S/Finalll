@@ -14,7 +14,13 @@
 }
 
 
+.my-sort {
+  display: none;
+}
 
+.sort-active {
+  display: block;
+}
 
 
 

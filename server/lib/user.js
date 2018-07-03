@@ -4,35 +4,39 @@ var jwt = require('jsonwebtoken');
 // var passportJWT = require('passport-jwt');
 var config = require('../config/keys');
 
-// exports.signup = function (req, res ,next) {
-// 	var username = req.body.username;
-// 	var password = req.body.password;
+ exports.signup = function (req, res ,next) {
+ 	var username = req.body.name;
+ 	var password = req.body.password;
+  var photoUrl = req.body.photoUrl;
+  console.log('req.body.name' + req.body.name);
+  console.log('req.body.password' + req.body.password);
+	console.log('req.body.photoUrl' + req.body.photoUrl);
+	if (!username || !password) {
+		return res.status(403).json({success:false, message:'posted data is not correct or incomplete'});
+	}
 
-// 	if (!username || !password) {
-// 		return res.status(403).json({success:false, message:'posted data is not correct or incomplete'});
-// 	}
+ 	User.findOne({username:username}, function (err, existingUser) {
+ 		if (err) {return res.status(422).json({success:false, message:'Error processing request '+err});}
 
-// 	User.findOne({username:username}, function (err, existingUser) {
-// 		if (err) {return res.status(422).json({success:false, message:'Error processing request '+err});}
+		if (existingUser) {
+			return res.status(201).json({success:false, message:'User already exist '});
+		}
 
-// 		if (existingUser) {
-// 			return res.status(201).json({success:false, message:'User already exist '+err});
-// 		}
-
-// 		let createUser = new User({
-// 			username:username,
-// 			password:password
-// 		});
+		let createUser = new User({
+      username:username,
+      photoUrl:photoUrl,
+			password:password
+		});
 
 // 		createUser.save(function (err, createUser) {
 // 			if (err) {return res.status(400).json({success:false, message:'Error processing request '+err});}
-// 			res.status(201).json({
-// 				success:true,
-// 				message:'User create a succese'
-// 			});
+			res.status(201).json({
+				success:true,
+				message:'User create a succese'
+			});
 // 		});
-// 	});
-// };
+ 	});
+ };
 
 
 exports.login = function (req, res, next) {
@@ -127,7 +131,6 @@ exports.authenticate = function (req, res, next) {
 	let token = req.headers['authorization'] || req.body.token;
 	console.log('authorization');
   // console.log(  req.headers);
-
 	// console.log(req.body);
 	// console.log(token);
 	if (token) {

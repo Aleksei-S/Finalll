@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 
 export class USER {
   constructor(
-    public _id: string,
     public name: string,
     public password: string,
     public photoUrl: string
@@ -61,6 +60,13 @@ export class LoginService {
         // }
         // response.json();
       });
+  }
+
+
+  signup(oUser: USER) {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const options = { headers: headers };
+    return this.http.post('/api/signup/', JSON.stringify(oUser), options);
   }
 
   logout(): void {

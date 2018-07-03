@@ -14,9 +14,8 @@ router.get('/', function(req, res, next) {
 });
 
 // /////////// 	user
-// router.post('/signup', user.signup);
+router.post('/signup', user.signup);
 router.post('/login', user.login);
-// router.post('/authenticate', user.authenticate);
 // router.get('/user/:id', user.getUserDetails);
 // router.put('/user/:id', user.updateUser);
 // router.put('/password/:id', user.updateUserPassword);
@@ -63,7 +62,7 @@ router.post('/getUser', user.authenticate, function(req, res, next) {
 router.post('/createNews', user.authenticate, newsFeed.createNews);
 router.get('/getNews', newsFeed.getAllNews);
 router.get('/getOneNews', newsFeed.getOneNews);
-// router.get('/news/:id', newsFeed.getNewsDetails);
+
 
 
 ///////////   Message  ////////////////
