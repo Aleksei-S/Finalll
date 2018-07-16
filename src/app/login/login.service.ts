@@ -45,21 +45,10 @@ export class LoginService {
     return !!this.currentUser;
   }
 
-  login(oUser): void {
+  login(oUser: USER) {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const options = { headers: headers };
-    this.http.post('/api/login/', JSON.stringify(oUser), options)
-      .subscribe((response) => {
-        console.log(response);
-        // if (response.json().success) {
-        //   this.currentUser = <USER>response.json().message;
-        //   let userObj: any = {};
-        //   userObj.user = response.json().message;
-        //   userObj.token = response.json().token;
-        //   localStorage.setItem('currentUser', JSON.stringify(userObj));
-        // }
-        // response.json();
-      });
+    return this.http.post('/api/login/', JSON.stringify(oUser), options);
   }
 
 

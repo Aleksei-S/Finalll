@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormControl, FormGroup, FormBuilder, Validators, ValidationErrors } from '@angular/forms';
 import { LoginService } from '../login.service';
 
@@ -13,7 +14,8 @@ export class SignupComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private loginService: LoginService
+    private loginService: LoginService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -33,7 +35,7 @@ export class SignupComponent implements OnInit {
         Validators.required,
         Validators.maxLength(20),
         Validators.minLength(3),
-        Validators.pattern(/^[a-zA-Z][a-zA-Z0-9._]+$/)]
+        Validators.pattern(/^[a-zA-Z0-9._]+$/)]
       ]
     });
   }
@@ -58,6 +60,9 @@ export class SignupComponent implements OnInit {
       (results: any) => {
         if (!!results.success) {
           console.log('success');
+          console.log(results.token);
+          this.loginService.getUser(results.token);
+          // this.router.navigate(['/']);
         } else {
           this.errorMessage = results.message;
         }

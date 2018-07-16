@@ -10,8 +10,7 @@ var UserSchema = new Schema({
     type: String
   },
   socialNetworkId : {
-    type: String,
-    unique: true,
+    type: String
   },
   photoUrl : {
     type: String

@@ -10,8 +10,11 @@ import { Router, ActivatedRoute, Params, ParamMap } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  public loginForm: FormGroup;
+  private errorMessage: string;
   private token: string;
+  public loginForm: FormGroup;
+
+
   constructor(private fb: FormBuilder,
     private route: ActivatedRoute,
     public loginService: LoginService) { }
@@ -24,18 +27,13 @@ export class LoginComponent implements OnInit {
       this.loginService.getUser(this.token);
     }
 
-    // this.token = this.route.snapshot.queryParams["token"];
-    // if (this.token) {
-    //   this.loginService.getUser(this.token);
-    // }
-
     this.initForm();
   }
 
   private initForm() {
     this.loginForm = this.fb.group({
-      name: ['admin', [Validators.required, Validators.maxLength(25), Validators.minLength(3)]],
-      password: ['password', [Validators.required, Validators.maxLength(20), Validators.minLength(3)]]
+      name: ['', [Validators.required]],
+      password: ['', [Validators.required]]
     });
   }
 
@@ -54,7 +52,21 @@ export class LoginComponent implements OnInit {
     }
     ///////// * Обработка данных формы * //////////
     console.log(this.loginForm.value);
-
+    this.loginService.login(this.loginForm.value)
+    .subscribe(
+      (results: any) => {
+        if (!!results.success) {
+          console.log('success');
+          console.log(results.token);
+          this.loginService.getUser(results.token);
+        } else {
+          this.errorMessage = results.message;
+        }
+      });
   }
+
+
+
+
 
 }

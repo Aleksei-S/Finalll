@@ -8,9 +8,9 @@ var config = require('../config/keys');
  	var username = req.body.name;
  	var password = req.body.password;
   var photoUrl = req.body.photoUrl;
-  console.log('req.body.name' + req.body.name);
-  console.log('req.body.password' + req.body.password);
-	console.log('req.body.photoUrl' + req.body.photoUrl);
+  console.log('req.body.name  ' + req.body.name);
+  console.log('req.body.password  ' + req.body.password);
+	console.log('req.body.photoUrl  ' + req.body.photoUrl);
 	if (!username || !password) {
 		return res.status(403).json({success:false, message:'posted data is not correct or incomplete'});
 	}
@@ -20,29 +20,63 @@ var config = require('../config/keys');
 
 		if (existingUser) {
 			return res.status(201).json({success:false, message:'User already exist '});
-		}
-
-		let createUser = new User({
-      username:username,
-      photoUrl:photoUrl,
-			password:password
-		});
-
-// 		createUser.save(function (err, createUser) {
-// 			if (err) {return res.status(400).json({success:false, message:'Error processing request '+err});}
-			res.status(201).json({
-				success:true,
-				message:'User create a succese'
+		} else {
+			
+			var newUser = new User({
+				username:username,
+				photoUrl:photoUrl,
+				password:password
 			});
-// 		});
+			console.log('newUser');
+			console.log(newUser);
+			
+			newUser.save(function (err, user) {
+				if (err) { res.status(400).json({succes:false, message:'Error processing request! on save '+err});}
+				var token = jwt.sign({data : user}, config.token.secretJWT, {expiresIn: config.token.exp});
+				console.log(user);
+				res.status(201).json({
+					success:true,
+					message:{'userId': user._id, 'username': user.username, 'photo': user.photo, 'lastlogin': user.lastlogin},
+					token: token
+				});
+			});
+		}
  	});
  };
 
 
 exports.login = function (req, res, next) {
-	console.log('req.body.username' + req.body.username);
+	console.log('req.body.username' + req.body.name);
 	console.log('req.body.password' + req.body.password);
-// 	User.findOne({username : req.body.username }, function (err, user) {
+ 	User.findOne({username : req.body.name }, function (err, user) {
+		if (err) { res.status(400).json({success:false, message:'Error processing request '+err});}
+		if (!user) {
+			return res.status(201).json({
+				success: false, 
+				message:'This username does not exist'
+			});
+		} else {
+			console.log(user);
+			if (req.body.password !== user.password) {
+				return res.status(201).json({
+					success: false, 
+					message:'password incorect'
+				});
+			} else {
+				let token = jwt.sign(
+					{data : user},
+					config.token.secretJWT, 
+					{expiresIn: config.token.exp}
+				);
+				return res.status(201).json({
+					success: true, 
+					message:'password incorect',
+					token: token
+				});
+			}
+		}
+
+	 });
 // 		if (err) { res.status(400).json({success:false, message:'Error processing request '+err});}
 
 // 		if (!user) {
@@ -73,12 +107,14 @@ exports.login = function (req, res, next) {
 // 		message:{'userId': user._id, 'username': user.username, 'photo': user.photo, 'lastlogin': user.lastlogin},
 // 		token: token
 // 	});
-// });
 
-// } else {
-// 	return res.status(201).json({success:false, message:'Incorect login credentials '});
-// }
-// });
+//  createUser.save(function (err, user) {
+//  	if (err) { res.status(400).json({succes:false, message:'Error processing request! on save '+err});}
+// // 	let token = jwt.sign({data : user}, config.token.secretJWT, {
+// // 		expiresIn: config.token.exp
+// // 	});
+// // 	res.redirect("/login/?token=" + token);
+//  });
 };
 
 

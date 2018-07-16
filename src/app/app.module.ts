@@ -30,6 +30,7 @@ import { PlacesModule } from './places/places.module';
     NewsModule,
     PlacesModule
   ],
+  exports: [MainMapComponent],
   providers: [
     AuthGuard,
     JwtInterceptorProvider,

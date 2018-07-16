@@ -7,7 +7,7 @@
                <input type="text" formControlName="name" placeholder="Account name">
           </div>
           <div class="error" *ngIf="isControlInvalid('name')" required>
-               Введите account name. Мин символов 3
+               Введите account name
           </div>
      </div>
      <div class="field">
@@ -32,6 +32,11 @@
      </div>
 
 
+     <div class="field" *ngIf="errorMessage">
+            <div class="error">
+               {{errorMessage}}
+            </div>
+       </div>
 
      <div class="ui column centered grid">
           <div class="row">

@@ -1,4 +1,4 @@
-<div class="slideshow-container">
+<div class="slideshow-container" *ngIf="photoArr">
 
   <div class="mySlides fade" *ngFor="let url of photoArr; let i = index">
       <img [src]="url" style="width:100%"
