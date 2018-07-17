@@ -29,7 +29,7 @@ var config = require('../config/keys');
 			});
 			console.log('newUser');
 			console.log(newUser);
-			
+		
 			newUser.save(function (err, user) {
 				if (err) { res.status(400).json({succes:false, message:'Error processing request! on save '+err});}
 				var token = jwt.sign({data : user}, config.token.secretJWT, {expiresIn: config.token.exp});

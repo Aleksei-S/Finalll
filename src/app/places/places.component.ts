@@ -63,12 +63,11 @@ export class PlacesComponent implements OnInit, OnDestroy {
             searchBox.setBounds(this.placesService.map.getBounds());
 
             this.placesService.map.addListener('bounds_changed', () => {
-              console.log('bounds_changed');
               searchBox.setBounds(this.placesService.map.getBounds());
             });
 
             searchBox.addListener('places_changed', () => {
-              console.log('places_changed');
+              // console.log('places_changed');
               const places = searchBox.getPlaces();
               this.setPlace(places);
             });
@@ -77,7 +76,7 @@ export class PlacesComponent implements OnInit, OnDestroy {
   }
 
   setPlace(places) {
-    console.log(places);
+    // console.log(places);
     this.places$.next(places);
     this.placesService.listPlaces = places;
     if (places.length === 0) {

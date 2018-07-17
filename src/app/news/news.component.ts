@@ -37,7 +37,8 @@ export class NewsComponent implements OnInit, OnDestroy {
   }
 
   selectChange(e) {
-
+    console.log(this.newsService.selectFilter);
+    this.newsService.selectFilter = e;
     if (e === 'По дате создания события') {
       this.newsArr.sort(function(a, b) {
           return (new Date(a.createDate)).getTime() - (new Date(b.createDate)).getTime();
@@ -51,17 +52,6 @@ export class NewsComponent implements OnInit, OnDestroy {
     }
 
   }
-
-
-
-
-
-
-
-
-
-
-
 
 
   addListenerOnMarker(marker, i) {
@@ -80,6 +70,7 @@ export class NewsComponent implements OnInit, OnDestroy {
     this.newsService.getNews().subscribe(
       (data) => {
         this.newsArr = data.data;
+        this.selectChange(this.newsService.selectFilter);
         for (let i = this.newsArr.length - 1; i >= 0; i--) {
           this.newsArr[i].marker = this.placesService.addMarker(this.newsArr[i]);
           this.addListenerOnMarker(this.newsArr[i].marker, i);

@@ -16,7 +16,8 @@
       <div class="ui form">
         <div class="field" *ngFor="let sort of newsService.listFilter">
           <div class="ui checkbox">
-            <input type="radio" (change)="selectChange(sort);" name="example2">
+            <!-- <input type="radio" (change)="selectChange(sort);" checked="newsService.selectFilter === sort" name="example2"> -->
+            <input type="radio" (change)="selectChange(sort);" [checked]="newsService.selectFilter === sort" name="example2">
             <label>{{sort}}</label>
           </div>
         </div>
@@ -81,18 +82,3 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-<!-- //////////////////////////////////////////////////////////////// -->
-
-
-<button (click)="bclick()">BBBBBB</button>

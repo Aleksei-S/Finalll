@@ -33,7 +33,7 @@ export class NewsService {
   public currentNews$: Observable<NEWS> = new Observable<NEWS>();
   public currentNews: NEWS;
   public listFilter = ['По дате создания события', 'По дате начала события'];
-
+  public selectFilter = this.listFilter[0];
   constructor(private http: HttpClient, private router: Router) { }
 
   addMessage(message: MESSAGE) {

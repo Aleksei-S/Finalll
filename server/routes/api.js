@@ -16,16 +16,6 @@ router.get('/', function(req, res, next) {
 // /////////// 	user
 router.post('/signup', user.signup);
 router.post('/login', user.login);
-// router.get('/user/:id', user.getUserDetails);
-// router.put('/user/:id', user.updateUser);
-// router.put('/password/:id', user.updateUserPassword);
-
-
-
-
-
-
-
 
 //////<<<<<<<<SOCIAL NET>>>>>>>///////   api/auth/
 router.get('/auth/google', passport.authenticate('google',{
