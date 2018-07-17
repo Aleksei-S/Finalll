@@ -80,9 +80,34 @@ export class NewsComponent implements OnInit, OnDestroy {
       (err) => { console.log(err); },
       () => {
         console.log('done loading news');
+        this.setPlace();
       }
     );
   }
+
+  setPlace() {
+    console.log(this.newsArr);
+
+    this.placesService.listPlaces = this.newsArr;
+    if (this.newsArr.length === 0) {
+      return;
+    }
+    const bounds = new this.placesService.google.maps.LatLngBounds();
+    this.newsArr.forEach((place) => {
+      // смещение карты
+      // if (this.newsArr.geometry.viewport) {
+        bounds.extend(place.latLng);
+      // }
+      // if (this.newsArr.geometry.viewport) {
+      //   bounds.union(place.geometry.viewport);
+      // } else {
+      //   bounds.extend(place.geometry.location);
+      // }
+    });
+    this.placesService.map.fitBounds(bounds);
+  }
+
+
 
   mouseHover(news) {
     news.marker.setAnimation(this.placesService.google.maps.Animation.BOUNCE);
@@ -101,13 +126,6 @@ export class NewsComponent implements OnInit, OnDestroy {
     }
   }
 
-  bclick() {
-    console.log(this.newsArr);
-    // numbers.sort(function(a, b) {
-    //   return a - b;
-    // });
-
-  }
 
 
 
