@@ -12,7 +12,7 @@ declare var google: any;
   templateUrl: './place-details.component.html',
   styleUrls: ['./place-details.component.css']
 })
-export class PlaceDetailsComponent implements OnInit {
+export class PlaceDetailsComponent implements OnInit,  OnDestroy{
   private subscriptionMap: Subscription;
   private subscriptionPlace: Subscription;
   public placeDetail: any;
@@ -26,14 +26,18 @@ export class PlaceDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.subscriptionPlace = this.placesService.currentPlace$.subscribe((u) => {
+      // console.log("subscriptionPlace");
       this.placeDetail = u;
+      // console.log(this.placeDetail);
       this.cdRef.detectChanges();
     });
+
+
 
     this.subscriptionMap = this.placesService.mapReady
       .subscribe((mission) => {
         if (mission === true) {
-          // console.log("mapReadymapReadymapReady");
+          // console.log("subscriptionMap");
           this.activatedRoute.params.subscribe((u) => {
             this.placesService.getDetails(u.placeId);
           });
@@ -41,11 +45,8 @@ export class PlaceDetailsComponent implements OnInit {
       });
   }
 
-  OnDestroy() {
+  ngOnDestroy() {
     this.subscriptionPlace.unsubscribe();
   }
 
-  bclick() {
-    console.log(this.placeDetail.photoUrlarr);
-  }
 }

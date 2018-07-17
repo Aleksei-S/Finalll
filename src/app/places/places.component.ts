@@ -14,7 +14,7 @@ declare var google: any;
   templateUrl: './places.component.html',
   styleUrls: ['./places.component.css']
 })
-export class PlacesComponent implements OnInit {
+export class PlacesComponent implements OnInit, OnDestroy {
 
   private map: any;
   private places$ = new BehaviorSubject<any[]>([]);
@@ -63,10 +63,12 @@ export class PlacesComponent implements OnInit {
             searchBox.setBounds(this.placesService.map.getBounds());
 
             this.placesService.map.addListener('bounds_changed', () => {
+              console.log('bounds_changed');
               searchBox.setBounds(this.placesService.map.getBounds());
             });
 
             searchBox.addListener('places_changed', () => {
+              console.log('places_changed');
               const places = searchBox.getPlaces();
               this.setPlace(places);
             });
@@ -109,6 +111,7 @@ export class PlacesComponent implements OnInit {
   }
 
   markerMouseover(marker) {
+    // console.log('markerMouseover');
     let indexPlace: any;
     for (let n = this.placesService.markers.length - 1; n >= 0; n--) {
       (this.placesService.markers[n] === marker) ? indexPlace = n : n = n;
@@ -124,15 +127,18 @@ export class PlacesComponent implements OnInit {
   }
 
   mouseHover(index, pl) {
+    // console.log('mouseHover');
     const curentMarker = this.placesService.markers[index];
     curentMarker.setAnimation(google.maps.Animation.BOUNCE);
   }
 
   mouseLeave(index, pl) {
+    // console.log('mouseLeave');
     this.placesService.markers[index].setAnimation(null);
   }
 
-  OnDestroy() {
+  ngOnDestroy() {
+    // console.log('OnDestroy');
     google.maps.event.clearListeners(this.placesService.map, 'bounds_changed');
     for (let i = this.placesService.markers.length - 1; i >= 0; i--) {
       google.maps.event.clearListeners(this.placesService.markers[i], 'mouseover');
