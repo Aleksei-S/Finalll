@@ -26,13 +26,13 @@ export class MainMapComponent implements OnInit {
 
   ngOnInit() {
     this.loadMapService.load().then((dd) => {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition((pos) => {
-          this.initMap(pos);
-        });
-      } else {
-        console.log('net');
-      }
+      // if (navigator.geolocation) {
+      //   navigator.geolocation.getCurrentPosition((pos) => {
+          this.initMap();
+      //   });
+      // } else {
+      //   console.log('net');
+      // }
     });
     this.rightClickOnMarker = this.placesService.emitRightClickOnMarker.subscribe({
       next: (arg) => {
@@ -44,10 +44,10 @@ export class MainMapComponent implements OnInit {
     });
   }
 
-  public initMap(pos): void {
+  public initMap(): void {
     console.log('initMap');
     const mapmy = document.getElementById('map');
-    const myCenter = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+    const myCenter = new google.maps.LatLng('52.09755', '23.68775');
     const myOptions = {
       center: myCenter,
       zoom: 15,
@@ -57,12 +57,12 @@ export class MainMapComponent implements OnInit {
     this.placesService.google = google;
     this.placesService.mapReady.next(true);
 
-    const marker = new google.maps.Marker({
-      position: { lat: pos.coords.latitude, lng: pos.coords.longitude },
-      map: this.placesService.map,
-      title: 'Hello World!',
-      icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
-    });
+    // const marker = new google.maps.Marker({
+    //   position: { lat: pos.coords.latitude, lng: pos.coords.longitude },
+    //   map: this.placesService.map,
+    //   title: 'Hello World!',
+    //   icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
+    // });
 
     this.placesService.map.addListener('click', (e) => {
       console.log('click');
